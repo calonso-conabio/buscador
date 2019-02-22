@@ -61,7 +61,7 @@ group :doc do
 end
 
 group :development, :test, :production do
-  gem 'blurrily', git: 'https://github.com/calonsot/blurrily.git', :ref => 'c0cbbd1e9961774a6b8e2546285d38095b4d1bfa', :require => 'blurrily/server.rb'  # Forza a blurrily a usar rails 5
+  #gem 'blurrily', git: 'https://github.com/calonsot/blurrily.git', :ref => 'c0cbbd1e9961774a6b8e2546285d38095b4d1bfa', :require => 'blurrily/server.rb'  # Forza a blurrily a usar rails 5
 end
 
 group :development, :development_mac, :test do
