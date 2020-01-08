@@ -1,0 +1,20 @@
+<div class='nested-fields'>
+  <%= f.input :tamanioPoblacional %>
+  <%= f.input :abundancia %>
+  <%= f.input :densidad %>
+  <%= f.input :patronOcupacion %>
+  <%= f.input :descripcionPatron %>
+
+  <%= f.input :parametrosPoblacionales %>
+  <%= f.input :poblacionminviableinicial %>
+
+  <%= # f.input :interacciones
+  %>
+  <%= f.input :infoAdicionalInteraccion %>
+
+  <hr class="espacio_ficha">
+  <%= f.simple_fields_for :interaccion do |info| %>
+    <%= render partial: 'fichas/taxa/seccion_ecologia/form_ecologia_interaccion', locals: {f: info }  %>
+  <% end %>
+
+</div>

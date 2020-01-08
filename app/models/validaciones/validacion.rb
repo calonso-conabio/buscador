@@ -17,7 +17,7 @@ class Validacion
   def encuentra_por_nombre
     puts "\n Encuentra record por nombre cientifico: #{nombre_cientifico}"
     # Evita que el nombre cientifico este vacio
-    if nombre_cientifico.blank?
+      if nombre_cientifico.blank?
       self.validacion = {estatus: false, msg: 'El nombre cientifico está vacío'}
       return
     end
@@ -82,7 +82,13 @@ class Validacion
             return
           else
             if taxones_con_distancia.length == 1
-              self.validacion = {estatus: true, taxon: taxones_con_distancia.first, msg: 'Búsqueda similar'}
+              if nombre_cientifico.downcase == taxones_con_distancia.first.nombre_cientifico.limpiar(true).downcase  # Era el mismo, solo que tenia ssp. en vez de subsp.
+                puts "-#{nombre_cientifico.limpiar.estandariza}-#{taxones_con_distancia.first.nombre_cientifico.limpiar.estandariza}-"
+                self.validacion = {estatus: true, taxon: taxones_con_distancia.first, msg: 'Búsqueda exacta'}
+              else
+                self.validacion = {estatus: true, taxon: taxones_con_distancia.first, msg: 'Búsqueda similar'}
+              end
+
               return
             else
               self.validacion = {taxones: taxones_con_distancia, msg: 'Existe más de una coincidencia'}

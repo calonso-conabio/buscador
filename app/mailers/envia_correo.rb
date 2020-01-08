@@ -32,9 +32,10 @@ class EnviaCorreo < Devise::Mailer
     mail(:to => enviar_a?(@comentario_root.correo), :subject => 'EncicloVida: Comentario recibido')
   end
 
-  def descargar_taxa(ruta, correo)
+  def descargar_taxa(ruta, correo, original_url=nil)
     @ruta = ruta
     @correos = correo
+    @original_url = original_url
     mail(:to => enviar_a?(correo), :subject => 'EncicloVida: Descargar taxa')
   end
 

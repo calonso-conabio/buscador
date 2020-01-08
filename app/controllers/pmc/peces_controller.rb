@@ -12,10 +12,9 @@ class Pmc::PecesController < Pmc::PmcController
 
   # Busqueda por pez y marisco
   def index
-    @filtros =  Pmc::Criterio.dame_filtros
-    @grupos = Especie.select_grupos_iconicos.where(nombre_cientifico: Pmc::Pez::GRUPOS_PECES_MARISCOS).order("FIELD(`catalogocentralizado`.`Nombre`.`NombreCompleto`, '#{Pmc::Pez::GRUPOS_PECES_MARISCOS.join("','")}')")
-
     if params[:commit].present?
+      @filtros =  Pmc::Criterio.dame_filtros
+      @grupos = Especie.select_grupos_iconicos.where(nombre_cientifico: Pmc::Pez::GRUPOS_PECES_MARISCOS).order("FIELD(`#{CONFIG.bases.cat}`.`Nombre`.`NombreCompleto`, '#{Pmc::Pez::GRUPOS_PECES_MARISCOS.join("','")}')")
       @peces = Pmc::Pez.filtros_peces
 
       if params[:id].present?  # Busqueda cuando selecciono un nombre en redis
@@ -42,21 +41,25 @@ class Pmc::PecesController < Pmc::PmcController
         @peces = @peces.where("#{Especie.table_name}.#{Especie.attribute_alias(:ancestry_ascendente_directo)} REGEXP '#{ids.join('|')}'")
       end
 
+      # La asigno aqui para que se encuentre más abajo
+      recomendacion = params[:semaforo_recomendacion]
+
       # Busqueda con estrella
       if params[:semaforo_recomendacion].present? && params[:semaforo_recomendacion].include?('star')
         @peces = @peces.where(con_estrella: 1)
+        recomendacion = params[:semaforo_recomendacion]-['star']  # Quito este valor, para que no busque con expresiones regualres "star"
       end
 
       # Filtros del SEMAFORO de RECOMENDACIÓN
-      if params[:semaforo_recomendacion].present? && params[:zonas].present?
-        regexp = dame_regexp_zonas(zonas: params[:zonas], color_seleccionado: "[#{params[:semaforo_recomendacion].join('')}]")
+      if recomendacion.present? && params[:zonas].present?
+        regexp = dame_regexp_zonas(zonas: params[:zonas], color_seleccionado: "[#{recomendacion.join('')}]")
         @peces = @peces.where("valor_zonas REGEXP '#{regexp}'")
-      elsif  params[:semaforo_recomendacion].present?
+      elsif recomendacion.present?
         # Selecciono el valor de sin datos
-        if params[:semaforo_recomendacion].include?('s')
-          rec = "[#{params[:semaforo_recomendacion].join('')}]{6}"
+        if recomendacion.include?('sn')
+          rec = "[#{recomendacion.join('')}]{6}"
         else # Cualquier otra combinacion
-          rec = params[:semaforo_recomendacion].map{ |r| r.split('') }.join('|')
+          rec = recomendacion.map{ |r| r.split('') }.join('|')
         end
         @peces = @peces.where("valor_zonas REGEXP '#{rec}'")
       elsif params[:zonas].present?
@@ -65,6 +68,8 @@ class Pmc::PecesController < Pmc::PmcController
       end
 
       render 'resultados'
+    else
+      redirect_to '/pmc/peces?semaforo_recomendacion%5B%5D=star&commit=Buscar'
     end
   end
 

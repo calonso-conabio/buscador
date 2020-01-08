@@ -1,0 +1,9 @@
+<div class='nested-fields'>
+  <%= f.simple_fields_for :amenazaDirecta do |info| %>
+    <%= render partial: 'fichas/taxa/seccion_conservacion/form_conservacion_amenaza_directa', locals: {f: info }  %>
+  <% end %>
+  <hr class="espacio_ficha">
+  <%= f.input :descPresionesAmenazas %>
+  <%= f.input :tendenciaPoblacional %>
+  <%= f.input :descTendenciaPoblacional %>
+</div>

@@ -1,0 +1,115 @@
+<div class='nested-fields'>
+
+  <h4 class="titulo_subseccion"><%= t('simple_form.labels.distribuciones.region.distribucion_mundial') %></h4>
+  (Distribución mundial:)
+
+  <%= f.input :historicaPotencial %>
+
+
+  <%= f.input :infoAdicionalMun %>
+  <hr class="espacio_ficha">
+
+  <%= f.input :alcanceDistribucion %>
+  <%= f.input :infoAdicionalAlcance %>
+
+
+</div>
+
+
+
+
+<%
+=begin
+
+<%
+  paises = Fichas::Pais.all
+%>
+
+<% distribucion = f.object.distribuciones.first || Fichas::Distribucion.new # Recupera la distribución %>
+<h4 class="titulo_subseccion"><%= t('simple_form.labels.distribucion.region.region') %></h4>
+
+<%= f.input :palabrasClave, collection: paises, label_method: :nombrepais, input_html: {class: 'form-control', value: distribucion.distribucion } %>
+<%= f.input :historica_potencial, input_html: { value: distribucion.historicaPotencial }, :as => "text" %>
+
+
+
+
+
+
+<hr class="espacio_ficha">
+<h4 class="titulo_subseccion"><%= t('simple_form.labels.distribucion.endemismo.endemismo') %></h4>
+
+
+
+
+<div class='nested-fields'>
+  <%= f.input :id, as: :hidden %>
+  <%= f.input :id, required: true, input_html: { onclick: 'dameKeyword($(this))', autocomplete: :off } %>
+
+  <%= link_to_remove_association 'Borrar asociación', f, :class => 'btn btn-danger btn-sm' %>
+</div>
+
+
+<% # Recupera la distribución, la endemica y el habitad
+   distribucion = f.object.distribuciones.first || Fichas::Distribucion.new
+   habitat = f.object.habitats.first
+%>
+
+<%= #f.input :estado_habitad_desarrollo_taxon, input_html: { value: habitat.estadoHabitat }
+%>
+<%= f.input :informacion_adicional, input_html: { value: distribucion.infoAdicionalMun }, :as => "text" %>
+
+
+
+
+<% # Recupera la distribución, la endemica y el habitad
+   # distribucion = f.object.distribuciones.first || Fichas::Distribucion.new
+   # endemica = f.object.endemicas.first || Fichas::Endemica.new
+   # habitat = f.object.habitats.first || Fichas::Habitat.new
+%>
+
+
+<%
+
+
+  #distribucion = Fichas::Distribucion.find(f.object.id)
+
+  if f.object.distribuciones.blank? %>
+  <%= f.input :distribuciones %>
+<%
+  else
+    distribucion = f.object.distribuciones.first
+%>
+
+<% end %>
+
+
+
+
+<h4><%= t('simple_form.labels.ficha_distribucion.region') %></h4>
+<%= #f.input :distribucion_mundial, input_html: { value:distribucion.exoticaMundial }
+
+%>
+<%= #f.input :historica_potencial, input_html: { value:distribucion.historicaPotencial }
+
+%>
+
+
+
+<%
+=begin
+region:
+          region: Región
+          distribucion_mundial: Distribución mundial
+        historica_potencial: Histórica o potencial
+
+        estado_habitad_desarrollo_taxon: Estado del hábitat con respecto al desarrollo natural del taxón
+        amplia_restringida: Amplia o restringida
+        endemismo:
+          endemismo: Endemismo
+          endemica_mexico: ¿Endémica en México?
+          endemica_sin: Sin
+
+
+=end
+%>

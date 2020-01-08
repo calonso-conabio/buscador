@@ -49,17 +49,9 @@ class ApplicationController < ActionController::Base
   end
 
   def es_propietario?(obj)
-    if usuario_signed_in?
-      usuario_id = obj.usuario_id
-
-      if current_usuario.id == usuario_id
-        true
-      else
-        false
-      end
-    else
-      false
-    end
+    return false unless usuario_signed_in?
+    usuario_id = obj.usuario_id
+    current_usuario.id == usuario_id
   end
 
 end

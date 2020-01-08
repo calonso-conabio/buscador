@@ -1,6 +1,36 @@
+# coding: utf-8
 Buscador::Application.routes.draw do
 
   #match '*path' => redirect('/mantenimiento.html'), via: [:get, :post]
+
+  if Rails.env.development?
+    namespace :metamares do
+      root 'metamares#index'
+      resources :admin
+      resources :proyectos
+      resources :directorio
+      get 'graficas' => 'metamares#graficas'
+      get 'grafica1' => 'metamares#grafica1'
+      get 'grafica2' => 'metamares#grafica2'
+      get 'dame-institucion' => 'metamares#dame_institucion'
+      get 'dame-keyword' => 'metamares#dame_keyword'
+    end
+  else
+    constraints host: 'infoceanos.conabio.gob.mx' do
+      root 'metamares/metamares#index'
+      namespace :metamares do
+        root 'metamares#index'
+        resources :admin
+        resources :proyectos
+        resources :directorio
+        get 'graficas' => 'metamares#graficas'
+        get 'grafica1' => 'metamares#grafica1'
+        get 'grafica2' => 'metamares#grafica2'
+        get 'dame-institucion' => 'metamares#dame_institucion'
+        get 'dame-keyword' => 'metamares#dame_keyword'
+      end
+    end
+  end
 
   namespace :pmc do
     resources :peces, :as => :pez do
@@ -9,7 +39,6 @@ Buscador::Application.routes.draw do
       end
     end
 
-    resources :criterios
     resources :propiedades do
       collection do
         get 'dame-tipo-propiedades/:q' => 'propiedades#dame_tipo_propiedades'
@@ -18,6 +47,7 @@ Buscador::Application.routes.draw do
   end
 
   namespace :fichas do
+    #resources :taxa
     resources :front do
       collection do
         # I. Clasificación y descripción de la especie
@@ -52,6 +82,10 @@ Buscador::Application.routes.draw do
       end
     end
   end
+
+  #get 'estadisticas' => 'estadisticas#show'
+  #get 'filtros_estadisticas' => 'estadisticas#filtros_estadisticas'
+  #get '' => ''
 
   get 'peces' => 'pmc/peces#index'
   get 'peces/busqueda' => 'pmc/peces#index'
@@ -112,6 +146,8 @@ Buscador::Application.routes.draw do
   resources :metadatos
 
   devise_for :usuarios
+  devise_for :metausuarios, :controllers => {:confirmations => "metamares/metausuarios/confirmations", :passwords => "metamares/metausuarios/passwords", :registrations => "metamares/metausuarios/registrations", :unlocks => "metamares/metausuarios/unlocks", :sessions => "metamares/metausuarios/sessions"}
+
   resources :bitacoras
 
   resources :listas do
@@ -162,6 +198,7 @@ Buscador::Application.routes.draw do
       get ':id/nombres-comunes-todos' => 'especies#nombres_comunes_todos'
       post ':id/guarda-id-naturalista' => 'especies#cambia_id_naturalista'
       get ':id/dame-nombre-con-formato' => 'especies#dame_nombre_con_formato'
+      get ':id/bhl' => 'especies#bhl'
     end
   end
 
@@ -203,7 +240,7 @@ Buscador::Application.routes.draw do
   match '/especies/:id/describe' => 'especies#describe', :as => :descripcion, :via => :get
   get '/especies/:id/descripcion_catalogos' => 'especies#descripcion_catalogos'
   get '/especies/:id/comentario' => 'especies#comentarios'
-  get '/especies/:id/noticias' => 'especies#noticias'
+
 
   # Path's para acceder a servicio de Janium
   get '/registros_bioteca/:id(/find_by=:t_name)(/page=:n_page)' => 'especies#show_bioteca_records'

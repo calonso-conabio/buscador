@@ -1,0 +1,258 @@
+es:
+  helpers:
+    submit:
+      metamares_directorio:
+        create: Guardar
+        update: Actualizar
+        cancel: Cancelar
+      metamares_proyecto:
+        create: Guardar la colección
+        update: Actualiza la colección
+        cancel: Cancelar
+      proy_b:
+        buscar: Buscar
+        descargar: Descargar
+        reiniciar: Reiniciar
+        buscando: Buscando ...
+        cancel: Cancelar
+      usuario:
+        create: Crear cuenta
+        update: Actualizar cuenta
+        cancel: Cancelar
+  simple_form:
+    labels:
+      metamares_directorio:
+        cargo: Puesto/cargo
+        grado_academico: Grado académico
+        tema_estudio: Tema de estudio
+        linea_investigacion: Línea de investigación
+        region_estudio: Regón de estudio
+        telefono: Teléfono
+        pagina_web: Página web
+      metamares_proyecto:
+        id: ID
+        nombre_proyecto: Nombre de la colección de datos
+        financiamiento: Financiamiento
+        autor: Autor
+        tipo_monitoreo: Tipo de monitoreo
+        objeto_monitoreo: Objeto del monitoreo
+        campo_investigacion: Campo de investigación
+        campo_ciencia: Campo de la ciencia
+        finalidad: Finalidad
+        metodo: Método
+        updated_at: Última actualización
+        created_at: Fecha de creación
+        institucion_id: Institución involucrada
+        nom_institucion: Institución involucrada
+        periodo:
+          periodicidad: Periodicidad del monitoreo
+          periodo_monitoreo_desde: Fecha de inicio del moniteo
+          periodo_monitoreo_hasta: Fecha de termino del monitoreo
+          periodo_sistematico_desde: Fecha de inicio del moniteo sistemático
+          periodo_sistematico_hasta: Fecha de termino del monitoreo sistemático
+          monitoreo_desde: Año de inicio del monitoreo
+          monitoreo_hasta: Año de finalización del monitoreo
+          comentarios: Comentarios
+        region:
+          nombre_ubicacion: Nombre de la ubicación
+          nombre_zona: Nombre de la zona
+          nombre_region: Nombre de la región
+          region_pesca: Región de pesca
+          latitud: Latitud
+          longitug: Longitud
+          Entidad: Entidad
+          Cuenca: Cuenca
+          anp: ANP
+          comentarios: Comentarios
+        dato:
+          titulo_conjunto_datos: Título de la coleccón de datos
+          titulo_compilacion: Título de la compilación
+          descarga_datos: Enlace origen
+          licencia_uso: Creative commons
+          estatus_datos: Disposición de datos al público
+          descripcion_base: Descripción de la colección de datos
+          resolucion_temporal: Resolución temporal
+          resolucion_espacial: Resolución espacial
+          publicaciones: Publicaciones
+          publicacion_url: Enlace de la publicación
+          publicacion_fecha: Fecha de la publicación
+          forma_citar: Cita
+          notas_adicionales: Notas adicionales
+          numero_ejemplares: Número de ejemplares
+          tipo_unidad: Tipo de unidad
+        info_adicional:
+          informacion_objeto: Información del objeto
+          información_posterior: Información posterior al monitoreo
+          informacion_adicional: Información adicional
+          colaboradores: Colaboradores
+          instituciones_involucradas: Instituciones involucradas
+          equipo: Equipo
+          comentarios: Comentarios
+        institucion:
+          nombre_institucion: Nombre institución
+          tipo: Tipo de instiución
+          sitio_web: Sitio web
+          contacto: Nombre del contacto
+          correo_conatcto: Correo electrónico del contacto
+        especies:
+          nombre_cientifico: Nombre común o científico
+        keywords:
+          nombre_keyword: Nombre de la palabra clave
+      usuario:
+        nombre: Nombre(s)
+        apellido: Apellido(s)
+        email: Correo electrónico
+        institucion: Institución
+        rol: Rol
+    hints:
+      metamares_proyecto:
+        autor: Es el autor intelectual de los datos
+        nombre_proyecto: Nombre corto para identificar la colección de datos
+        financiamiento: ¿Quién financió la colección de datos?
+        campo_investigacion: ¿Cuál fue la razón principal por la que se recopilaron los datos?
+        nom_institucion: Auto completa la institución, de no existir puedes asociar una institución en la pestaña correspondiente
+        periodo:
+          periodicidad: ¿Cada cuando se realiza el monitoreo? Ej. anual, mensual, etc.
+          periodo_monitoreo_desde: Un periodo de tiempo al año en el cual inicia el monitoreo
+          periodo_monitoreo_hasta: Un periodo de tiempo al año en el cual finaliza el monitoreo
+          periodo_sistematico_desde: ¿Desde que fecha se realiza un periodo sistemático?
+          periodo_sistematico_hasta: ¿Hasta que fecha se realiza un periodo sistemático?
+          monitoreo_desde: Fecha desde que se inicio con cualquier tipo de monitoreo
+          monitoreo_hasta: Fecha hasta que se finalizó con cualquier tipo de monitoreo
+        region:
+          nombre_ubicacion: Una categoría abierta para especificar una área
+          nombre_zona: Una categoría más acotada donde los datos fueron generados
+          nombre_region: Una categoría de ubicación más específica
+          region_pesca: Una categoría de región donde se pesca
+          anp: Área Natural Protegida
+        dato:
+          titulo_conjunto_datos: Título original de la colección de los datos
+          titulo_compilacion: Nombre del documento o respositorio donde los datos estan disponibles
+          descarga_datos: Enlace de consulta, descarga, responsable o información acerca de la coleccòn
+          licencia_uso: Por default tiene una licencia de atribución no comercial
+          estatus_datos: ¿Cómo quieres poner esta colección de datos visible al público?
+          resolucion_temporal: ¿Cuál es la resolución temporal de los datos?
+          resolucion_espacial: ¿Cuál es la resolución espacial de los datos?
+          publicaciones: Publicaciones donde la colección fue publicada
+          publicacion_url: Enlace de la pblicación
+          publicacion_fecha: Fecha en que la colección de datos fue publicada
+          forma_citar: Forma de citar esta colección de datos
+          numero_ejemplares: Cantidad de ejemplares disponibles en la colección de datos
+          tipo_unidad: La unidad usada para la colección
+        especies:
+          nombre_cientifico: Selecciona una especie o escribe un nuevo nombre
+        keywords:
+          nombre_keyword: Selecciona una palabra clave o crea una nueva
+    placeholders:
+      especies:
+        nombre_cientifico: Auto completa por nombre cómun o científico
+      keywords:
+        nombre_keyword: Auto completa con palabras claves existentes
+      proy_b:
+        proyecto: Nombre de la colección
+        institucion: Nombre de la institución
+        autor: Autor de la colección
+        nombre: Nombre común o científico
+        titulo_compilacion: Título de la compilación
+    options:
+      metamares_proyecto:
+        financiamiento:
+          ACADEMIC_F: Académico
+          OSC_F: Organizacion de la Sociedad Civil
+          ACA_F: Por ley
+          GOV_F: Gubernamental
+          IGO_F: Gobierno internacional
+          INT_F: Internacional
+          NGO_F: Subsidio para la sustentabilidad
+          Private_F: Privado
+          Unknown: Desconocido
+        campo_investigacion:
+          Aquaculture: Acuacultura
+          Conservation: Conservación
+          Ecology: Ecología
+          Fisheries: Pesca
+          Oceanography: Oceanografía
+          Other: Otro
+          Sociology: Sociología
+          Tourism: Turismo
+        campo_ciencia:
+          Natural Science: Ciencias naturales
+          Social Science: Ciencias sociales
+        region:
+          nombre_region:
+            B Camp Caribe: Banco de Campeche / Mar Caribe
+            Central Pacific: Océano Pacífico Centro
+            Freshwater/Terrestrial: Dulceacuícola/Terrestre
+            G California: Golfo de California
+            South Pacific: Océano Pacífico Sur
+            W G Mexico: Oeste del Golfo de México
+          nombre_zona:
+            Atlantic: Océano Atlántico
+            Freshwater/Terrestrial: Dulceacuícola/Terrestre
+            National: Nacional
+            Pacific: Pacífico
+          region_pesca:
+            aguas-continentales: Aguas Continentales
+            golfo-de-mexico-norte: Golfo de México Norte
+            golfo-de-mexico-sur-mar-caribe: Golfo de México Sur - Mar Caribe
+            pacifico-centro-sur: Océano Pacífico Centro - Sur
+            pacifico-norte-golfo-de-california: Océano Pacífico - Golfo de California
+        dato:
+          estatus_datos:
+            '1': Acceso público
+            '2': Acceso restringido
+            '3': Acceso privado
+          licencia_uso:
+            cc0: Sin derechos de autor (CC0)
+            cc_by: Atribución (CC-BY)
+            cc_by_nc: Atribución - No comercial (CC-BY-NC)
+            cc_by_sa: Atribución - Compartir bajo la misma (CC-BY-SA)
+            cc_by_nd: Atribución - Sin obras derivadas (CC-BY-ND)
+            cc_by_nc_sa: Atribución - No comercial compartir bajo la misma licencia (CC-BY-NC-SA)
+            cc_by_nc_nd: Atribución - No comercial sin obras derivadas (CC-BY-NC-ND)
+            no_licence: Sin licencia, todos los derechos reservados
+      proy_b:
+        campo_investigacion:
+          Aquaculture: Acuacultura
+          Conservation: Conservación
+          Ecology: Ecología
+          Fisheries: Pesca
+          Oceanography: Oceanografía
+          Other: Otro
+          Sociology: Sociología
+          Tourism: Turismo
+        nombre_region:
+          B Camp Caribe: Banco de Campeche / Mar Caribe
+          Central Pacific: Pacífico Centro
+          Freshwater/Terrestrial: Dulceacuícola/Terrestre
+          G California: Golfo de California
+          South Pacific: Pacífico Sur
+          W G Mexico: Oeste del Golfo de México
+        nombre_zona:
+          Atlantic: Océano Atlántico
+          Freshwater/Terrestrial: Dulceacuícola/Terrestre
+          National: Nacional
+          Pacific: Pacífico
+      usuario:
+        usuario_roles:
+          rol_id:
+            '20': Administrador
+            '21': Manager
+            '22': Usuario
+
+    "yes": 'Yes'
+    "no": 'No'
+    required:
+      text: 'required'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Please review the problems below:"
+  titulos:
+    colecciones_globales: Busqueda global de colecciones
+    editar_coleccion: Actualizar información de la colección
+    informacion_coleccion: Información de la colección
+    mis_colecciones: Mis colecciones de datos
+    nueva_coleccion: Nuevo registro de colección

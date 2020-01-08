@@ -1,0 +1,44 @@
+<%= stylesheet_link_tag 'metamares/graficas', 'data-turbolinks-track' => true %>
+
+<script src="https://d3js.org/d3.v3.min.js" data-turbolinks-track="true"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js" data-turbolinks-track="true"></script>
+
+<h3>Campo de investigación por año de publicación</h3>
+<div class="chart-wrapper" id="chart-line1"></div>
+
+<script type="text/javascript">
+    d3.json("/metamares/grafica1", function(data) {
+        data.forEach(function (d) {
+            d.year = +d.year;
+            d.variableA = +d.variableA;
+            d.variableB = +d.variableB;
+            d.variableC = +d.variableC;
+            d.variableD = +d.variableD;
+            d.variableE = +d.variableE;
+            d.variableF = +d.variableF;
+            d.variableG = +d.variableG;
+            d.variableH = +d.variableH;
+        });
+
+        var chart = makeLineChart(data, 'year', {
+            'Aquaculture': {column: 'variableA'},
+            'Conservation': {column: 'variableB'},
+            'Ecology': {column: 'variableC'},
+            'Fisheries': {column: 'variableD'},
+            'Oceanography': {column: 'variableE'},
+            'Sociology': {column: 'variableF'},
+            'Tourism': {column: 'variableG'},
+            'Other': {column: 'variableH'}
+        }, {xAxis: 'Años', yAxis: 'Número de colecciones'});
+        chart.bind("#chart-line1");
+        chart.render();
+
+    });
+</script>
+
+<hr />
+<h3>Número de colecciones por región</h3>
+<div id="grafica-pie"></div>
+
+<%= javascript_include_tag 'metamares/graficas', 'data-turbolinks-track' => true %>
+

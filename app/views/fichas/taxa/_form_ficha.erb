@@ -1,0 +1,264 @@
+<!-- Opción 1 -- >
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit.js"></script> <script type="text/javascript">
+    //<![CDATA[
+    bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+    //]]>
+</script>
+<style>
+  textarea.form-control {
+    min-height: 200px;
+  }
+</style>
+<!-- -->
+
+<!-- Opción 2 -- >
+<script src="https://cloud.tinymce.com/4/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "fullscreen"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    });
+</script>
+<!-- -->
+
+<%= simple_form_for @taxon, **@form_params, wrapper: :horizontal_form, wrapper_mappings: {
+    boolean:       :horizontal_boolean,
+    check_boxes:   :horizontal_collection,
+    file:          :horizontal_file,
+    radio_buttons: :horizontal_collection,
+    range:         :horizontal_range,
+    #time:          :custom_multi_select,
+    select:        :horizontal_collection
+    #date:          :horizontal_multi_select,
+    #datetime:      :horizontal_multi_select,
+    #select:        :floating_labels_select
+} do |f| %>
+
+  <div id="pestañas" class="panel row">
+    <ul class="nav nav-tabs links" role="tablist">
+      <li role="presentation" class="active">
+        <%= link_to 'Clasificación y descripción', '#clasificacion-descripcion', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => 'clasificacion-descripcion' %>
+      </li>
+      <li role="presentation">
+        <%= link_to 'Distribución', '#distribucion', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :distribuciones %>
+      </li>
+      <li role="presentation" >
+        <%= link_to 'Ambiente', '#ambiente', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => 'ambiente_ecosistema' %>
+      </li>
+      <li role="presentation" >
+        <%= link_to 'Biología', '#biologia', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :info_adicional %>
+      </li>
+      <li role="presentation" >
+        <%= link_to 'Ecología', '#ecologia', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :region %>
+      </li>
+      <li role="presentation">
+        <%= link_to 'Genética', '#genetica', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :institucion %>
+      </li>
+      <li role="presentation" >
+        <%= link_to 'Importancia', '#importancia', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => 'especiesEstudiadas' %>
+      </li>
+      <li role="presentation" >
+        <%= link_to 'Conservación', '#conservacion', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :keywords %>
+      </li>
+      <li role="presentation" >
+        <%= link_to 'Especies prioritarias', '#prioritaria-conservacion', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :keywords %>
+      </li>
+      <li role="presentation" >
+        <%= link_to 'Necesidades de información', '#necesidad-informacion', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :keywords %>
+      </li>
+      <li role="presentation" >
+        <%= link_to 'Metadatos', '#metadatos', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :keywords %>
+      </li>
+      <li role="presentation" >
+        <%= link_to 'Referencias', '#referencias', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :keywords %>
+      </li>
+      <li role="presentation" >
+
+      </li>
+    </ul>
+
+    <div class="tab-content">
+
+
+      <div id="clasificacion-descripcion" role="tabpanel" class="tab-pane fade in panel-body active">
+        <hr />
+        <% # OCUPA: taxon, legislacion  %>
+        <%= render partial: 'fichas/taxa/seccion_clasificacion/form_clasificacion_y_descripcion_taxon', locals: {f: f } %>
+        <hr class="espacio_ficha">
+        <h4 class="titulo-modelo">LEGISLACIONES:</h4>
+
+        <hr />
+
+        <%= f.simple_fields_for :legislaciones do |info| %>
+
+          <%= render partial: 'fichas/taxa/seccion_clasificacion/form_clasificacion_y_descripcion_legislacion', locals: {f: info} %>
+        <% end %>
+
+
+
+      </div>
+
+      <div id='distribucion' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        <% # OCUPA: habitat, distribucion, endemica  %>
+        <%= f.simple_fields_for :habitats  do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_distribucion/form_distribucion_habitad', locals: { f: info} %>
+        <% end %>
+        <hr class="espacio_ficha">
+        <%= f.simple_fields_for :distribuciones do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_distribucion/form_distribucion_distribucion', locals: {f: info} %>
+        <% end %>
+        <hr class="espacio_ficha">
+        <%= f.simple_fields_for :endemicas do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_distribucion/form_distribucion_endemica', locals: { f: info} %>
+        <% end %>
+      </div>
+
+      <div id='ambiente' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        <% # OCUPA: habitat  * * ecorregion, ecosistema, suelo, geoforma %>
+        <%= f.simple_fields_for :habitats do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_ambiente/form_ambiente_habitat', locals: {f: info } %>
+        <% end %>
+      </div>
+
+      <div id='biologia' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        <% # OCUPA: habitad, historianatural, demografiaamenazas, * * reproduccionanimal, * * reproduccionvegetal %>
+        <%= f.simple_fields_for :habitats do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_biologia/form_biologia_habitad', locals: { f: info } %>
+        <% end %>
+        <hr class="espacio_ficha">
+        <%= f.simple_fields_for :historiaNatural do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_biologia/form_biologia_historiaNatural', locals: {f: info } %>
+        <% end %>
+        <hr class="espacio_ficha">
+        <%= f.simple_fields_for :demografiaAmenazas do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_biologia/form_biologia_demografia_amenazas', locals: { f: info } %>
+        <% end %>
+      </div>
+
+      <div id='ecologia' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        <% # OCUPA: demografiaamenazas, * * interaccion  %>
+        <%= f.simple_fields_for :demografiaAmenazas do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_ecologia/form_ecologia_demografiaamenazas', locals: {f: info } %>
+        <% end %>
+      </div>
+
+      <div id='genetica' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        <% # OCUPA: historianatural %>
+        <%= f.simple_fields_for :historiaNatural do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_genetica/form_genetica_historiaNatural', locals: {f: info } %>
+        <% end %>
+      </div>
+
+      <div id='importancia' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        <% # OCUPA: historianatural %>
+        <%= f.simple_fields_for :historiaNatural do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_importancia/form_importancia_historiaNatural', locals: {f: info } %>
+        <% end %>
+      </div>
+
+      <div id='conservacion' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        <% # OCUPA: demografiaamenazas, conservacion, * * amenazadirecta %>
+        <%= f.simple_fields_for :demografiaAmenazas do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_conservacion/form_conservacion_demografia_amenazas', locals: {f: info } %>
+        <% end %>
+
+        <hr class="espacio_ficha">
+        <%= f.simple_fields_for :conservacion do |info| %>
+          <%= render partial: 'fichas/taxa/seccion_conservacion/form_conservacion_conservacion', locals: {f: info } %>
+        <% end %>
+      </div>
+
+      <div id='prioritaria-conservacion' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        <% # OCUPA:  taxon %>
+        <%= render partial: 'fichas/taxa/seccion_prioritaria/form_prioritaria_conservacion_taxon', locals: {f: f } %>
+      </div>
+
+      <div id='necesidad-informacion' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        <% # OCUPA: taxon  %>
+        <%= render partial: 'fichas/taxa/seccion_necesidad_informacion/form_necesiades_informacion_taxon', locals: {f: f } %>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div id='metadatos' role="tabpanel" class="tab-pane fade panel-body">
+        <%= f.simple_fields_for :meta do |info| %>
+          <%= info.input :gender, as: :radio_buttons, collection: [['0', ' Female'], ['1', ' Male']], label_method: :second, value_method: :first, input_html: {class: 'form-control'} %>
+          <%= info.input :username, label: 'Your username please', error: 'Username is mandatory, please specify one' %>
+          <%= info.input :password, hint: 'No special characters.' %>
+          <%= info.input :email, placeholder: 'user@domain.com' %>
+          <%= info.input :remember_me, inline_label: 'Yes, remember me' %>
+          <%= info.input :username, label_html: { class: 'my_class' } %>
+          <%= info.input :password, hint: false, error_html: { id: 'password_error'} %>
+          <%= info.input_field :remember_me, as: :boolean, boolean_style: :inline , input_html: {class: 'form-control'} %>
+          <%= info.input_field :remember_me2, as: :boolean, boolean_style: :inline %>
+          <%= info.select :role, Fichas::Pais.all.map { |r| [r.nombrepais, r.id, { }] }, include_blank: true, multiple: true %>
+
+          <%= info.input :age, collection: 18..60 %>
+          <%= info.input :shipping_country, priority: [ "Brazil" ], collection: [ "Australia", "Brazil", "New Zealand"], :include_blank => false, :input_html => { class: 'multiselectuser', multiple: true } %>
+
+          <%=
+            # info.input :role_id, label: "visible to", as: :select, label: "Role", collection: [ "Australia", "Brazil", "New Zealand"], required: true, multiple: true
+          %>
+
+          <%= select_tag 'particular_users',
+                         options_from_collection_for_select(Fichas::Pais.all, :id, :nombrepais),
+                         multiple: true, class: 'multiselectuser' %>
+
+          <%= f.association :sinonimos, input_html: { } %>
+          <%= info.input :ethnicity, :label => "Ethnicity", :collection => ["Asian","Black", "Hispanic/Latino", "Indian", "Middle Eastern", "Native American", "Pacific Islander", "White", "Other"], :include_blank => "Anything", wrapper_html: { class: 'form-group' }, :as => :check_boxes, include_hidden: false, :input_html => {:name => "search[ethnicity][]", :multiple => true} %>
+        <% end %>
+      </div>
+
+      <div id='referencias' role="tabpanel" class="tab-pane fade panel-body">
+        <hr />
+        Hola
+      </div>
+
+    </div>
+  </div>
+  <hr />
+  <%= f.submit class: 'btn btn-lg btn-block btn-success' %>
+
+<% end %>
+
+<style>
+
+  textarea.form-control {
+    min-height: 200px;
+  }
+
+ .espacio_ficha {
+   border: lightgrey;
+   border-style: dashed;
+   border-width: 2px;
+ }
+
+  .titulo_subseccion {
+
+  }
+
+</style>

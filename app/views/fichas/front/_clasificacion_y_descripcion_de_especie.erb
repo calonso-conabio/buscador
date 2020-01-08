@@ -1,56 +1,82 @@
 <div class="row showInfo">
   <div class="col-md-8" style="padding: 0px 30px 30px 15px;">
-    <h4>Resumen de la especie</h4> <p class="text-justify"><%=convierte_a_HTML(@taxon.resumenEspecie)%></p>
-    <br><br>
-    <h4>Descripción de la especie</h4> <p class="text-justify"><%=convierte_a_HTML(@taxon.descEspecie)%></p>
-    <br><br>
-    <table class="table table-striped table-bordered">
-      <thead>
-      <tr>
-        <th></th>
-        <th>Machos</th>
-        <th>Hembras</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <th>Largo total en centímetros</th>
-        <td><%=convierte_a_HTML(@taxon.largoinicialmachos)%></td>
-        <td><%=convierte_a_HTML(@taxon.largoinicialhembras)%></td>
-      </tr>
-      <tr>
-        <th>Longevidad</th>
-        <td><%=convierte_a_HTML(@taxon.edadinicialmachos)%></td>
-        <td><%=convierte_a_HTML(@taxon.edadinicialhembras)%></td>
-      </tr>
-      <tr>
-        <th>Peso en gramos</th>
-        <td><%=convierte_a_HTML(@taxon.pesoinicialmachos)%></td>
-        <td><%=convierte_a_HTML(@taxon.pesoinicialhembras)%></td>
-      </tr>
-      </tbody>
-    </table>
 
-    <br>
-    <h4>Categoría de riesgo según la NOM-059-SEMARNAT</h4>
-    <p class="text-justify"><%=convierte_a_HTML(@legislacion.infoAdicional)%></p>
-    <p class="text-justify"><%=convierte_a_HTML(@legislacion.estatusLegalProteccion)%></p>
+    <% if @ficha[:taxon].resumenEspecie.present? %>
+      <h4>Resumen de la especie</h4> <p class="text-justify"><%= @ficha[:taxon].resumenEspecie.a_HTML %></p>
+      <br />
+    <% end %>
+
+    <% if @taxon.descEspecie.present? %>
+      <h4>Descripción de la especie</h4> <p class="text-justify"><%= @ficha[:taxon].descEspecie.a_HTML %></p>
+      <br />
+    <% end %>
+
+    <% if @ficha[:taxon].especiesSmilares.present? %>
+      <h4>Especies similares</h4>
+      <p class="text-justify"><%= @ficha[:taxon].especiesSmilares.a_HTML %></p>
+      <br />
+    <% end %>
+
+    <% if @ficha[:edad_peso_largo][:estatus] %>
+      <h4>Información adicional</h4>
+      <table class="table table-striped table-bordered">
+
+        <thead>
+        <tr>
+          <th></th>
+          <th>Machos</th>
+          <th>Hembras</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <% if @ficha[:edad_peso_largo][:edad] %>
+          <tr>
+            <th>Longevidad (<%= @ficha[:taxon].tiempoedadhembra.present? ? @ficha[:taxon].tiempoedadhembra.a_HTML : 'años' %>)</th>
+            <td><%= @ficha[:taxon].edadinicialmachos %> a <%= @ficha[:taxon].edadfinalmachos %></td>
+            <td><%= @ficha[:taxon].edadinicialhembras %> a <%= @ficha[:taxon].edadfinalhembras %></td>
+          </tr>
+        <% end %>
+
+        <% if @ficha[:edad_peso_largo][:peso] %>
+          <tr>
+            <th>Peso (gramos)</th>
+            <td><%= @taxon.pesoinicialmachos %> a <%= @taxon.pesofinalmachos %></td>
+            <td><%= @taxon.pesoinicialhembras %> a <%= @taxon.pesofinalhembras %></td>
+          </tr>
+        <% end %>
+
+        <% if @ficha[:edad_peso_largo][:largo] %>
+          <tr>
+            <th>Largo (centímetros)</th>
+            <td><%= @taxon.largoinicialmachos %> a <%= @taxon.largofinalmachos %></td>
+            <td><%= @taxon.largoinicialhembras %> a <%= @taxon.largofinalhembras %></td>
+          </tr>
+        <% end %>
+
+        </tbody>
+
+      </table>
+    <% end %>
 
   </div>
 
   <div class="col-md-4 fichaSeccionApartadosT2">
     <h4 class="text-center text-primary">Taxonomía</h4>
-    <p><strong>Reino: </strong><%=" " + convierte_a_HTML(@taxon.reino)%></p>
-    <p><strong>Phylum: </strong><%=" " + convierte_a_HTML(@taxon.divisionphylum)%></p>
-    <p><strong>Clase: </strong><%=" " + convierte_a_HTML(@taxon.clase)%></p>
-    <p><strong>Orden: </strong><%=" " + convierte_a_HTML(@taxon.orden)%></p>
-    <p><strong>Familia: </strong><%=" " + convierte_a_HTML(@taxon.familia)%></p>
+    <p><strong>reino: </strong><%= @ficha[:especie].x_reino %></p>
+    <p><strong><%= @ficha[:especie].x_reino == 'Animalia' ? 'phylum' : 'división' %>: </strong><%= @ficha[:especie].x_division %></p>
+    <p><strong>clase: </strong><%= @ficha[:especie].x_clase %></p>
+    <p><strong>orden: </strong><%= @ficha[:especie].x_orden %></p>
+    <p><strong>familia: </strong><%= @ficha[:especie].x_familia %></p>
+    <p><strong>género: </strong><%= @ficha[:especie].x_genero %></p>
+    <p><strong>especie: </strong><%= @ficha[:especie].x_especie %></p>
     <br>
     <h4 class="text-center text-primary">Nombre científico</h4>
-    <p><strong>Año: </strong> <%= convierte_a_HTML(@taxon.anio)%></p>
-    <p><strong>Autor: </strong> <%= convierte_a_HTML(@taxon.autor)%></p>
+    <p><i><%= @ficha[:especie].nombre_cientifico %></i> <%= @ficha[:especie].nombre_autoridad %></p>
     <br>
-    <h4 class="text-center text-primary">Información adicional</h4>
-    <p class="text-justify"><strong>Especies similares:</strong> <%=convierte_a_HTML(@taxon.especiesSmilares)%></p>
+
+    <%= dameCategoriasDeRiesgo %>
+
   </div>
 </div>

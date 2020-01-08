@@ -1,0 +1,54 @@
+<% if params[:proy_b].present? && params[:proy_b][:usuario_id].present? %>
+  <h3><%= t('titulos.mis_colecciones') %></h3>
+<% else %>
+  <h3><%= t('titulos.colecciones_globales') %></h3>
+<% end %>
+
+<hr />
+<%= render partial: 'busqueda_proyectos' %>
+<hr />
+
+<h5>Colecciones: <%= @totales %></h5>
+<table class="table table-condensed table-striped table-hover table-responsive">
+  <thead>
+  <tr class="success">
+    <th><%= t('simple_form.labels.metamares_proyecto.id') %></th>
+    <th><%= t('simple_form.labels.metamares_proyecto.nombre_proyecto') %></th>
+    <th><%= t('simple_form.labels.metamares_proyecto.dato.titulo_compilacion') %></th>
+    <th><%= t('simple_form.labels.metamares_proyecto.institucion.nombre_institucion') %></th>
+    <th><%= t('simple_form.labels.metamares_proyecto.autor') %></th>
+    <th><%= t('simple_form.labels.metamares_proyecto.dato.descarga_datos') %></th>
+    <th><%= t('simple_form.labels.metamares_proyecto.updated_at') %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @proyectos.each do |p| %>
+    <tr>
+      <td><%= p.id %></td>
+      <td><%= link_to p.nombre_proyecto, metamares_proyecto_path(p) %></td>
+      <td><%= p.titulo_compilacion %></td>
+      <td><%= p.nombre_institucion %></td>
+      <td><%= p.autor %></td>
+      <td><small>
+        <%=
+          begin
+            link_to("<i class='glyphicon glyphicon-new-window'></i>".html_safe, p.descarga_datos, target: :_blank) if !URI.parse(p.descarga_datos.strip).host.nil?
+          rescue URI::InvalidURIError
+              ''
+          end
+        %>
+      </small></td>
+      <td><small><%= p.updated_at.strftime("%Y/%m/%d") %></small></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<div class="text-center paginado-metamares"></div>
+
+<% content_for :delayedjs do %>
+  <script data-turbolinks-track="true">
+      soulmateAsigna('metamares', 'proy_b_nombre');
+      paginadoMetamares(<%= @paginas %>, <%= @pagina %>);
+  </script>
+<% end %>

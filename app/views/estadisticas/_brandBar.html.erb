@@ -1,0 +1,12 @@
+<div id="brandBar" class="row" style="<%= "background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(236, 236, 236, 0.8)), url('#{@bgImg}');".html_safe %>">
+
+  <%= render(:partial => 'shared/dropdown_menu') %>
+
+  <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 col-xs-offset-0 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+      <%= link_to "<i class ='enciclo-ev-icon'></i><i class ='vida-ev-icon'></i>".html_safe, root_path, :class => '', data: { turbolinks: false }  %>
+  </div>
+  <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 col-xs-offset-0 col-sm-offset-1 col-md-offset-0 col-lg-offset-0">
+    <%= link_to "<i class ='conabio_completo-ev-icon'></i>".html_safe, "http://www.biodiversidad.gob.mx/", :class => '', target: :_blank  %>
+  </div>
+
+</div>

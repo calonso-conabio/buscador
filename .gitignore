@@ -42,8 +42,8 @@ db/seeds.rb
 db/respaldos/*
 app/assets/javascripts/i18n/*
 tools/bitacoras/
-config/config.yml*
-config/database.yml*
+config/config.yml
+config/database.yml
 dump.rdb*
 tools/campos_snib.csv
 tools/correspondencia_snib/
@@ -61,5 +61,10 @@ public/descargas_resultados/
 public/fotos_invasoras/
 public/validaciones/
 public/topojson/
+db/metamares/metamares.mwb.bak
+db/metamares/migracion_base/metamares*csv
+db/metamares/migracion_base/metamares*sql
+db/metamares/migracion_base/*sql
 public/javascripts
+public/IUCN
 

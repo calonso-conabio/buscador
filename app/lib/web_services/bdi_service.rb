@@ -1,4 +1,4 @@
-class BDIService
+  class BDIService
 
   ALBUM_ANIMALES = {22655 => '5006-Aves', 213407 => '5009-Peces', 22653 => '5008-Mamíferos',
                     22647 => '5001-Reptiles', 22654 => '5007-Anfibios', 213422 => '5107-Tiburones%20y%20Rayas',

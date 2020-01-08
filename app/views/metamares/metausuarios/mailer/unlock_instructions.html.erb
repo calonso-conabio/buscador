@@ -1,0 +1,7 @@
+<p>¡Hola <%= @resource.email %>!</p>
+
+<p>Tu cuenta ha sido bloqueda debido a un número excesivo de intentos erróneos (<%= Devise.maximum_attempts %>) de inicio de sesión:</p>
+
+<p>Puedes desbloquear tu cuenta en el siguiente enlace:</p>
+
+<p><%= link_to 'Desbloquear mi cuenta', unlock_url(@resource, unlock_token: @token) %></p>

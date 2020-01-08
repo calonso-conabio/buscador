@@ -38,8 +38,10 @@ module Buscador
 
     config.time_zone = 'Mexico City'
 
+    config.middleware.use I18n::JS::Middleware
+
     #config.autoload_paths += %W(#{config.root}/lib)
-    config.eager_load_paths << Rails.root.join('lib')
+    config.eager_load_paths += Dir[Rails.root.join('lib')]
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{*/}')]
     #config.sass.preferred_syntax=:sass
 

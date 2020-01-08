@@ -12,6 +12,8 @@ class Usuario < ActiveRecord::Base
   CORREO_INVALIDO_MSG = 'no tiene la estructura apropiada.'.freeze
 
   has_many :usuario_roles, :class_name=> 'UsuarioRol', :foreign_key => :usuario_id
+  accepts_nested_attributes_for :usuario_roles, reject_if: :all_blank, allow_destroy: true
+
   has_many :roles, :through => :usuario_roles, :source => :rol
   has_many :categorias_contenidos, :through => :roles, :source => :categorias_contenidos
 

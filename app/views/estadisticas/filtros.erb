@@ -1,0 +1,30 @@
+<% content_for(:delayedjs) do %>
+  <%= javascript_include_tag 'busquedas/avanzada/avanzada', 'data-turbolinks-track' => true %>
+<% end %>
+
+<% content_for(:delayedjs) do %>
+  <%= stylesheet_link_tag 'busquedas', 'data-turbolinks-track' => true %>
+
+  <% if I18n.locale.to_s != 'es-cientifico' %>
+    <style type="text/css" data-turbolinks-track="true">
+      .soulmate-type-suggestions li{
+        padding: 1em 0;
+        min-height: 125px;
+      }
+    </style>
+  <% end %>
+<% end %>
+
+<div id="busqueda_avanzada" class="">
+  <%= form_tag estadisticas_url, :method => :get, :class => 'form-horizontal', :id => :b_avanzada, :onsubmit => "cargaEstadisticas()" do %>
+    <div class="" id="panelFiltrosPt">
+      <div class="text-left" id="panelFiltros">
+        <%= render :partial => 'estadisticas/filtros_busqueda_avanzada' %>
+        <div class="col-xs-12">
+          <%= submit_tag :Buscar, :class => 'btn btn-success form-control busquedas', data: { disable_with: 'Procesando...' } %>
+          <button class="form-control btn btn-default"  data-disable-with="Limpiando..." id="limpiar-de-estd" name="button" type="reset">Limpiar búsqueda</button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

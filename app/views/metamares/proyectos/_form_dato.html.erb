@@ -1,0 +1,21 @@
+<div class='nested-fields'>
+  <%= f.input :titulo_conjunto_datos %>
+  <%= f.input :titulo_compilacion %>
+  <%= f.input :descarga_datos %>
+  <%= f.input :licencia_uso, collection: Metamares::Dato::CREATIVE_COMMONS, input_html: {class: 'form-control'} %>
+  <%= f.input :estatus_datos, collection: Metamares::Dato::ESTATUS_DATOS, input_html: {class: 'form-control'} %>
+  <%= f.input :descripcion_base %>
+  <%= f.input :resolucion_temporal %>
+  <%= f.input :resolucion_espacial %>
+  <%#= f.input :metadatos %>
+  <%= f.input :publicaciones %>
+  <%= f.input :publicacion_url %>
+  <%= f.input :publicacion_fecha, html5: true %>
+  <%#= f.input :descarga_informe %>
+  <%= f.input :forma_citar %>
+  <%#= f.input :restricciones %>
+  <%#= f.input :interaccion %>
+  <%= f.input :numero_ejemplares, as: :integer %>
+  <%= f.input :tipo_unidad %>
+  <%= f.input :notas_adicionales %>
+</div>

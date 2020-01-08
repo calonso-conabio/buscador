@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es"
+      xmlns:fb="http://www.facebook.com/2008/fbml"
+      xmlns:og="http://ogp.me/ns#">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Infocéanos | Mares | País | Comisión Nacional para el Conocimiento y Uso de la Biodiversidad | <%= yield :title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Infocéanos">
+  <meta name="keywords" content="<%= yield :meta_keywords %>">
+  <meta name="author" content="CONABIO">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#002B3E"/>
+
+  <%= javascript_include_tag 'https://use.typekit.net/shb5zji.js', 'data-turbolinks-track' => true %>
+
+  <script type="text/javascript" data-turbolinks-track="true">
+      TYPES = ['peces'];
+      IP = "<%= IP %>";
+      PORT = "<%= PORT %>";
+  </script>
+
+  <%= javascript_include_tag 'metamares/metamares', 'data-turbolinks-track' => true %>
+
+  <script type="text/javascript" data-turbolinks-track="true">
+      I18n.defaultLocale = "<%= CONFIG.default_locale.to_s %>";
+      I18n.locale = "<%= I18n.locale %>";
+      I18n.fallbacks = true;
+  </script>
+
+  <%= stylesheet_link_tag 'metamares/metamares', 'data-turbolinks-track' => true %>
+
+  <%= csrf_meta_tags %>
+  <%= yield :extrahead %>
+  <%= yield :extracss %>
+  <%= yield :extrajs %>
+</head>
+<body>
+
+<section id="mastwrap">
+
+  <header id="masthead" class="masthead project-masthead container-fluid">
+    <%= render :partial => 'metamares/layout/brandBar' %>
+  </header>
+
+
+  <section id="project" class="project page-section">
+
+    <section id="pagetitle" class="inner-section page-head project-head">
+
+      <section class="container">
+        <div class="row">
+          <article class="col-md-12 text-left">
+            <h1><%= link_to 'Mares mexicanos', 'https://www.biodiversidad.gob.mx/pais/mares/', class: 'white' %></h1>
+          </article>
+        </div>
+      </section>
+
+    </section>
+
+    <nav id="sectionmenu" class="navbar navbar-default navbar-planeta">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <% usuario = metausuario_signed_in?  ? current_metausuario : nil %>
+          <ul class="main-nav text-right hidden-xs">
+            <li><%= link_to 'Búsqueda de colecciones', metamares_proyectos_path, data: { turbolinks: false } %></li>&middot;
+            <li><%= link_to 'Nuevo registro de colección', new_metamares_proyecto_path, data: { turbolinks: false } %></li>&middot;
+            <!--li><%#= link_to 'Gráficas', metamares_graficas_path, data: { turbolinks: false } %></li-->
+
+            <% if usuario.present? %>
+              <li><%= link_to 'Administración de usuarios', metamares_admin_index_path, data: { turbolinks: false } if tiene_permiso_metamares?('AdminInfoceanos') %></li>&middot;
+              <li><%= link_to 'Mis colecciones', metamares_proyectos_path({'proy_b[usuario_id]': usuario.id}), data: { turbolinks: false } %></li>&middot;
+              <li><%= link_to 'Configuración de tu cuenta', edit_metausuario_registration_path, data: { turbolinks: false } %></li>&middot;
+              <li><%= link_to 'Datos personales', usuario.directorio ? metamares_directorio_path(usuario.directorio) : new_metamares_directorio_path, data: { turbolinks: false } %></li>&middot;
+              <li><%= link_to 'Cerrar sesión', destroy_metausuario_session_path, :method => :delete, data: {confirm: '¿Estás seguro que deseas cerrar la sesión?'.html_safe, turbolinks: false} %></li>
+            <% else %>
+              <li><%= link_to('<b>Iniciar sesión...</b>'.html_safe, new_metausuario_session_path, data: { turbolinks: false }) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section id="pageima" class="inner-section features-wrap">
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <!-- imagen principal -->
+          <%= link_to '<img class="img-responsive" src="https://www.biodiversidad.gob.mx/assets/images/pais/maresm/infoceanos/encabezado_infoceanos.jpg">'.html_safe, metamares_root_url %>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="pageinfo" class="inner-section project-info">
+
+      <section class="container">
+        <div class="row">
+          <article class="col-md-12 col-sm-12 project-det texto_snmb">
+            <%= yield %>
+          </article>
+        </div>
+      </section>
+
+    </section>
+
+  </section>
+
+  <footer id="mastfoot" class="mastfoot">
+    <%= render :partial => 'metamares/layout/footer_legal' %>
+  </footer>
+</section>
+<%= yield :delayedjs %>
+</body>
+</html>

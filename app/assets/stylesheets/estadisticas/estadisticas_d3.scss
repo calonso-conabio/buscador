@@ -1,0 +1,59 @@
+.slice {
+  cursor: pointer;
+}
+
+.slice .main-arc {
+  stroke: #fff;
+  stroke-width: 1px;
+}
+
+.slice .hidden-arc {
+  fill: none;
+}
+
+.slice text {
+  pointer-events: none;
+  dominant-baseline: middle;
+  text-anchor: middle;
+}
+
+
+#sequence {
+  width: 600px;
+  height: 70px;
+  font-size: 12px;
+}
+
+#chart {
+  position: relative;
+  font-size: 16px;
+}
+
+#explanation {
+  position: absolute;
+  top: -70px;
+  right: 0px;
+  width: 140px;
+  text-align: center;
+  color: gray;
+  z-index: 5;
+}
+
+#percentage {
+  font-size: 2em;
+}
+
+#estadistica-listo {
+  display: none;
+}
+
+#botonRegresaEstadistica {
+  position: absolute;
+  color: white;
+  font-size: 1em;
+  left: 50%;
+  top: 50%;
+  margin: 0 0 0 0;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}

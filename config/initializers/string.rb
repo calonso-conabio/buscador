@@ -56,5 +56,22 @@ class String
   def sin_acentos
     I18n.transliterate(self).strip.downcase
   end
+
+  # Metodo para asegurarse de parsear bien un HTML o un texto
+  def a_HTML
+    # Verificar si hay información que mostrar
+    if self.present?
+      # Verificar que sea texto lo que se va a analizar
+      if self.is_a? String
+        #Asegurar que el fragmento html tenga los "< / >"'s cerrados
+        Nokogiri::HTML.fragment(self).to_html.html_safe
+      else
+        self.to_s
+      end
+    else
+      ''
+    end
+  end
+
 end
 

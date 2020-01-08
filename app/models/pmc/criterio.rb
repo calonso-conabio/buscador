@@ -25,16 +25,19 @@ class Pmc::Criterio < ActiveRecord::Base
   def self.catalogo(prop = nil)
 
     if prop.present?
-      prop.siblings.map do |p|
-        if p.criterios.present?
+      resp = []
 
-          if prop.descripcion.present?
-            ["#{p.nombre_propiedad} - #{p.descripcion}", p.criterios.first.id]
-          else
-            [p.nombre_propiedad, p.criterios.first.id]
-          end
+      prop.siblings.map do |p|
+        next unless p.criterios.present?
+
+        if prop.descripcion.present?
+          resp << ["#{p.nombre_propiedad} - #{p.descripcion}", p.criterios.first.id]
+        else
+          resp << [p.nombre_propiedad, p.criterios.first.id]
         end
       end
+
+      resp
 
     else
       resp = Rails.cache.fetch('criterios_catalogo', expires_in: eval(CONFIG.cache.peces.catalogos)) do

@@ -1,0 +1,48 @@
+<% content_for :extracss do %>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+<% end %>
+
+<div class='nested-fields'>
+  <%= f.input :id, required: true, :as => :hidden, :disabled => true %>
+  <%= f.input :resumenEspecie %>
+  <%= f.input :descEspecie %>
+
+  <!-- Tabla con información de medidas de la especie -->
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-9">
+      <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th></th>
+          <th><%= t('simple_form.labels.fichas_taxon.hembras') %></th>
+          <th><%= t('simple_form.labels.fichas_taxon.machos') %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th><%= t('simple_form.labels.fichas_taxon.largo') %></th>
+          <td><%= f.input_field :largoinicialhembras %> - <%= f.input_field :largofinalhembras %></td>
+          <td><%= f.input_field :largoinicialmachos %> - <%= f.input_field :largofinalmachos %> </td>
+        </tr>
+        <tr>
+          <th><%= t('simple_form.labels.fichas_taxon.longevidad') %></th>
+          <td><%= f.input_field :edadinicialhembras %> - <%= f.input_field :edadfinalhembras %></td>
+          <td><%= f.input_field :edadinicialmachos %> - <%= f.input_field :edadfinalmachos %> </td>
+        </tr>
+        <tr>
+          <th><%= t('simple_form.labels.fichas_taxon.peso') %></th>
+          <td><%= f.input_field :pesoinicialhembras %> - <%= f.input_field :pesofinalhembras %></td>
+          <td><%= f.input_field :pesoinicialmachos %> - <%= f.input_field :pesofinalmachos %> </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%= f.input :especiesSmilares %>
+  <%= f.input :origen %>
+  <%= f.input :descripcionOrigen %>
+</div>
+

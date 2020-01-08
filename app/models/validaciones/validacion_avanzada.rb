@@ -336,7 +336,7 @@ SCAT_NombreCient_valido SCAT_NOM-059 SCAT_IUCN SCAT_CITES SCAT_Distribucion SCAT
       end
 
       #cites = taxon.estados_conservacion.where('nivel1=4 AND nivel2=3 AND nivel3>0').distinct
-      cites = taxon.catalogos.iucn
+      cites = taxon.catalogos.cites
       if cites.length == 1
         taxon.x_cites = cites[0].descripcion
         validacion_interna_hash['SCAT_CITES'] = taxon.x_cites

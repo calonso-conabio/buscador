@@ -1,0 +1,12 @@
+<div class='nested-fields'>
+  <%= f.input :nombre_ubicacion %>
+  <%= f.input :nombre_zona, collection: Metamares::RegionM::ZONAS, input_html: { class: 'form-control' } %>
+  <%= f.input :nombre_region, collection: Metamares::RegionM::REGIONES, input_html: { class: 'form-control' } %>
+  <%= f.input :region_pesca, collection: Metamares::RegionM::REGIONES_PESCA, input_html: { class: 'form-control' } %>
+  <%= f.input :latitud, as: :float %>
+  <%= f.input :longitud, as: :float %>
+  <%= f.input :entidad %>
+  <%= f.input :cuenca %>
+  <%= f.input :anp %>
+  <%= f.input :comentarios %>
+</div>

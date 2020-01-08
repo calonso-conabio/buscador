@@ -15,16 +15,16 @@ var soulmateAsigna = function(tipo_busqueda, elem)
         {
             var nombres = '<h5> ' + data.nombre_comun + '</h5>' + '<h5><a href="" class="not-active">' + data.nombre_cientifico + ' </a><i>' + data.autoridad + '</i></h5><h5>&nbsp;</h5>';
             return nombres;
+        }else{
+            if(data.nombre_comun == null) {
+                var nombres = '<a href="" class="not-active">' + data.nombre_cientifico + '</a>';
+            }else {
+                var nombres = '<b>' + primeraEnMayuscula(data.nombre_comun) + ' </b><sub>' + data.lengua + '</sub><a href="" class="not-active">' + data.nombre_cientifico + '</a>';
+            }
 
-        } else {
-            if (data.nombre_comun == null)
-                var nombres = '<a href="" class="not-active">' + data.nombre_cientifico +'</a>';
-            else
-                var nombres = '<b>' + primeraEnMayuscula(data.nombre_comun) + ' </b><sub>' + data.lengua + '</sub><a href="" class="not-active">' + data.nombre_cientifico +'</a>';
-
-            if (data.foto == null)
+            if(data.foto == null) {
                 var foto = '<i class="soulmate-img ev1-ev-icon pull-left"></i>';
-            else {
+            }else{
                 var foto_url = data.foto;
                 var foto = "<i class='soulmate-img pull-left' style='background-image: url(\"" + foto_url + "\")';></i>";
             }
@@ -37,11 +37,13 @@ var soulmateAsigna = function(tipo_busqueda, elem)
                 iconos = iconos + "<span class='btn-title' tooltip-title='" + val + "'><i class='" + i + ev +"'></i></span>"
             });
 
-            if (data.geodatos != undefined && data.geodatos.length > 0)
+            if(data.geodatos != undefined && data.geodatos.length > 0){
                 iconos = iconos + "<span class='btn-title' tooltip-title='Tiene datos geográficos'><i class='glyphicon glyphicon-globe'></i></span>";
+            }
 
-            if (data.fotos > 0)
+            if(data.fotos > 0) {
                 iconos = iconos + "<span class='btn-title' tooltip-title='Tiene imágenes'><i class='picture-ev-icon'></i><sub>" + data.fotos + "</sub></span>";
+            }
 
             return foto + " " + nombres + "<h5 class='soulmate-icons'>" + iconos + "</h5>";
         }
@@ -67,6 +69,12 @@ var soulmateAsigna = function(tipo_busqueda, elem)
             case 'soloAsigna':
                 $('#id').attr('value', data.id); //TODO arreglar el ID id ¬.¬ !>.> pffff
                 break;
+            case 'metamares':
+                $('#proy_b_especie_id').attr('value', data.id); // feliz?
+                break;
+            case 'metamares_proy_esp':
+                $('#'+elemento.replace('nombre_cientifico','especie_id')).attr('value', data.id);
+                break;
             default:
                 // Para no pasar por el controlador de busquedas, ir directo a la especie, solo busqueda basica
                 window.location.replace('/especies/' + data.id);
@@ -80,6 +88,7 @@ var soulmateAsigna = function(tipo_busqueda, elem)
         renderCallback: render,
         selectCallback: select,
         minQueryLength: 2,
-        maxResults:     5
+        maxResults:     5,
+        timeout:        3500
     });
 };

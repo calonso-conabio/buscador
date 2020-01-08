@@ -1,21 +1,22 @@
-<div id="resultados-container" class="col-xs-12 state-two">
+<div id="resultados-container" class="col-xs-12 state-one">
+  <button id="toggleFiltros" class="btn btn-link" onclick="$('#resultados-container').toggleClass('state-one state-two');" type="button">
+    <span class="glyphicon"></span>
+  </button>
   <div class="row">
-    <button id="toggleFiltros" class="btn btn-default pull-left" onclick="$('#resultados-container').toggleClass('state-one state-two');" type="button">
-      <span class="glyphicon"></span>
-    </button>
-    <div class="pull-left filtrosUsados">
-      <% fu = filtrosUsados.html_safe %>
-      <% unless fu == '' %>
-        <h5>
-          <b>Tu búsqueda se realizó con los siguientes filtros: </b>
-          <%= fu %>
-        </h5>
-      <% end %>
-    </div>
-
+    <% fu = filtrosUsados.html_safe %>
+    <% unless fu == '' %>
+      <div class="col-md-3">
+        <h5 class="filtrosUsados"><b>La presente consulta utilizó los siguientes filtros: </b></h5>
+        <h4 class="filtrosUsados"><small>(especies en orden decreciente de recomendación)</small></h4>
+      </div>
+      <div class="col-md-9">
+        <h3 class="filtrosUsados"><%= fu %></h3>
+      </div>
+    <% end %>
   </div>
   <hr/>
-    <%= render :file => 'pmc/peces/index' %>
+
+  <%= render :file => 'pmc/peces/index' %>
 
   <div id="pestañas" class="panel">
     <ul class="nav nav-tabs" data-tabs="tabs">
@@ -25,14 +26,10 @@
     </ul>
 
     <div class="tab-pane panel-body resultados-peces" id="todos">
-        <div id="resultados">
-          <%= render :file => 'pmc/peces/resultados_iteracion' %>
-        </div>
+      <div id="resultados">
+        <%= render :file => 'pmc/peces/resultados_iteracion' %>
+      </div>
     </div>
   </div>
 
 </div>
-
-
-
-

@@ -1,0 +1,38 @@
+
+<%#= @BhlInfo /// @BhlInfo['Result']///@NuevoBHL[@contador] %>
+<!-- Div para cada resultado -->
+<% @contador =  0%>
+
+<%@SegundoNuevoBHL.each do |p| %>
+  <div class="card" >
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><b>BHL type:</b><%= p['BHLType'] %></li>
+      <li class="list-group-item"><b>Found In:</b><%= p['FoundIn'] %></li>
+      <li class="list-group-item"><b>Volume:</b><%= p['Volume'] %></li>
+      <!--Arreglo de autores-->
+      <li class="list-group-item"><b>Authors:</b>
+        <%if  p['Authors'].class == NilClass%>
+          no existe el author
+        <%else %>
+          <% p['Authors'].each do |e| %>
+            <%= e['Name'] %>
+          <% end %>
+        <% end %>
+      </li>
+      <li class="list-group-item"><b>Part URL:</b><a href=" <%= p['PartUrl'] %>" target="_blank"><%= p['PartUrl'] %></a></li>
+      <li class="list-group-item"><b>Part ID:</b><%= p['PArtID'] %></li>
+      <li class="list-group-item"><b>Genre:</b><%= p['Genre'] %></li>
+      <li class="list-group-item"><b>Title:</b><%= p['Title'] %></li>
+      <li class="list-group-item"><b>ContainerTitle:</b><%= p['ContainerTitle'] %></li>
+      <li class="list-group-item"><b>Date:</b><%= p['Date'] %></li>
+      <li class="list-group-item"><b>Page Range:</b><%= p['PageRange'] %></li>
+    </ul>
+  </div>
+<% end %>
+
+<!-- Muestra los botonoes de siguiente y anterior
+con la cantidad de paginas para  buscar -->
+
+<%= will_paginate @SegundoNuevoBHL %>
+
+

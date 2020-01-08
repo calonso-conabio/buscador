@@ -1,0 +1,44 @@
+<div class='nested-fields'>
+
+  <%= f.input :habitoPlantas %>
+  <%= f.input :alimentacion %>
+  <%= f.input :descripcionAlimentacion %>
+  <%= f.input :estrategiaTrofica %>
+  <%= f.input :descripcionEstrofica %>
+  <%= f.input :forrajeo %>
+
+  <%= f.input :conducta %>
+
+  <%= f.input :migracion %>
+  <%= f.input :tipoMigracion %>
+  <%= f.input :habito %>
+
+  <%= f.input :tipopHabito %>
+
+  <%= f.input :hibernacion %>
+  <%= f.input :infoaddhibernacion %>
+  <%= f.input :territorialidad %>
+  <%= f.input :infoaddterritorialidad %>
+  <%= f.input :ambitoHogareno %>
+  <%= f.input :mecanismosDefensa %>
+  <%= f.input :infoaddmecdefensa %>
+
+  <%= f.input :tipoReproduccion %>
+
+  <%= f.input :tipoDispersion %>
+  <%= f.input :descTipoDispersion %>
+  <%= f.input :estructuraDispersora %>
+  <%= f.input :descEstDispersora %>
+  <%= f.input :distanciadispercioninicial %>
+
+  <hr class="espacio_ficha">
+  <%= f.simple_fields_for :reproduccionAnimal do |info| %>
+    <%= render partial: 'fichas/taxa/seccion_biologia/form_biologia_reproduccionAnimal', locals: {f: info }  %>
+  <% end %>
+
+  <hr class="espacio_ficha">
+  <%= f.simple_fields_for :reproduccionVegetal do |info| %>
+    <%= render partial: 'fichas/taxa/seccion_biologia/form_biologia_reproduccionVegetal', locals: {f: info }  %>
+  <% end %>
+
+</div>

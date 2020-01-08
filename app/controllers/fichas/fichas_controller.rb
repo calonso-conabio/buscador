@@ -1,5 +1,5 @@
 class Fichas::FichasController < ApplicationController
 
-  #layout 'fichas'
+  layout 'fichas'
 
 end

@@ -8,6 +8,14 @@ module CacheServices
       guarda_ejemplares_snib_servicio
       guarda_redis_servicio
       guarda_pez_servicios
+      # estadisticas_naturalista_servicio
+      # estadisticas_conabio_servicio
+      # estadisticas_wikipedia_servicio
+      # estadisticas_eol_servicio
+      # estadisticas_tropicos_service_servicio
+      # estadisticas_maccaulay_servicio
+      # estadisticas_SNIB_servicio
+      # estadisticas_mapas_distribucion_servicio
     end
   end
 
@@ -69,6 +77,7 @@ module CacheServices
       end
     end
   end
+
 
   # REVISADO: Es un metodo que no depende del la tabla proveedor, puesto que consulta naturalista sin el ID
   def ficha_naturalista_por_nombre
@@ -197,8 +206,572 @@ module CacheServices
     end
   end
 
+=begin
+  RESPUESTAS DE LOS METODOS
+
+  estadisticas_naturalista
+    nombres_comunes
+    fotos
+    total_observaciones_investigacion
+    observaciones_casual
+
+  estadisticas_conabio
+    total_nombres_comune
+    total_fotos
+    total_fichas
+
+  estadisticas_wikipedia
+    ficha_espaniol
+    ficha_ingles
+
+  estadisticas_eol
+    ficha_espaniol
+    ficha_ingles
+
+  estadisticas_tropicos_service
+    total_fotos
+
+  estadisticas_maccaulay
+    total_fotos
+    total_videos
+    total_audios
+
+  estadisticas_SNIB
+    ejemplares_snib
+    ejemplares_snib_averaves
+
+  estadisticas_mapas_distribucion
+    mapas_distribucion
+=end
+
+  def estadisticas_naturalista_servicio
+    # No hacer nada si aún es vigente el caché
+    return if existe_cache?('estadisticas_naturalista')
+
+    if Rails.env.production?
+      # Para no guardar nada si el cache aun esta vigente
+      escribe_cache('estadisticas_naturalista', CONFIG.cache.estadisticas.estadisticas_naturalista) if Rails.env.production?
+      delay(queue: 'estadisticas_naturalista').estadisticas_naturalista
+    else
+      estadisticas_naturalista
+    end
+  end
+
+  def estadisticas_conabio_servicio
+    # No hacer nada si aún es vigente el caché
+    return if existe_cache?('estadisticas_conabio')
+
+    if Rails.env.production?
+      escribe_cache('estadisticas_conabio', CONFIG.cache.estadisticas.estadisticas_conabio) if Rails.env.production?
+      delay(queue: 'estadisticas_conabio').estadisticas_conabio
+    else
+      estadisticas_conabio
+    end
+  end
+
+  def estadisticas_wikipedia_servicio
+    # No hacer nada si aún es vigente el caché
+    return if existe_cache?('estadisticas_wikipedia')
+
+    if Rails.env.production?
+      escribe_cache('estadisticas_wikipedia', CONFIG.cache.estadisticas.estadisticas_wikipedia) if Rails.env.production?
+      delay(queue: 'estadisticas_wikipedia').estadisticas_wikipedia
+    else
+      estadisticas_wikipedia
+    end
+  end
+
+  def estadisticas_eol_servicio
+    # No hacer nada si aún es vigente el caché
+    return if existe_cache?('estadisticas_eol')
+
+    if Rails.env.production?
+      escribe_cache('estadisticas_eol', CONFIG.cache.estadisticas.estadisticas_eol) if Rails.env.production?
+      delay(queue: 'estadisticas_eol').estadisticas_eol
+    else
+      estadisticas_eol
+    end
+  end
+
+  def estadisticas_tropicos_service_servicio
+    # No hacer nada si aún es vigente el caché
+    return if existe_cache?('estadisticas_tropicos_service')
+
+    if Rails.env.production?
+      escribe_cache('estadisticas_tropicos_service', CONFIG.cache.estadisticas.estadisticas_tropicos_service) if Rails.env.production?
+      delay(queue: 'estadisticas_tropicos_service').estadisticas_tropicos_service
+    else
+      estadisticas_tropicos_service
+    end
+  end
+
+  def estadisticas_maccaulay_servicio
+    # No hacer nada si aún es vigente el caché
+    return if existe_cache?('estadisticas_maccaulay')
+
+    if Rails.env.production?
+      escribe_cache('estadisticas_maccaulay', CONFIG.cache.estadisticas.estadisticas_maccaulay) if Rails.env.production?
+      delay(queue: 'estadisticas_maccaulay').estadisticas_maccaulay
+    else
+      estadisticas_maccaulay
+    end
+  end
+
+  def estadisticas_SNIB_servicio
+    # No hacer nada si aún es vigente el caché
+    return if existe_cache?('estadisticas_SNIB')
+
+    if Rails.env.production?
+      escribe_cache('estadisticas_SNIB', CONFIG.cache.estadisticas.estadisticas_SNIB) if Rails.env.production?
+      delay(queue: 'estadisticas_SNIB').estadisticas_SNIB
+    else
+      estadisticas_SNIB
+    end
+  end
+
+  def estadisticas_mapas_distribucion_servicio
+    # No hacer nada si aún es vigente el caché
+    return if existe_cache?('estadisticas_mapas_distribucion')
+
+    if Rails.env.production?
+      escribe_cache('estadisticas_mapas_distribucion', CONFIG.cache.estadisticas.estadisticas_mapas_distribucion) if Rails.env.production?
+      delay(queue: 'estadisticas_mapas_distribucion').estadisticas_mapas_distribucion
+    else
+      estadisticas_mapas_distribucion
+    end
+  end
+
+  # Datos estadísticos
+  def estadisticas_naturalista(guardar = true)
+
+    # Respuesta de la función
+    res = {
+        :total_nombres_comunes => 0,
+        :total_fotos => 0,
+        :total_observaciones_investigacion => 0,
+        :total_observaciones_casual => 0
+    }
+
+    # Acceder a tabla proveedor
+    if proveedor_n = proveedor
+
+      # Esperar X segundo(s) antes de llamar al servicio
+      sleep(3.seconds)
+
+      # Obtener los nombres comunes y fotos de naturalista
+      puts "\n\nAntes"
+      respuesta_naturalista = proveedor_n.nombres_comunes_Y_fotos_naturalista
+      if respuesta_naturalista[:estatus]
+        puts "\n\nDespués"
+        # Verificar que existan nombres comúnes y # ID: 4 Obtener el total de los nombres comunes
+        if respuesta_naturalista[:msg][:nc].present?
+          resp = respuesta_naturalista[:msg][:nc]
+          if resp.kind_of?(Array) && resp.any?
+            resp = resp.delete_if { |h| h["lexicon"] == "Scientific Names" }
+            res[:total_nombres_comunes] = resp.index_by {|r| r["id"]}.values.count
+          end
+        end
+
+        # Verificar que existan fotos y # ID: 6 Obtener el total de fotos en NaturaLista
+        if respuesta_naturalista[:msg][:ft].present?
+          if respuesta_naturalista[:msg][:ft].kind_of?(Array)  && respuesta_naturalista[:msg][:ft].any?
+            res[:total_fotos] = respuesta_naturalista[:msg][:ft].count
+          end
+        end
+      end
+
+      if especie_o_inferior?
+        # Obtener el total de observaciones:
+
+        # Opción 1: consultando directamente el servicio de naturalista (No sirve por ahora...)
+        # tipo_observaciones = proveedor_n.numero_observaciones_naturalista
+        # ID: 19. Grado de investigación
+        # res[:total_observaciones_investigacion] = tipo_observaciones[:investigacion]
+        # ID: 20. Grado casual
+        # res[:total_observaciones_casual] = tipo_observaciones[:casual]
+
+        # Opción 2: consultando a través de geodatos[:naturalista_mapa_json]
+        if los_geodatos = proveedor_n.geodatos # verificar que contenga geodatos
+          if los_geodatos.key?(:naturalista_mapa_json) && !los_geodatos[:naturalista_mapa_json].blank? # verificar que contenga la llave naturalista_mapa_json
+            url_geodatos = los_geodatos[:naturalista_mapa_json]
+            consulta = invoca_url_geodatos(url_geodatos)
+            if consulta['estatus'] # buscar el total y tipos de observaciones existentes en un archivo JSON
+              json = consulta['msg']
+              observaciones = json.map { |x| x[3]}
+              observaciones.each { |obs| obs == 1 ? res[:total_observaciones_investigacion] += 1 : res[:total_observaciones_casual] += 1 }
+            end
+          end
+        end
+      end
+    end
+
+    if guardar
+      estd = especie_estadisticas
+      escribe_estadistica(estd, 4, res[:total_nombres_comunes])
+      escribe_estadistica(estd, 6, res[:total_fotos])
+      escribe_estadistica(estd, 19, res[:total_observaciones_investigacion]) if especie_o_inferior?
+      escribe_estadistica(estd, 20, res[:total_observaciones_casual]) if especie_o_inferior?
+    end
+    res
+  end
+
+  def estadisticas_conabio(guardar = true)
+
+    # Respuesta de la función
+    res = {
+        :total_nombres_comunes => 0,
+        :total_fotos => 0,
+        :total_fichas => 0
+    }
+
+    # ID: 5 Nombres comunes de CONABIO
+    res[:total_nombres_comunes] = nombres_comunes.count
+
+    # ID: 7 Fotos en el Banco de Imágenes de CONABIO
+    res[:total_fotos] = fotos_bdi[:fotos].count
+
+    # ID: 11 Fichas revisadas de CONABIO -> Sólo aparecerá si tiene ficha asociada (0 o 1)
+    if cat = scat
+      res[:total_fichas] = Fichas::Taxon.where(IdCat: cat.catalogo_id).count
+    else
+      # No se encuentra en el catálogo, por tanto no tiene ninguna ficha asociada
+      res[:total_fichas] = 0
+    end
+
+    # ID: 12 Fichas en revisión de CONABIO ( no existe campo)
+    if guardar
+      estd = especie_estadisticas
+      escribe_estadistica(estd, 5, res[:total_nombres_comunes])
+      escribe_estadistica(estd, 7, res[:total_fotos])
+      escribe_estadistica(estd, 11, res[:total_fichas])
+    end
+    res
+  end
+
+  def estadisticas_wikipedia(guardar = true)
+
+    # Respuesta de la función
+    res = {
+        :ficha_espaniol => 0,
+        :ficha_ingles => 0
+    }
+    # ID: 9 Fotos en Wikimedia (Ya no)
+    begin
+      # ID: 15 Fichas de Wikipedia-español
+      res[:ficha_espaniol] = TaxonDescribers::WikipediaEs.describe(self).blank? ?  0 : 1
+      # ID: 16 Fichas de Wikipedia-ingles
+      res[:ficha_ingles] = TaxonDescribers::Wikipedia.describe(self).blank? ? 0 : 1
+
+      if guardar
+        estd = especie_estadisticas
+        escribe_estadistica(estd, 15, res[:ficha_espaniol])
+        escribe_estadistica(estd, 16, res[:ficha_ingles])
+      end
+
+    rescue StandardError => msg
+      puts msg
+      borra_cache('estadisticas_wikipedia')
+    end
+
+    res
+  end
+
+  def estadisticas_eol(guardar = true)
+
+    # Respuesta de la función
+    res = {
+        :ficha_espaniol => 0,
+        :ficha_ingles => 0
+    }
+
+    begin
+      # ID: 13 Fichas de EOL-español
+      res[:ficha_espaniol] = TaxonDescribers::EolEs.describe(self).blank? ?  0 :  1
+      # ID: 14 Fichas de EOL-ingles
+      res[:ficha_ingles] = TaxonDescribers::Eol.describe(self).blank? ?  0 :  1
+
+      if guardar
+        estd = especie_estadisticas
+        escribe_estadistica(estd, 13, res[:ficha_espaniol])
+        escribe_estadistica(estd, 14, res[:ficha_ingles])
+      end
+
+    rescue StandardError => msg
+      puts msg
+      borra_cache('estadisticas_eol')
+    end
+
+    res
+  end
+
+  def estadisticas_tropicos_service(guardar = true)
+
+    # Respuesta de la función
+    res = {
+        :total_fotos => 0
+    }
+
+    # Crear instancia de servicio trópicos:
+    ts_req = Tropicos_Service.new
+    respuesta = get_tropico_id
+
+    begin
+
+      if respuesta[:estatus]
+        # Si existe el tropico_id, recuperar las imágenes
+        tropico_id = respuesta[:id]
+        fotos = ts_req.get_media(tropico_id)
+        fotos[0]["Error"].present? ? res[:total_fotos] = 0 : res[:total_fotos] =  ts_req.get_media(tropico_id).count
+      else
+        res[:total_fotos] =  0
+      end
+
+      estd = especie_estadisticas
+      escribe_estadistica(estd, 24, res[:total_fotos]) if guardar
+
+    rescue
+      puts "ERROR: ID #{id}"
+      borra_cache('estadisticas_tropicos_service')
+    end
+
+    res
+  end
+
+  def estadisticas_maccaulay(guardar = true)
+
+    # Respuesta de la función
+    res = {}
+
+    begin
+      taxonNC = nombre_cientifico
+      puts "Buscando fotos..."
+      res[:total_fotos] = itera_servicio_maccaulay(taxonNC, "photo")
+      puts "Buscando videos..."
+      res[:total_videos] = itera_servicio_maccaulay(taxonNC, "video")
+      puts "Buscando audios..."
+      res[:total_audios] = itera_servicio_maccaulay(taxonNC, "audio")
+
+      if guardar
+        estd = especie_estadisticas
+        escribe_estadistica(estd, 25, res[:total_fotos])
+        escribe_estadistica(estd, 26, res[:total_videos])
+        escribe_estadistica(estd, 27, res[:total_audios])
+      end
+
+    rescue
+        borra_cache("estadisticas_maccaulay")
+    end
+
+    res
+  end
+
+  # SNIB: Sistema Nacional de Información sobre Biodiversidad de México
+  def estadisticas_SNIB(guardar = true)
+
+    return unless especie_o_inferior?
+
+    # Respuesta de la función
+    res = {
+        :ejemplares_snib => 0
+        #:ejemplares_snib_averaves => 0
+    }
+
+    # LLamada al servicio para obtener los resultados SNIB
+    resultados_snib = recupera_ejemplares_snib(self.scat.catalogo_id)
+
+    # Verificar el estatus de la llamada al servicio
+    # En teorìa, se puede acceder al arreglo de 'resultados'
+    if resultados_snib.first.include?('nregistros')
+      res[:ejemplares_snib] = resultados_snib.first['nregistros']
+    end
+
+      # Ahora, buscar los de eBird
+      # buscar = ['eBird eBird', 'aVerAves aVerAves']
+      # res[:ejemplares_snib_averaves] = 0
+      # Itera todos los ejemplares y busca los de aVerAves
+      # resultados_snib['resultados'].each do |ejemplar|
+      #   if buscar.include? (ejemplar['coleccion'])
+      #     res[:ejemplares_snib_averaves] += 1
+      #   end
+      # end
+
+    if guardar
+      estd = especie_estadisticas
+      escribe_estadistica(estd, 17, res[:ejemplares_snib])
+      # escribe_estadistica(estd, 18, res[:ejemplares_snib_averaves])
+    end
+    res
+  end
+
+  def estadisticas_mapas_distribucion(guardar = true)
+    return unless especie_o_inferior?
+
+    # Respuesta de la función
+    res = {:mapas_distribucion => 0}
+    # ID: 21 Mapas de distribución
+    if p = proveedor
+      pg = p.geodatos
+      res[:mapas_distribucion] = pg[:cuales].include?('geoserver') ?  1 : 0
+    end
+    estd = especie_estadisticas
+    escribe_estadistica(estd, 21, res[:mapas_distribucion]) if guardar
+    res
+  end
+
+  def itera_estadisticas_restantes
+    Especie.all.each do |especie_x|
+      next unless especie_x.especie_o_inferior?
+      puts "\n\n\n* * * * * * Especie ID: ", especie_x.id
+      especie_x.genera_estadisticas_directo
+      puts "\n* * * * * * * * * * * * * * * * "
+    end
+  end
+
+  def self.itera_especies
+    # Obtener todas las especies a iterar
+    especies_todas = Especie.all
+
+    especies_todas.each do |especie_x|
+      puts "\n\n\n* * * * * * Especie ID: ", especie_x.id
+      # Eliminar el caché si tiene
+      especie_x.borra_cache('estadisticas_naturalista')
+      especie_x.borra_cache('estadisticas_conabio')
+      especie_x.borra_cache('estadisticas_wikipedia')
+      especie_x.borra_cache('estadisticas_eol')
+      especie_x.borra_cache('estadisticas_tropicos_service')
+      especie_x.borra_cache('estadisticas_maccaulay')
+      especie_x.borra_cache('estadisticas_SNIB')
+      especie_x.borra_cache('estadisticas_mapas_distribucion')
+      especie_x.genera_estadisticas
+      puts "\n* * * * * * * * * * * * * * * * "
+    end
+  end
+
+  def genera_estadisticas_directo
+    # Invocar las estadisticas de naturalista
+    borra_cache('estadisticas_SNIB')
+    puts "\nestadisticas_SNIB: #{estadisticas_SNIB}"
+  end
+
+  def genera_estadisticas
+    # Invocar las estadisticas de naturalista
+    puts estadisticas_naturalista_servicio
+    puts estadisticas_conabio_servicio
+    puts estadisticas_wikipedia_servicio
+    puts estadisticas_eol_servicio
+    puts estadisticas_tropicos_service_servicio
+    puts estadisticas_maccaulay_servicio
+    puts estadisticas_SNIB_servicio
+    puts estadisticas_mapas_distribucion_servicio
+  end
 
   private
+
+  # Función para invocar la url geodatos/ y extraer el json con las observaciones
+  def invoca_url_geodatos(geodatos_especie)
+    resultados = {}
+    begin
+      # LLamada al servicio de enciclovida para obtener el JSON
+      rest_client = RestClient::Request.execute(method: :get, url: "#{CONFIG.enciclovida_url}#{geodatos_especie}", timeout: 20)
+      resultados['estatus'] = true
+      resultados['msg'] = JSON.parse(rest_client)
+    rescue
+      resultados['estatus'] = false
+      resultados['msg'] = "Hubo un error al invocar la URL: #{geodatos_especie} "
+    end
+    resultados
+  end
+
+  def get_tropico_id()
+
+    # Crear instancia de servicio trópicos:
+    ts_req = Tropicos_Service.new
+
+    # Para saber si tiene proveedor asociado
+    if prov = proveedor
+      # Verificar si tiene ya el tropico_id (si se consultó anteriormente)
+      if tropico_id = prov.tropico_id
+        return {'estatus': true, id: tropico_id}
+      else
+        # No existe aún el tropico_id, buscarlo
+        name_id = ts_req.get_id_name(nombre_cientifico)
+        unless name_id[0][:msg].present?
+          prov.update(tropico_id: name_id[0]['NameId'])
+          return {estatus: true, id: name_id[0]['NameId']}
+        end
+      end
+    else
+      # No existe aún la especie en proveedores ni el tropico_id, buscarlo invocando el servicio:
+      name_id = ts_req.get_id_name(nombre_cientifico)
+      unless name_id[0][:msg].present?
+        Proveedor.create(especie_id: id, tropico_id: name_id[0]['NameId'])
+        return {'estatus': true, id: name_id[0]['NameId']}
+      end
+    end
+    return {estatus: false}
+  end
+
+  # LLama a enciclovida.mx para accder a los ejemplares SNIB de cada especie
+  def recupera_ejemplares_snib(especie_id)
+    resultados = {}
+    begin
+      # LLamada al servicio de enciclovida para obtener el JSON
+      rest_client = RestClient::Request.execute(method: :get, url: "#{CONFIG.enciclovida_api}/especie/snib/ejemplares/conteo?idnombrecatvalido=#{especie_id}", timeout: 20)
+      resultados = JSON.parse(rest_client)
+    rescue
+      resultados['estatus'] = "error"
+    end
+    resultados
+  end
+
+  # Funciòn para llamar a maccaulay, hace las llamadas suficientes para extraer el total de archivos existentes sobre una especie (una llamada por cada pàgina)
+  def itera_servicio_maccaulay(nombre_especie, tipo)
+    servicio = MacaulayService.new
+    total = 0
+    total_por_pagina = 1000
+    (1..100).each do | i |
+      if i > 1 && %w(photo audio video).include?(tipo) && total < (total_por_pagina * (i - 1))
+        break # No tiene caso buscar cuando ya no hay mas resultadose  en las demàs pàginas
+      end
+      archivo = servicio.dameMedia_nc(nombre_especie, tipo, i, total_por_pagina)
+      if archivo == nil && i == 1
+        total = 0
+        break
+      else
+
+        # Si se regresó un mensaje, es porque por alguna razón no existieron fotos
+        if archivo[0][:msg].present?
+          # puts "XP #{archivo[0][:msg].present?}"
+          break
+        else
+          if archivo.count == 0
+            break
+          else
+            total = total + archivo.count
+          end
+        end
+      end
+      puts "hasta ahora hay: #{total}"
+    end
+    total
+  end
+
+
+
+  # Recibe el apuntador a la tabla y escribe el dato en ella segùn el id de la estadìstica
+  def escribe_estadistica(estd, estd_id, dato)
+    if estadistica = estd.where(estadistica_id: estd_id).first
+      # Si ya existe, actualizar si cambiò
+      estadistica.conteo = dato
+      estadistica.save if estadistica.changed?
+    else
+      # Si no, crearla
+      estadistica = estd.new
+      estadistica.conteo = dato
+      estadistica.estadistica_id = estd_id
+      estadistica.save
+    end
+  end
 
   # REVISADO: Guarda fotos y nombres comunes de dbi, catalogos y naturalista
   def guarda_fotos_nombres_servicios

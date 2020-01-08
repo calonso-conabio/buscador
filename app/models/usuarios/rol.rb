@@ -10,4 +10,6 @@ class Rol < ActiveRecord::Base
   has_many :usuario_roles, :class_name => 'UsuarioRol', :foreign_key => :rol_id
   has_many :usuarios, :through => :usuario_roles, :source => :usuario
 
+  METAMARES_ROLES = [:'20', :'21', :'22']
+
 end

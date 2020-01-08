@@ -25,7 +25,11 @@ class CreateEstadisticas < ActiveRecord::Migration[5.1]
                      "Ejemplares en el SNIB (aVerAves)",
                      "Observaciones en NaturaLista (grado de investigación)",
                      "Observaciones en NaturaLista (grado casual)",
-                     "Mapas de distribución", "Número de especies validas", "Número de especies e inferiores validas"]
+                     "Mapas de distribución", "Número de especies validas", "Número de especies e inferiores validas",
+                     "Fotos en Tropicos",
+                     "Fotos en Maccaulay",
+                     "Videos en Maccaulay",
+                     "Audio en Maccaulay" ]
 
     descripciones.each do |x|
       Estadistica.create(:descripcion_estadistica => x)

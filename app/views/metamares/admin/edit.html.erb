@@ -1,0 +1,20 @@
+<%= simple_form_for @usuario, url: metamares_admin_path(@usuario) do |f| %>
+
+  <%= f.input :nombre, required: true %>
+  <%= f.input :apellido, required: true %>
+  <%= f.input :email, required: true, disabled: true %>
+  <%= f.input :institucion %>
+  <%#= f.input :password, label: 'Contraseña', :hint => 'Dejar vacío si no se desea cambiar' %>
+  <%#= f.input :password_confirmation, label: 'Confirma contraseña', :hint => 'Dejar vacío si no se desea cambiar' %>
+
+  <%= f.simple_fields_for :usuario_roles do |rol| %>
+    <% if Rol::METAMARES_ROLES.include?(rol.object.rol_id.to_s.to_sym) %>
+      <%= rol.input :usuario_id, as: :hidden %>
+      <%= rol.input :rol_id, collection: Rol::METAMARES_ROLES, input_html: {class: 'form-control'} %>
+    <% end %>
+  <% end %>
+
+  <%= f.submit class: 'btn btn-lg btn-block btn-success' %>
+  <%= link_to t('helpers.submit.usuario.cancel'), metamares_admin_index_path, { :class=>"btn btn-lg btn-block btn-default" } %>
+
+<% end %>

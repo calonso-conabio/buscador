@@ -51,6 +51,7 @@ $(document).ready(function() {
 // Función para llamar a la siguiente página desde botón siguiénte / atrás
 var biotecaCurrentPage = 1;
 var biotecaLastPage = 99;
+
 function changePage(taxon, tipo, action) {
     // Calcular página siguiente
     if (action === "siguiente") {

@@ -1,0 +1,6 @@
+<div class='nested-fields'>
+  <%= f.input :prioritaria, :as => :boolean, :input_html => { :checked => "checked"}  %>
+  <%= f.input :publicadaEn, collection: Fichas::Taxon::LISTADOS, input_html: {class: 'form-control'} %>
+  <%= f.input :nivelPrioridad, collection: Fichas::Taxon::PRIORIDADS, input_html: {class: 'form-control'} %>
+  <%= f.input :justificacionPrioritaria %>
+</div>

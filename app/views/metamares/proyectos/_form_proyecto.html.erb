@@ -1,0 +1,38 @@
+<% content_for :extracss do %>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+<% end %>
+
+<%= f.input :nombre_proyecto, required: true %>
+<%= f.input :autor %>
+<%= f.input :tipo_monitoreo %>
+<%= f.input :objeto_monitoreo %>
+<%= f.input :metodo %>
+<%= f.input :finalidad %>
+<%= f.input :campo_investigacion, collection: Metamares::Proyecto::CAMPOS_INVESTIGACION, input_html: {class: 'form-control'} %>
+<%= f.input :campo_ciencia, collection: Metamares::Proyecto::CAMPOS_CIENCIAS, input_html: {class: 'form-control'} %>
+<%= f.input :financiamiento, collection: Metamares::Proyecto::FINANCIAMIENTOS, input_html: {class: 'form-control'} %>
+<%= f.input :institucion_id, as: :hidden %>
+
+<% if @proyecto.new_record? || f.object.institucion_id.blank? %>
+  <%= f.input :nom_institucion, autocomplete: :off %>
+<%
+  else
+    institucion = Metamares::Institucion.find(f.object.institucion_id)
+%>
+  <%= f.input :nom_institucion, input_html: { value: institucion.nombre_institucion }, autocomplete: :off %>
+  <h5 class="text-right"><%= link_to 'Desvincular institución', nil, id: 'desvincula_inst' %></h5>
+<% end %>
+
+<% if tiene_permiso?('AdminInfoceanosManager') %>
+  <%= f.input :usuario_id, collection: Metausuario.new.dame_usuarios, input_html: { class: 'form-control' } %>
+<% else %>
+  <%= f.input :usuario_id, as: :hidden , input_html: { value: current_metausuario.id } %>
+<% end %>
+
+<% content_for :delayedjs do %>
+  <script>
+      dameInstitucion();
+      desvinculaInstitucion();
+  </script>
+<% end %>

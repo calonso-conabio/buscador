@@ -51,6 +51,6 @@
   <hr />
 
   <%= f.submit class: 'btn btn-lg btn-block btn-success' %>
-  <%= link_to t('helpers.submit.pmc_propiedad.cancel'), @propiedad.new_record? ? pmc_propiedades_path : pmc_propiedades_path(@propiedad), { :class=>"btn btn-lg btn-block btn-default" } %>
+  <%= link_to t('helpers.submit.pmc_propiedad.cancel'), @propiedad.new_record? ? pmc_propiedades_path : @propiedad, { :class=>"btn btn-lg btn-block btn-default" } %>
 
 <% end %>

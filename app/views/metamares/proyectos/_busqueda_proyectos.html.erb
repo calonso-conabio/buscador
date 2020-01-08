@@ -1,0 +1,25 @@
+<%= simple_form_for :proy_b, method: :get, wrapper: :inline_form, html: { class: "form-inline" } do |f| %>
+  <%= f.input :proyecto, required: false, input_html: { value: (params[:proy_b][:proyecto] if params[:proy_b].present?) } %>
+  <%= f.input :institucion, required: false, input_html: { value: (params[:proy_b][:institucion] if params[:proy_b].present?) } %>
+  <%= f.input :autor, required: false, input_html: { value: (params[:proy_b][:autor] if params[:proy_b].present?) } %>
+  <%= f.input :nombre, required: false, input_html: { value: (params[:proy_b][:nombre] if params[:proy_b].present?), autocomplete: :off } %>
+  <%= f.hidden_field :especie_id, value: (params[:proy_b][:especie_id] if params[:proy_b].present?) %>
+
+  <% if params[:proy_b].present? && params[:proy_b][:usuario_id].present? %>
+    <%= f.hidden_field :usuario_id, value: params[:proy_b][:usuario_id] %>
+  <% end %>
+
+  <%= f.submit :Buscar, {:class => 'btn btn-success', value: t('helpers.submit.proy_b.buscar'), "data-disable-with" => false } %>
+  <%= f.submit :Descargar, { :class => 'btn btn-info', value: t('helpers.submit.proy_b.descargar'), "data-disable-with" => false } %>
+  <%= f.submit :JSON, { :class => 'btn btn-warning', value: 'JSON', "data-disable-with" => false } %>
+  <%= button_tag(:Reiniciar, type: :reset, class: 'btn btn-default', onclick: "window.location.replace('/metamares/proyectos')") %>
+
+  <%= f.input :titulo_compilacion, input_html: { value: (params[:proy_b][:titulo_compilacion] if params[:proy_b].present?) } %>
+  <%= f.input :campo_investigacion, collection: Metamares::Proyecto::CAMPOS_INVESTIGACION, input_html: { class: 'form-control' }, prompt: 'Campo de investigación',
+              selected: (params[:proy_b][:campo_investigacion] if params[:proy_b].present?) %>
+  <%#= f.input :nombre_zona, collection: Metamares::RegionM::ZONAS, input_html: { class: 'form-control' }, prompt: 'Escoge una zona',
+              selected: (params[:proy_b][:nombre_zona] if params[:proy_b].present?) %>
+  <%= f.input :nombre_region, collection: Metamares::RegionM::REGIONES, input_html: { class: 'form-control' }, prompt: 'Escoge una región',
+              selected: (params[:proy_b][:nombre_region] if params[:proy_b].present?)%>
+
+<% end %>

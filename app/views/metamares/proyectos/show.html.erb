@@ -1,0 +1,161 @@
+<h3><%= t('titulos.informacion_coleccion') %></h3>
+
+<div id="pestañas" class="panel row">
+  <ul class="nav nav-tabs links" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#proyecto" class="btn btn-sm" aria-controls="proyecto" role="tab" data-toggle="tab">Colección</a>
+    </li>
+    <li role="presentation" >
+      <%= link_to 'Datos', '#dato', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :dato %>
+    </li>
+    <li role="presentation" >
+      <%= link_to 'Periodo', '#periodo', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :periodo %>
+    </li>
+    <li role="presentation" >
+      <%= link_to 'Información adicional', '#infoAdicional', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :info_adicional %>
+    </li>
+    <li role="presentation" >
+      <%= link_to 'Región', '#region', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :region %>
+    </li>
+    <li role="presentation" >
+      <%= link_to 'Institución', '#institucion', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :institucion %>
+    </li>
+    <li role="presentation" >
+      <%= link_to 'Especies', '#especiesEstudiadas', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => 'especiesEstudiadas' %>
+    </li>
+    <li role="presentation" >
+      <%= link_to 'Palabras claves', '#keywords', :class => 'btn btn-sm', role: 'tab', "data-toggle" => 'tab', "aria-controls" => :keywords %>
+    </li>
+
+    <% if tiene_permiso_metamares?('AdminInfoceanosManager') || es_propietario_metamares?(@proyecto) %>
+      <li role="presentation" >
+        <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_metamares_proyecto_path(@proyecto), :class => 'pull-right btn btn-sm btn-warning' %>
+      </li>
+      <li role="presentation" >
+        <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, metamares_proyecto_path(@proyecto), method: :delete,
+                    class: 'pull-right btn btn-sm btn-warning', data: { confirm: 'Are you sure?' } %>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="tab-content">
+
+    <div id="proyecto" role="tabpanel" class="tab-pane fade in panel-body active">
+      <ul class="list-group">
+        <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.nombre_proyecto') %></b>: <%= @proyecto.nombre_proyecto %></li>
+        <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.autor') %></b>: <%= @proyecto.autor %></li>
+        <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.tipo_monitoreo') %></b>: <%= @proyecto.tipo_monitoreo %></li>
+        <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.objeto_monitoreo') %></b>: <%= @proyecto.objeto_monitoreo %></li>
+        <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.metodo') %></b>: <%= @proyecto.metodo %></li>
+        <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.finalidad') %></b>: <%= @proyecto.finalidad %></li>
+        <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.campo_investigacion') %></b>: <%= t("simple_form.options.metamares_proyecto.campo_investigacion.#{@proyecto.campo_investigacion}", default: @proyecto.campo_investigacion) if @proyecto.campo_investigacion.present? %></li>
+        <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.campo_ciencia') %></b>: <%= t("simple_form.options.metamares_proyecto.campo_ciencia.#{@proyecto.campo_ciencia}", default: @proyecto.campo_ciencia) if @proyecto.campo_ciencia.present? %></li>
+        <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.financiamiento') %></b>: <%= t("simple_form.options.metamares_proyecto.financiamiento.#{@proyecto.financiamiento}", default: @proyecto.financiamiento) if @proyecto.financiamiento.present? %></li>
+      </ul>
+    </div>
+
+    <div id='dato' role="tabpanel" class="tab-pane fade panel-body">
+      <ul class="list-group">
+        <% if dato = @proyecto.dato %>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.titulo_conjunto_datos') %></b>: <%= dato.titulo_conjunto_datos %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.titulo_compilacion') %></b>: <%= dato.titulo_compilacion %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.descarga_datos') %></b>:
+            <%=
+              begin
+                link_to(dato.descarga_datos, dato.descarga_datos, target: :_blank) if !URI.parse(dato.descarga_datos.strip).host.nil?
+              rescue URI::InvalidURIError
+                  dato.descarga_datos
+              end
+            %>
+          </li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.licencia_uso') %></b>: <%= t("simple_form.options.metamares_proyecto.dato.licencia_uso.#{dato.licencia_uso}", default: dato.licencia_uso) if dato.licencia_uso.present? %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.estatus_datos') %></b>: <%= t("simple_form.options.metamares_proyecto.dato.estatus_datos.#{dato.estatus_datos}", default: dato.estatus_datos) if dato.estatus_datos.present? %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.descripcion_base') %></b>: <%= dato.descripcion_base %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.resolucion_temporal') %></b>: <%= dato.resolucion_temporal %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.resolucion_espacial') %></b>: <%= dato.resolucion_espacial %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.publicaciones') %></b>: <%= dato.publicaciones %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.publicacion_url') %></b>: <%= dato.publicacion_url %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.publicacion_fecha') %></b>: <%= dato.publicacion_fecha %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.forma_citar') %></b>: <%= dato.forma_citar %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.numero_ejemplares') %></b>: <%= dato.numero_ejemplares %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.tipo_unidad') %></b>: <%= dato.tipo_unidad %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.dato.notas_adicionales') %></b>: <%= dato.notas_adicionales %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div id='periodo' role="tabpanel" class="tab-pane fade panel-body">
+      <ul class="list-group">
+        <% if periodo = @proyecto.periodo %>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.periodo.periodicidad') %></b>: <%= periodo.periodicidad %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.periodo.periodo_monitoreo_desde') %></b>: <%= periodo.periodo_monitoreo_desde %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.periodo.periodo_monitoreo_hasta') %></b>: <%= periodo.periodo_monitoreo_hasta %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.periodo.periodo_sistematico_desde') %></b>: <%= periodo.periodo_sistematico_desde %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.periodo.periodo_sistematico_hasta') %></b>: <%= periodo.periodo_sistematico_hasta %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.periodo.monitoreo_desde') %></b>: <%= periodo.monitoreo_desde %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.periodo.monitoreo_hasta') %></b>: <%= periodo.monitoreo_hasta %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.periodo.comentarios') %></b>: <%= periodo.comentarios %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div id='infoAdicional' role="tabpanel" class="tab-pane fade panel-body">
+      <ul class="list-group">
+        <% if info_adicional = @proyecto.info_adicional %>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.info_adicional.informacion_objeto') %></b>: <%= info_adicional.informacion_objeto %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.info_adicional.informacion_posterior') %></b>: <%= info_adicional.informacion_posterior %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.info_adicional.informacion_adicional') %></b>: <%= info_adicional.informacion_adicional %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.info_adicional.colaboradores') %></b>: <%= info_adicional.colaboradores %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.info_adicional.instituciones_involucradas') %></b>: <%= info_adicional.instituciones_involucradas %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.info_adicional.equipo') %></b>: <%= info_adicional.equipo %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.info_adicional.comentarios') %></b>: <%= info_adicional.comentarios %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div id='region' role="tabpanel" class="tab-pane fade panel-body">
+      <ul class="list-group">
+        <% if region = @proyecto.region %>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.nombre_ubicacion') %></b>: <%= region.nombre_ubicacion %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.nombre_zona') %></b>: <%= t("simple_form.options.metamares_proyecto.region.nombre_zona.#{region.nombre_zona}", default: region.nombre_zona) if region.nombre_zona.present? %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.nombre_region') %></b>: <%= t("simple_form.options.metamares_proyecto.region.nombre_region.#{region.nombre_region}", default: region.nombre_region) if region.nombre_region.present? %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.region_pesca') %></b>: <%= t("simple_form.options.metamares_proyecto.region.region_pesca.#{region.region_pesca}", default: region.region_pesca) if region.region_pesca.present? %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.latitud') %></b>: <%= region.latitud %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.longitud') %></b>: <%= region.longitud %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.entidad') %></b>: <%= region.entidad %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.cuenca') %></b>: <%= region.cuenca %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.anp') %></b>: <%= region.anp %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.region.comentarios') %></b>: <%= region.comentarios %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div id='institucion' role="tabpanel" class="tab-pane fade panel-body">
+      <ul class="list-group">
+        <% if institucion = @proyecto.institucion %>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.institucion.nombre_institucion') %></b>: <%= institucion.nombre_institucion %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.institucion.sitio_web') %></b>: <%= institucion.sitio_web %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.institucion.contacto') %></b>: <%= institucion.contacto %></li>
+          <li class="list-group-item"><b><%= t('simple_form.labels.metamares_proyecto.institucion.correo_contacto') %></b>: <%= institucion.correo_contacto %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div id='especiesEstudiadas' role="tabpanel" class="tab-pane fade panel-body">
+      <ul class="list-group">
+        <% @proyecto.especies.each do |e| %>
+          <li class="list-group-item"><%= e.especie ? tituloNombreCientifico(e.especie, link: true).html_safe : e.nombre_cientifico %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div id='keywords' role="tabpanel" class="tab-pane fade panel-body">
+      <% @proyecto.keywords.map(&:nombre_keyword).each do |k| %>
+        <h4><span class="label label-primary"><%= k %></span></h4>
+      <% end %>
+    </div>
+  </div>
+
+  <%= t('simple_form.labels.metamares_proyecto.updated_at') %>: <%= @proyecto.updated_at.strftime("%Y/%m/%d") %>
+
+</div>

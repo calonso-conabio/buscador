@@ -4,8 +4,14 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-<h1>Gracias por utilizar el servicio de descarga de taxa</h1>
+<h1>Servicio de descarga de especies</h1>
 <p>Puedes descargar el archivo excel en el siguiente <a href="<%= @ruta %>">enlace</a>
-</p>
-</body>
+
+  <% if @original_url.present? %>
+    <br />
+    <p>
+      Si deseas consultar cual fue tu criterio de búsqueda para esta descarga, puedes verlo en este <%= link_to 'enlace', @original_url %>
+    </p>
+  <% end %>
+  </body>
 </html>

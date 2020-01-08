@@ -4,6 +4,11 @@
     <% if pez.con_estrella %>
       <i class="certificacion-ev-icon pull-right"></i>
     <% end %>
+
+    <% if pez.valor_zonas[-1].to_i == 0 %>
+      <i class="importado-ev-icon pull-right"></i>
+    <% end %>
+
     <% if pez.imagen =~ URI::regexp %>
       <%= button_tag image_tag(pez.imagen, class: "img-responsive"), type: 'button', class: 'btn-ficha', "data-especie-id" => pez.especie_id, "data-toggle" => "popover" %>
     <% else %>

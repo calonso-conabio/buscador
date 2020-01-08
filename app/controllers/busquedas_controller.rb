@@ -117,8 +117,22 @@ class BusquedasController < ApplicationController
   # REVISADO: Los filtros de la busqueda avanzada y de los resultados
   def filtros_iniciales
     @reinos = Especie.select_grupos_iconicos.where(nombre_cientifico: Busqueda::GRUPOS_REINOS)
-    @animales = Especie.select_grupos_iconicos.where(nombre_cientifico: Busqueda::GRUPOS_ANIMALES)
-    @plantas = Especie.select_grupos_iconicos.where(nombre_cientifico: Busqueda::GRUPOS_PLANTAS)
+
+    animales = Especie.select_grupos_iconicos.where(nombre_cientifico: Busqueda::GRUPOS_ANIMALES)
+    @animales = []
+    animales.each do |animal|
+      if index = Busqueda::GRUPOS_ANIMALES.index(animal.nombre_cientifico)
+        @animales[index] = animal
+      end
+    end
+
+    plantas = Especie.select_grupos_iconicos.where(nombre_cientifico: Busqueda::GRUPOS_PLANTAS)
+    @plantas = []
+    plantas.each do |planta|
+      if index = Busqueda::GRUPOS_PLANTAS.index(planta.nombre_cientifico)
+        @plantas[index] = planta
+      end
+    end
 
     @nom_cites_iucn_todos = Catalogo.nom_cites_iucn_todos
 
@@ -270,18 +284,18 @@ class BusquedasController < ApplicationController
         lista.nombre_lista = Time.now.strftime("%Y-%m-%d_%H-%M-%S-%L") + "_taxa_EncicloVida|#{params[:correo]}"
 
         if Rails.env.production?
-          lista.delay(queue: 'descargar_taxa').to_excel({busqueda: @taxones.to_sql, es_busqueda: true, correo: params[:correo]}) if lista.save
+          lista.delay(queue: 'descargar_taxa').to_excel({ busqueda: @taxones.to_sql, es_busqueda: true, correo: params[:correo], original_url: request.original_url.gsub('.xlsx?','?') }) if lista.save
         else  # Para develpment o test
-          lista.to_excel({busqueda: @taxones.to_sql, es_busqueda: true, correo: params[:correo]}) if lista.save
+          lista.to_excel({ busqueda: @taxones.to_sql, es_busqueda: true, correo: params[:correo], original_url: request.original_url.gsub('.xlsx?','?') }) if lista.save
         end
 
-        render json: {estatus: 1}
+        render json: { estatus: 1 }
       else  # Por si no puso un correo valido
-        render json: {estatus: 0}
+        render json: { estatus: 0 }
       end
 
     else  # No entro a ningun condicional, es un error
-      render json: {estatus: 0}
+      render json: { estatus: 0 }
     end  # end totoales
   end  # end metodo
 

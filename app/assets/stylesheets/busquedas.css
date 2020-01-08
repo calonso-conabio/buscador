@@ -115,7 +115,7 @@ div.result-img-container{
     background-image: linear-gradient(to bottom, #f5e1cb 0%, #ffebd4 40%);
     font-size: 2em;
 }
-.bryophyta-ev-icon, .pteridophyta-ev-icon, .cycadophyta-ev-icon, .gnetophyta-ev-icon, .liliopsida-ev-icon, .coniferophyta-ev-icon, .magnoliopsida-ev-icon{
+.bryophyta-ev-icon, .polypodiidae-ev-icon, .cycadidae-ev-icon, .anthocerotophyta-ev-icon, .lilianae-ev-icon, .pinidae-ev-icon, .magnoliidae-ev-icon{
     background-image: linear-gradient(to bottom, #bFDaa8 0%, #d2f2b6 30%);
     font-size: 2em;
 }
@@ -142,12 +142,12 @@ div.result-img-container{
 .mollusca-ev-icon{color: #aa7961}
 .crustacea-ev-icon{color: #a0837c}
 .bryophyta-ev-icon{color: #7a7544}
-.pteridophyta-ev-icon{color: #adb280}
-.cycadophyta-ev-icon{color: #545a35}
-.gnetophyta-ev-icon{color: #394822}
-.liliopsida-ev-icon{color: #114722}
-.coniferophyta-ev-icon{color: #788c4a}
-.magnoliopsida-ev-icon{color: #495925}
+.polypodiidae-ev-icon{color: #adb280}
+.cycadidae-ev-icon{color: #545a35}
+.anthocerotophyta-ev-icon{color: #394822}
+.lilianae-ev-icon{color: #114722}
+.pinidae-ev-icon{color: #788c4a}
+.magnoliidae-ev-icon{color: #495925}
 .invertebrados-ev-icon{color: #6c4e30}
 
 

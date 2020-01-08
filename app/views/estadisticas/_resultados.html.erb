@@ -1,0 +1,7 @@
+<% if @taxones.length == 0 %>
+    <p class="enlaces_acciones">
+      <em>Tu búsqueda no dio ningún resultado, verifica tus filtros.</em>
+    </p>
+<% else %>
+    <%= render :partial => 'estadisticas/_resultados' %>
+<% end %>

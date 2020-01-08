@@ -16,14 +16,13 @@
 # end
 
 ActiveSupport::Inflector.inflections do |inflect|
-  inflect.plural /([aeiou])([A-Z]|_|$)/, '\1s\2'
-  inflect.plural /([rlnd])([A-Z]|_|$)/, '\1es\2'
-  inflect.plural /([aeiou])([A-Z]|_|$)([a-z]+)([rlnd])($)/, '\1s\2\3\4es\5'
-  inflect.plural /([rlnd])([A-Z]|_|$)([a-z]+)([aeiou])($)/, '\1es\2\3\4s\5'
-  inflect.singular /([aeiou])s([A-Z]|_|$)/, '\1\2'
-  inflect.singular /([rlnd])es([A-Z]|_|$)/, '\1\2'
-  inflect.singular /([aeiou])s([A-Z]|_)([a-z]+)([rlnd])es($)/, '\1\2\3\4\5'
-  inflect.singular /([rlnd])es([A-Z]|_)([a-z]+)([aeiou])s($)/, '\1\2\3\4\5'
+  inflect.irregular 'usuario_rol', 'usuarios_roles'
+  inflect.irregular 'rol_categorias_contenido', 'roles_categorias_contenido'
+  inflect.irregular 'metamar', 'metamares'
+  inflect.irregular 'usuario_metamares', 'usuarios_metamares'
   inflect.irregular 'especy', 'especies'
   inflect.irregular 'pez', 'peces'
+  inflect.irregular 'propiedad', 'propiedades'
+  inflect.irregular "legislacion", 'legislaciones'
+  inflect.irregular 'taxon', 'taxa'
 end

@@ -1,6 +1,6 @@
 class Busqueda
   attr_accessor :params, :taxones, :totales, :por_categoria, :es_cientifico, :original_url, :formato,
-                :pagina, :por_pagina, :offset, :taxon
+                :pagina, :por_pagina, :offset, :taxon, :estadisticas
 
   POR_PAGINA = [50, 100, 200]
   POR_PAGINA_PREDETERMINADO = POR_PAGINA.first
@@ -14,9 +14,9 @@ class Busqueda
   ]
 
   GRUPOS_REINOS = %w(Animalia Plantae Fungi Prokaryotae Protoctista)
-  GRUPOS_ANIMALES = %w(Mammalia Aves Reptilia Amphibia Actinopterygii Petromyzontidae Myxini Chondrichthyes Cnidaria
-Arachnida Myriapoda Annelida Insecta Porifera Echinodermata Mollusca Crustacea)
-  GRUPOS_PLANTAS = %w(Bryophyta Pteridophyta Cycadophyta Gnetophyta Liliopsida Coniferophyta Magnoliopsida)
+  GRUPOS_ANIMALES = %w(Mammalia Aves Reptilia Amphibia Actinopterygii Petromyzontidae Myxini Chondrichthyes
+Arachnida Insecta Mollusca Crustacea Annelida Myriapoda Echinodermata Cnidaria Porifera)
+  GRUPOS_PLANTAS = %w(Bryophyta Anthocerotophyta Polypodiidae Pinidae Cycadidae Lilianae Magnoliidae)
 
   # REVISADO: Inicializa los objetos busqueda
   def initialize
@@ -29,6 +29,69 @@ Arachnida Myriapoda Annelida Insecta Porifera Echinodermata Mollusca Crustacea)
     if params[:dist].present? && params[:dist].any?
       self.taxones = taxones.where("#{TipoDistribucion.table_name}.#{TipoDistribucion.attribute_alias(:id)} IN (?)", params[:dist]).left_joins(:tipos_distribuciones)
     end
+  end
+
+  def busca_estadisticas
+
+    if params[:controller]=='estadisticas'
+
+      # Si se definió condición para conteo de valores:
+      conteo = '> 0'
+      if params["tipoResultado"].present?
+        case params["tipoResultado"]
+          when 'mayorCero'
+            conteo = '> 0'
+          when 'cero'
+            conteo = '= 0'
+          when 'mayorIgualCero'
+            conteo = '>= 0'
+          else
+            conteo = '> 0'
+        end
+      end
+
+      # Construir la clausula WHERE a partir de los parámetros
+      estadisticas_a_mostrar = []
+      # Si se definieron las estadísticas
+      if params["showEstadisticas"].present?
+        estadisticas_a_mostrar = params["showEstadisticas"]
+      else
+        # Si no, mostrar todas
+        Estadistica.all.each do |estadistica|
+          next if Estadistica::ESTADISTICAS_QUE_NO.index(estadistica.id)
+          estadisticas_a_mostrar << estadistica.id
+        end
+      end
+
+      el_where = "("
+      flag = false
+      estadisticas_a_mostrar.each do |estadistica|
+        unless flag
+          el_where << "enciclovida.especies_estadistica.estadistica_id = #{estadistica}"
+          flag = true
+        else
+          el_where << " OR enciclovida.especies_estadistica.estadistica_id = #{estadistica}"
+        end
+      end
+      el_where << ")"
+      # Agregarle el filtro de conteo
+      el_where << " AND enciclovida.especies_estadistica.conteo #{conteo} "
+
+      # EJECUTAR QUERY con el WHERE CONSTRUIDO
+      resultados = taxones.joins(:especie_estadisticas).distinct.where(el_where).group(:estadistica_id).size
+
+      # Iteramos los resultados y guardamos
+      self.estadisticas = {}
+      resultados.each do |clave, valor|
+        nombre_estd = Estadistica.where("id = #{clave}").first.descripcion_estadistica
+        conteo_estd = valor
+        self.estadisticas[clave] = {
+            'nombre_estadistica': nombre_estd,
+            'conteo': conteo_estd
+        }
+      end
+    end
+
   end
 
   # REVISADO: filtros de categorias de riesgo, nivel de prioridad

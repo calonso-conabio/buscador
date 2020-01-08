@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190205210408) do
+ActiveRecord::Schema.define(version: 20190424232856) do
 
   create_table "adicionales", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "especie_id", null: false
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20190205210408) do
     t.datetime "updated_at"
   end
 
-  create_table "comentarios", primary_key: "idConsecutivo", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "comentarios", primary_key: "idConsecutivo", id: :integer, force: :cascade, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8" do |t|
     t.text "comentario", limit: 4294967295, null: false
     t.string "correo"
     t.string "nombre"
@@ -113,10 +113,10 @@ ActiveRecord::Schema.define(version: 20190205210408) do
     t.index ["estadistica_id"], name: "idx_especies_estadistica_estadistica_id"
   end
 
-  create_table "estadisticas", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "estadisticas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "descripcion_estadistica"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "listas", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(version: 20190205210408) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "usuarios", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "usuarios", id: :integer, force: :cascade, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8" do |t|
     t.string "nombre", null: false
     t.string "apellido", null: false
     t.string "institucion"

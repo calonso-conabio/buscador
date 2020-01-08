@@ -57,4 +57,19 @@ class Tropicos_Service
     end
   end
 
+
+  # Función para agregar a la tabla Proveedor
+  def agerga_proveedor_id_tropicos(especie, proveedor = false)
+    # Se invoca cuando no existe aún la especie en proveedores ni el tropico_id, buscarlo invocando el servicio:
+    name_id = get_id_name(especie.nombre_cientifico)
+
+    if name_id[0][:msg].present?
+      return nil
+    else
+      # Si existió la especie:
+      Proveedor.create(especie_id: especie.id, tropico_id: name_id[0]['NameId'])
+      return name_id[0]['NameId']
+    end
+  end
+
 end

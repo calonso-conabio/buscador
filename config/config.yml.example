@@ -58,6 +58,7 @@ base: &base
 
   # Servidor en produccion que tendra los kml y kmz, tienen que estar publicos
   enciclovida_url: http://enciclovida.mx
+  enciclovida_api: http://api.enciclovida.mx
 
   # Cache de los servicios que guarda en disco
   cache:
@@ -71,6 +72,14 @@ base: &base
       especies_grupo: 1.week
     estadisticas:
       cuantas_especies_inferiores: 1.week
+      estadisticas_naturalista: 1.second
+      estadisticas_conabio: 1.second
+      estadisticas_wikipedia: 1.second
+      estadisticas_eol: 1.second
+      estadisticas_maccaulay: 1.second
+      estadisticas_SNIB: 1.second
+      estadisticas_tropicos_service: 1.second
+      estadisticas__mapas_distribucion: 1.second
     github:
       issues: 1.hour
     peces:
@@ -100,6 +109,7 @@ base: &base
   iucn:
     api: http://apiv3.iucnredlist.org
     token: 999999999999999999999999999999999999999999999999
+    timeout: 1
 
   github:
     api: https://api.github.com/repos/calonso-conabio/buscador
@@ -132,6 +142,7 @@ base: &base
     cat: catalogocentralizado
     ev: enciclovida
     pez: peces
+    metamares: metamares
 
 ###--------------------Aun no se ocupan------------------------###
 

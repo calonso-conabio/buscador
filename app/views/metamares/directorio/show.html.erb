@@ -1,0 +1,16 @@
+<h3>Datos personales</h3>
+<%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_metamares_directorio_path(@directorio), :class => 'pull-right btn btn-sm btn-warning' %>
+<hr />
+<label><%= t('simple_form.labels.metamares_directorio.tema_estudio') %>: </label><%= @directorio.tema_estudio %>
+<hr />
+<label><%= t('simple_form.labels.metamares_directorio.linea_investigacion') %>: </label><%= @directorio.linea_investigacion %>
+<hr />
+<label><%= t('simple_form.labels.metamares_directorio.region_estudio') %>: </label><%= @directorio.region_estudio %>
+<hr />
+<label><%= t('simple_form.labels.metamares_directorio.cargo') %>: </label><%= @directorio.cargo %>
+<hr />
+<label><%= t('simple_form.labels.metamares_directorio.grado_academico') %>: </label><%= @directorio.grado_academico %>
+<hr />
+<label><%= t('simple_form.labels.metamares_directorio.telefono') %>: </label><%= @directorio.telefono %>
+<hr />
+<label><%= t('simple_form.labels.metamares_directorio.pagina_web') %>: </label><%= @directorio.pagina_web %>

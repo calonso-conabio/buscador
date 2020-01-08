@@ -1,0 +1,8 @@
+<div class='nested-fields'>
+
+  <h4 class="titulo_subseccion"><%= t('simple_form.labels.distribuciones.endemismo.endemismo') %></h4>
+
+  <%=  f.input :endemicaMexico, as: :radio_buttons, collection: [['0', 'YES'], ['1', 'NO']], label_method: :second, value_method: :first  %>
+  <%=  f.input :endemicaA %>
+  <%=  f.input :infoAdicionalEndemica %>
+</div>

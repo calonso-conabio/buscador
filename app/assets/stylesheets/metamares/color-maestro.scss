@@ -1,0 +1,696 @@
+.white{
+  color:$white !important;
+}
+.dark{
+  color:$dark !important;
+}
+
+.pace {
+  background: $white;
+  border: 1px solid $subColor
+}
+.pace .pace-progress {
+  background: $mainColor;
+}
+
+.menu{
+  background: $mainColor;
+}
+.menu a{
+  border-bottom: solid 1px $mainColor;
+}
+.slides-pagination a{
+  background: $mainColor;
+}
+.liner-high{
+  border-bottom: solid 3px $mainColor;
+}
+.liner-high-dark{
+  border-bottom: solid 3px $dark;
+}
+.count-label > span{
+  border-top: solid 3px $mainColor;
+}
+.count, .client-name{
+  color:$mainColor;
+}
+
+.liner-big{
+  background: $mainColor;
+}
+
+.liner{
+  background: $mainColor;
+}
+.liner-dark{
+  /*	background: $dark;*/
+}
+.liner-white{
+  background: $white;
+}
+.about-head, .portfolio-head{
+  background: $mainColor;
+}
+
+div#portfolio_thumbs ul {
+  background: $altSubColor;
+}
+.feature-block-top{
+  background: $subColor;
+}
+.feature-block-top-alt{
+  background: $mainColor;
+}
+.feature-block-bottom{
+  background: $mainColor;
+}
+.feature-block-bottom-alt{
+  background: $subColor;
+}
+.feature-expansion p{
+  border-top: solid 10px $mainColor;;
+}
+.team-block, .memebers-team{
+  background: $altMainColor;
+}
+.team-block-alt{
+  background: $dark;
+}
+.team-block > h6 > span{
+  color:$mainColor;
+}
+.cifras {
+  background-color: $subColor;
+}
+
+.services-head{
+  background: $altMainColor;
+  margin:50px 0 20px 0; /*AGREGADO POR ALEJANDRA 20-4-17*/
+}
+.service-short{
+  background: $altMainColor;
+}
+.service-short-icon{
+  background: $mainColor;
+}
+.service-short-info > h2{
+  color:$white;
+}
+.service-short-info > p{
+  color:$grey;
+}
+.service-short-info > h5 > span, .project-info-tag > span{
+  border: solid 1px $mainColor;
+  color:$mainColor;
+}
+
+.service-info .plan-tag > span{
+  background: $mainColor;
+  color:$white;
+}
+.preview-wrap{
+  background: $subColor;
+}
+ul#portfolioFilter li {
+  color:$white;
+}
+ul#portfolioFilter li:hover {
+  color:$dark;
+}
+ul#portfolioFilter li{
+  color: $white;
+  border:solid 1px $white;
+}
+ul#portfolioFilter li.active-filter {
+  color: $dark;
+  background:$white;
+}
+
+#item_content {
+  background:$white;
+}
+
+#item_slider .flex-direction-nav li a {
+  background: $mainColor;
+}
+
+#item_slider .flex-direction-nav li a:hover {
+  background: $dark;
+}
+
+.item_info{
+  background: $mainColor;
+}
+.item_info_alt{
+  background: $subColor;
+}
+
+
+.parallax-layer h3{
+  color:$dark;
+}
+.liner-center{
+  background: $mainColor;
+}
+
+
+.team-block > .team-thumb{
+  border: solid 3px $mainColor;
+}
+
+
+.contact-mail-wrap{
+  background: $altSubColor;
+}
+
+.contact-form-wrap, .contact-head{
+  background: $altMainColor;
+}
+
+.contact-mail{
+  color:$mainColor;
+}
+.contact-mail:hover{
+  color:$white;
+}
+
+.contact .alert{
+  color:$white;
+  border: solid 1px $mainColor;
+}
+
+.tweet-panel{
+  background: $white ;
+}
+
+.tweet_list li a:hover {
+  color: $mainColor;
+}
+.owl-theme .owl-controls .owl-buttons div{
+  background: $dark;
+}
+.owl-theme .owl-controls .owl-buttons div:hover{
+  background: $mainColor;
+}
+
+
+.project-head, .pricing-head{
+  background: $mainColor;
+}
+
+.btn-saga-color{
+  border:solid 2px $mainColor;
+  color: $mainColor;
+}
+.btn-saga-color:hover{
+  border:solid 2px $mainColor;
+  background: $mainColor;
+}
+
+
+.intro-02-carousel .scroll{
+  color: $mainColor !important;
+}
+
+.intro-04-carousel .owl-controls .owl-buttons div{
+  background: transparent !important;
+  border: solid 2px $mainColor;
+}
+.intro-04-carousel  .owl-controls .owl-buttons div:hover{
+  background: $mainColor !important;
+  color: $white !important;
+}
+
+
+.intro-05{
+  background: $altSubColor;
+}
+.intro-05 p > span{
+  background: $mainColor;
+}
+
+
+.intro-06-carousel .scroll{
+  color: $white !important;
+}
+
+
+.intro-06-carousel h4 > span{
+  background: $mainColor;
+}
+
+
+.intro-06-carousel .scroll{
+  border-top: solid 2px $mainColor;
+  border-bottom: solid 2px $mainColor;
+}
+
+.intro-07-vimeo-bg h4 > span{
+  background: $mainColor;
+}
+.intro-08-youtube-bg h4 > span{
+  background: $mainColor;
+}
+
+.intro-13-carousel h3 > span{
+  color: $mainColor;
+}
+
+.highlighted{
+  border: solid 1px $mainColor;
+}
+
+.avatar{
+  border: solid 8px $mainColor;
+}
+
+.testimonial-user > span{
+  border: solid 1px $mainColor;
+}
+
+.intro-15-carousel h3 > span{
+  border-bottom: solid 2px $mainColor;
+}
+
+
+
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* SUBMENÚ */
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+
+.navbar{
+  margin-bottom: 0px;
+}
+
+.navbar-planeta{
+  background-color: $altMainColor;
+  border-color: $subColor;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: $mainColor;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  background-color: $subColor;
+  color: $mainColor;
+}
+
+.dropdown-menu > li {
+  line-height: 1.9; /*AGREGADO POR ALEJANDRA 08-5-17*/
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  text-decoration: none;
+  color: $mainColor;
+  background-color: $altSubColor;
+}
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+  color: $mainColor;
+  text-decoration: none;
+  outline: 0;
+  background-color: $altSubColor;
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    border-radius: 0px;
+  }
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* SUBMENÚ MEGA */
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+.mega-dropdown {
+  position: static !important;
+  /*width: 100%;*/
+}
+
+.mega-dropdown-menu {
+  padding: 20px 0px;
+  width: 60%;
+  /*  box-shadow: none;
+    -webkit-box-shadow: none;*/
+}
+
+.mega-dropdown-menu:before {
+  content: "";
+  border-bottom: 15px solid #fff;
+  border-right: 17px solid transparent;
+  border-left: 17px solid transparent;
+  position: absolute;
+  top: -15px;
+  left: 182px;
+  z-index: 10;
+}
+
+.mega-dropdown-menu:after {
+  content: "";
+  border-bottom: 17px solid #ccc;
+  border-right: 19px solid transparent;
+  border-left: 19px solid transparent;
+  position: absolute;
+  top: -17px;
+  left: 180px;
+  z-index: 8;
+}
+
+
+.mega-dropdown-menu > li > ul {
+  padding: 0;
+  margin: 0;
+}
+
+.mega-dropdown-menu > li > ul > li {
+  list-style: none;
+}
+
+.mega-dropdown-menu > li > ul > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #333333;
+  white-space: normal;
+}
+
+.mega-dropdown-menu > li ul > li > a:hover,
+.mega-dropdown-menu > li ul > li > a:focus {
+  text-decoration: none;
+  color: $mainColor;
+  background-color: $altSubColor;
+}
+
+.mega-dropdown-menu .dropdown-header, /*AGREGADO POR ALEJANDRA 27-4-17*/
+.mega-dropdown-menu .dropdown-header a {
+  color: $mainColor;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.mega-dropdown-menu .dropdown-header a {
+  color: $mainColor;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left:-20px; /*AGREGADO POR ALEJANDRA 27-4-17*/
+}
+
+/*AGREGADO POR ALEJANDRA 27-4-17*/
+.mega-dropdown-menu .dropdown-subheader,
+.mega-dropdown-menu .dropdown-subheader a {
+  color: $subColor;
+  font-size: 16px;
+  font-weight: bold;
+  margin-left:20px;
+}
+
+.mega-dropdown-menu .dropdown-subheader a {
+  margin-left:-20px;
+}
+
+/* */
+
+.mega-dropdown-menu form {
+  margin: 3px 20px;
+}
+
+.mega-dropdown-menu .form-group {
+  margin-bottom: 3px;
+}
+
+
+
+
+.breadcrumb-item+.breadcrumb-item::before {
+  display: inline-block;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  color: $mainColor;
+  content: "/";
+  font-weight: bold;
+}
+
+
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* SUBMENÚ BIG */
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+.big-dropdown {
+  position: static !important;
+}
+
+.big-dropdown-menu {
+  padding: 20px 0px;
+  width: 60%;
+  top:auto;
+  left:auto;
+  /*  box-shadow: none;
+    -webkit-box-shadow: none;*/
+}
+
+
+
+.big-dropdown-menu > li > ul {
+  padding: 0;
+  margin: 0;
+}
+
+.big-dropdown-menu > li > ul > li {
+  list-style: none;
+}
+
+.big-dropdown-menu > li > ul > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #333333;
+  white-space: normal;
+}
+
+
+
+.big-dropdown-menu > li ul > li > a:hover,
+.big-dropdown-menu > li ul > li > a:focus {
+  text-decoration: none;
+  color: $mainColor;
+  background-color: $altSubColor;
+}
+
+.big-dropdown-menu .dropdown-header, /*AGREGADO POR ALEJANDRA 20-4-17*/
+.big-dropdown-menu .dropdown-header a {
+  color: $mainColor;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.big-dropdown-menu .dropdown-header a {
+  margin-left:-20px; /*AGREGADO POR ALEJANDRA 25-4-17*/
+}
+
+.big-dropdown-menu form {
+  margin: 3px 20px;
+}
+
+.big-dropdown-menu .form-group {
+  margin-bottom: 3px;
+}
+
+
+
+/*NUEVAS CLASES PARA AGREGAR*/
+
+h1, h2, h3, h4, h5, h6 {
+  font-family:"acumin-pro-extra-condensed", sans-serif;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.tabla {
+  width: 100%;
+  font-size: 17px;
+  background-color: $white;
+  border-style: solid;
+  border-collapse: collapse;
+  border: 1px solid;
+  border-color: $altMainColor;
+}
+
+.tabla td, th {
+  border: 1px solid;
+  border-color: $altMainColor;
+}
+
+.tabla td, th {
+  text-align: center;
+  padding: 8px 3px;
+}
+
+.tabla th {
+  background-color: $subColor;
+  color: $white;
+  font-weight:600;
+}
+
+.tabla tr:nth-child(odd) {
+  background-color:$altSubColor;
+}
+
+
+a:not(.white) {
+  color:$subColor;
+  font-weight:bold;
+}
+
+a:hover {
+  color:$mainColor;
+  text-decoration:underline;
+}
+
+.main-nav a{
+  font-weight:300;
+  color:$dark;
+
+}
+
+.btn-default {
+  color: $white;
+  background-color: $altMainColor;
+  border-color: $altMainColor;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+  color: $dark;
+  background-color: $altSubColor;
+  border-color: $altMainColor;
+
+}
+
+.btn-primary {
+  color: $white;
+  background-color: $mainColor;
+  border-color: $altMainColor;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: $dark;
+  background-color: $altSubColor;
+  border-color: $altMainColor;
+
+}
+
+/*BOOTSTRAP AGREGADO 3.3.7*/
+
+.embed-responsive {
+  position: relative;
+  display: block;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.embed-responsive .embed-responsive-item,
+.embed-responsive iframe,
+.embed-responsive embed,
+.embed-responsive object,
+.embed-responsive video {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.embed-responsive-16by9 {
+  padding-bottom: 56.25%;
+}
+.embed-responsive-4by3 {
+  padding-bottom: 75%;
+}
+
+.nav-seccion {
+  background-color: $altSubColor;
+}
+
+div.item_info p {
+  color:$white;
+  line-height:1;
+  padding:5px;
+  margin:0;
+
+
+}
+
+div.item_info {
+  margin-bottom:15px;
+}
+
+
+.large-menu {
+  width:600px;
+  background-color: #83E065;
+}
+
+
+.photo-menu {
+  padding:0 6px;
+}
+
+.photo-menu img {
+  width:100%;
+}
+
+.well {
+  margin:8px;
+}
+
+.thumbnail {
+  margin:8px;
+}
+
+.navbar-nav .btn {
+  margin-right:6px;
+
+}
+
+/*Agregado por Alejandra 18-4-2017*/
+
+@media (max-width: 767px) {
+
+  .navbar-nav .open .dropdown-menu {
+    background-color: $altSubColor !important;
+    font-size: 1.5em;
+  }
+
+  .navbar-nav .open .dropdown-menu a{
+    color:$mainColor !important;
+  }
+
+  .navbar-nav .open .dropdown-menu a:hover,
+  .navbar-nav .open .dropdown-menu a:focus {
+    color:$subColor !important;
+  }
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: $mainColor !important;
+}

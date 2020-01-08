@@ -1,0 +1,61 @@
+<div class='nested-fields'>
+
+  <% # OCUPA: ecorregion de  * habitat %>
+  <%= f.simple_fields_for :ecorregion do |info| %>
+    <%= render partial: 'fichas/taxa/seccion_ambiente/form_ambiente_ecorregion', locals: { f: info }  %>
+  <% end %>
+
+  <hr class="espacio_ficha">
+  <%= link_to_add_association '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Asociar un ecosistema'.html_safe,
+                              f,
+                              :ecosistema,
+                              partial: 'fichas/taxa/seccion_ambiente/form_ambiente_ecosistema',
+                              :class => 'btn btn-info btn-sm',
+                              role: 'tab',
+                              "data-toggle" => 'tab',
+                              "aria-controls" => 'ambiente',
+                              'data-association-insertion-node' => '#ambiente_ecosistema',
+                              'data-association-insertion-method' => 'append',
+                              href: '#ambiente'
+  %>
+
+  <hr />
+  ECOSISTEMAS:
+  <div id="ambiente_ecosistema">
+    <%= f.simple_fields_for :ecosistema do |info| %>
+      <%= render partial: 'fichas/taxa/seccion_ambiente/form_ambiente_ecosistema', locals: { f: info }  %>
+    <% end %>
+  </div>
+  ---- FIN
+
+  <%= f.input :tipoVegetacion %>
+  <%= f.input :habitatAgropecuario %>
+  <%= f.input :zonaUrbana %>
+  <%= f.input :VegetacionSecundaria %>
+  <%= f.input :tipoVegetacionSecundaria %>
+  <%= f.input :intervaloaltitudinalinicial %>
+  <%= f.input :infoAddintervaloaltitudinal %>
+  <%= f.input :tipoClimaId %>
+  <%= f.input :climaAdicional %>
+  <%= f.input :temperaturainicial %>
+  <%= f.input :infoaddtemperatura %>
+  <%= f.input :precipitacioninicial %>
+  <%= f.input :infoaddprecipitacion %>
+  <%= f.input :humedadinicial %>
+  <%= f.input :infoaddhumedad %>
+  <%= f.input :descripcionSuelo %>
+
+  <hr class="espacio_ficha">
+  <%= f.simple_fields_for :suelo do |info| %>
+    <%= render partial: 'fichas/taxa/seccion_ambiente/form_ambiente_suelo', locals: { f: info }  %>
+  <% end %>
+
+  <hr class="espacio_ficha">
+  <%= f.simple_fields_for :geoforma do |info| %>
+    <%= render partial: 'fichas/taxa/seccion_ambiente/form_ambiente_geoforma', locals: { f: info }  %>
+  <% end %>
+
+  <hr class="espacio_ficha">
+  <%= f.input :descripcionGeoforma
+  %>
+</div>

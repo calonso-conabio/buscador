@@ -9,4 +9,7 @@ class Fichas::Demografiaamenazas < Ficha
 	has_many :relDemografiasAmenazas, class_name: 'Fichas::Reldemografiaamenazas', :foreign_key => 'demografiaAmenazasId'
 	has_many :amenazaDirecta, class_name: 'Fichas::Amenazadirecta', through: :relDemografiasAmenazas
 
+	accepts_nested_attributes_for :interaccion, allow_destroy: true
+	accepts_nested_attributes_for :amenazaDirecta, allow_destroy: true
+
 end

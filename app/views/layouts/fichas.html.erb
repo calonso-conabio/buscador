@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es"
+      xmlns:fb="http://www.facebook.com/2008/fbml"
+      xmlns:og="http://ogp.me/ns#">
+<head>
+  <meta http-equiv="content-type" content="text/html" charset="UTF-8"/>
+  <meta name="keywords" content="<%= yield :meta_keywords %>">
+  <title><%= yield :title %></title>
+  <%= favicon_link_tag '/favicon.ico' %>
+
+  <script type="text/javascript" data-turbolinks-track="true">
+      TYPES = eval("<%=raw CategoriaTaxonomica.categorias_redis %>");
+      IP = "<%= IP %>";
+      PORT = "<%= PORT %>";
+  </script>
+
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'fichas/fichas', 'data-turbolinks-track' => true %>
+
+
+  <script type="text/javascript" data-turbolinks-track="true">
+      I18n.defaultLocale = "<%= CONFIG.default_locale.to_s %>";
+      I18n.locale = "<%= I18n.locale %>";
+      I18n.fallbacks = true;
+  </script>
+
+  <%= stylesheet_link_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'fichas.css', 'data-turbolinks-track' => true %>
+
+  <%= csrf_meta_tags %>
+  <%= yield :extrahead %>
+  <%= yield :extracss %>
+  <%= yield :extrajs %>
+</head>
+<body>
+
+<%= yield :ribbon %>
+
+<header class="container-fluid">
+  <%= render :partial => 'shared/brandBar' %>
+</header>
+
+<header class="container-fluid">
+  <%= yield :extra_title_header %>
+</header>
+
+<section id="content" class="container-fluid">
+  <div class="row main">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <%= yield %>
+    </div>
+  </div>
+</section>
+
+<footer class="social">
+  <%= render :partial => 'shared/footer_social' %>
+</footer>
+
+<footer class="legal">
+  <%= render :partial => 'shared/footer_legal' %>
+</footer>
+
+<%= yield :extrajs_carrusel %>
+
+<% if Rails.env.production?  %>
+    <script src="http://bdi.conabio.gob.mx/fotoweb/googleAnalytics.js"></script>
+<% end %>
+
+<%= yield :delayedjs %>
+</body>
+</html>

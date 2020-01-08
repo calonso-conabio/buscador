@@ -1,4 +1,4 @@
-<%= select_tag :nivel, options_for_select(Busqueda::NIVEL_CATEGORIAS, (params[:nivel].present? ? params[:nivel] : '>=')), :class => 'form-control' %>
+<%= select_tag :nivel, options_for_select(Busqueda::NIVEL_CATEGORIAS, (params[:nivel].present? ? params[:nivel] : '=')), :class => 'form-control' %>
 <% if (params[:cat].present? && params[:cat] != '') %>
     <%= select_tag :cat, options_for_select(@categorias.collect{ |u| [u.nombre_categoria_taxonomica, u.nivel] },params[:cat]), :class => 'form-control' %>
 <% else %>

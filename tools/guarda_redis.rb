@@ -34,9 +34,13 @@ def guarda_redis
   end
 end
 
+def testUno
+  puts "TestUno"
+end
 
 start_time = Time.now
 
-guarda_redis
+#guarda_redis
+testUno
 
 puts "Termino en #{Time.now - start_time} seg" if OPTS[:debug]

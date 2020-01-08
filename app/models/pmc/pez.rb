@@ -23,7 +23,7 @@ class Pmc::Pez < ActiveRecord::Base
   scope :nombres_cientificos_peces, -> { select(:especie_id).select("nombre_cientifico as label")}
   scope :nombres_comunes_peces, -> { select(:especie_id).select("nombres_comunes as label")}
 
-  attr_accessor :guardar_manual, :anio, :valor_por_zona, :nombre
+  attr_accessor :guardar_manual, :anio, :valor_por_zona, :nombre, :importada, :nacional_importada, :en_riesgo, :veda_perm_dep
 
   validates_presence_of :especie_id
   after_save :actualiza_pez, unless: :guardar_manual
@@ -71,9 +71,9 @@ class Pmc::Pez < ActiveRecord::Base
     criterio_propiedades.select('propiedades.*, valor').cnp.where('anio=?', anio).each do |propiedad|
       zona_num = propiedad.parent.nombre_zona_a_numero  # Para obtener la posicion de la zona
 
-      if propiedad.nombre_propiedad == 'No se distribuye'  # Quitamos la zona
+      if propiedad.nombre_propiedad == 'No se distribuye' && !importada  # Quitamos la zona
         self.valor_por_zona[zona_num] = 'n'
-      elsif propiedad.nombre_propiedad == 'Estatus no definido' # La zona se muestra en gris
+      elsif propiedad.nombre_propiedad == 'Estatus no definido' && !importada && !nacional_importada && !en_riesgo && !veda_perm_dep  # La zona se muestra en gris
         self.valor_por_zona[zona_num] = 's'  # Por si se arrepienten
       else
         self.valor_por_zona[zona_num] = valor_por_zona[zona_num] + propiedad.valor
@@ -240,13 +240,14 @@ class Pmc::Pez < ActiveRecord::Base
   def valor_zona_a_color
     valor_por_zona.each_with_index do |zona, i|
       next unless zona.class == Integer # Por si ya tiene asignada una letra
+      next if i == 6  # Para dejar el valor de nacional o importado
 
       case zona
       when -5..4
         self.valor_por_zona[i] = 'v'
       when 5..19
         self.valor_por_zona[i] = 'a'
-      when 20..100
+      when 20..200
         self.valor_por_zona[i] = 'r'
       end
     end
@@ -284,14 +285,32 @@ class Pmc::Pez < ActiveRecord::Base
 
     propiedades = criterio_propiedades.select('valor').where('anio=?', anio)
     valor+= propiedades.tipo_capturas.map(&:valor).inject(:+).to_i
-    valor+= propiedades.tipo_vedas.map(&:valor).inject(:+).to_i
-    valor+= propiedades.procedencias.map(&:valor).inject(:+).to_i
-    valor+= propiedades.nom.map(&:valor).inject(:+).to_i
-    valor+= propiedades.iucn.map(&:valor).inject(:+).to_i
+
+    # Para la veda permanente o deportiva
+    veda = propiedades.tipo_vedas.map(&:valor).inject(:+).to_i
+    valor+= veda
+    self.veda_perm_dep = true if veda >= 20
+
+    # Para la nom
+    nom = propiedades.nom.map(&:valor).inject(:+).to_i
+    valor+= nom
+    self.en_riesgo = true if nom >= 20
+
+    # Para la iucn
+    iucn = propiedades.iucn.map(&:valor).inject(:+).to_i
+    valor+= iucn
+    self.en_riesgo = true if iucn >= 20
+
+    # Para la procedencia, si es un caso especial en caso de ser importado
+    procedencia_texto = criterio_propiedades.procedencias.first.try(:nombre_propiedad)
+    procedencia = propiedades.procedencias.map(&:valor).inject(:+).to_i
+    valor+= procedencia
+
+    self.importada = true if procedencia >= 20 && procedencia_texto == 'Importado (huella ecológica alta)'
+    self.nacional_importada = true if procedencia >= 20 && procedencia_texto == 'Nacional e Importado (huella ecológica alta)'
 
     # Para asignar el campo con_estrella que se asocia a las pesquerias sustentables
     pesquerias = propiedades.pesquerias.map(&:valor).inject(:+).to_i
-    #valor+= pesquerias
 
     if pesquerias != 0
       self.con_estrella = 1
@@ -300,5 +319,13 @@ class Pmc::Pez < ActiveRecord::Base
     end
 
     self.valor_por_zona = Array.new(6, valor)
+
+    # Quiere decir que es importado
+    if importada
+      self.valor_por_zona << 0
+    else
+      self.valor_por_zona << 1
+    end
   end
+
 end

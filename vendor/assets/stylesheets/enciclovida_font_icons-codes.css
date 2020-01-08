@@ -19,12 +19,12 @@
 .crustacea-ev-icon:before { content: '\e811'; } /* '' */
 .plantae-ev-icon:before { content: '\e812'; } /* '' */
 .bryophyta-ev-icon:before { content: '\e813'; } /* '' */
-.pteridophyta-ev-icon:before { content: '\e814'; } /* '' */
-.cycadophyta-ev-icon:before { content: '\e815'; } /* '' */
-.gnetophyta-ev-icon:before { content: '\e816'; } /* '' */
-.liliopsida-ev-icon:before { content: '\e817'; } /* '' */
-.coniferophyta-ev-icon:before { content: '\e818'; } /* '' */
-.magnoliopsida-ev-icon:before { content: '\e819'; } /* '' */
+.polypodiidae-ev-icon:before { content: '\e814'; } /* '' */
+.cycadidae-ev-icon:before { content: '\e815'; } /* '' */
+.anthocerotophyta-ev-icon:before { content: '\e816'; } /* '' */
+.lilianae-ev-icon:before { content: '\e817'; } /* '' */
+.pinidae-ev-icon:before { content: '\e818'; } /* '' */
+.magnoliidae-ev-icon:before { content: '\e819'; } /* '' */
 .fungi-ev-icon:before { content: '\e81a'; } /* '' */
 .prokaryotae-ev-icon:before { content: '\e81b'; } /* '' */
 .protoctista-ev-icon:before { content: '\e81c'; } /* '' */
@@ -60,7 +60,7 @@
 .menor-ev-icon:before { content: '\e83a'; } /* '' */
 .dulceacuicola-ev-icon:before { content: '\e83b'; } /* '' */
 .newspaper-ev-icon:before { content: '\e83c'; } /* '' */
-.cobi-ev-icon:before { content: '\e83d'; } /* '' */
+.cobi-1-ev-icon:before { content: '\e83d'; } /* '' */
 .doc-text-ev-icon:before { content: '\e83e'; } /* '' */
 .busqueda-avanzada-ev-icon:before { content: '\e83f'; } /* '' */
 .file-pdf-ev-icon:before { content: '\e840'; } /* '' */
@@ -113,5 +113,7 @@
 .cornell_lab_yellow-ev-icon:before { content: '\e86f'; } /* '' */
 .macaulay_library-ev-icon:before { content: '\e870'; } /* '' */
 .bdi-ev-icon:before { content: '\e871'; } /* '' */
+.cobi-ev-icon:before { content: '\e872'; } /* '' */
+.importado-ev-icon:before { content: '\e873'; } /* '' */
 .circle-ev-icon:before { content: '\f111'; } /* '' */
 .copyright-ev-icon:before { content: '\f1f9'; } /* '' */

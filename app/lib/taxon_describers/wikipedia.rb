@@ -1,7 +1,9 @@
 module TaxonDescribers
   
   class Wikipedia < Base
+
     def describe(taxon)
+      puts "entrando al taxon de wikipedia "
       #title = taxon.wikipedia_title
       title = taxon.nombre_cientifico.limpiar.limpia# if title.blank?
       decoded = ''

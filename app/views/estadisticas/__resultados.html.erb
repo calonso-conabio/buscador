@@ -1,0 +1,32 @@
+
+<div id="cargando-estadistica">
+  <p class="text-center">
+    <i class="spin3-ev-icon animate-spin" style="font-size: 3em; color: rgba(128, 0, 0, 0.75);"></i>
+  <h4>Cargando... Por favor, espera</h4>
+  </p>
+</div>
+
+<div id="estadistica-listo">
+  <div id="grp">
+    <div id="sequence"></div>
+    <div id="chart">
+      <a id="botonRegresaEstadistica"><span class="glyphicon glyphicon-arrow-left"></span></a>
+      <div id="explanation" style="visibility: hidden;">
+        <span id="percentage"></span><br/>
+        <p id="estadistica"></p>
+      </div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+        // START: Función que comenzará a dibujar la gráfica en la vista, recibe las estadisticas en un formato generado por Rails
+        start(<%=raw @totales_estadisticas.to_json %>);
+    </script>
+  </div>
+
+  <div id="resultados" class="text-left">
+    <h4>
+      El total de taxónes es: <%= @totales.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %>
+    </h4>
+  </div>
+</div>
+
+

@@ -1,0 +1,20 @@
+dataset_available, start_year, end_year, date_time_point, publication_year, latitude, longitude, quitar los NA de
+estos campos que son ints por NULL
+Quitar los saltos de linea en todo el csv, comando de replace directo en excel
+Volver a guardar por separador | y delimitador ~
+Quitar todas las comillas dobles con vi
+Correr comando para crear los inserts:
+awk -F"|" '{print "("$1","$2","$3",`"$4"`,`"$5"`,`"$6"`,`"$7"`,"$8",`"$9"`,`"$10"`,`"$11"`,`"$12"`,"$13","$14","$15",`"$16"`,`"$17"`,`"$18"`,`"$19"`,`"$20"`,"$21",`"$22"`,`"$23"`,`"$24"`,`"$25"`,`"$26"`,`"$27"`,"$28","$29",`"$30"`,`"$31"`,`"$32"`,`"$33"`),"}' metamares_formateado.csv > metamares_tabla.sql
+Poner la cabecera de los datos y poner un ; al final
+INSERT INTO metadata (mmid,c_id,d_id,short_title,keywords,author,institution,dataset_available,subject_name,area,region,location,start_year,end_year,data_time_points,unit_type,temporal_resolution,spatial_resolution,dataset_title,compilation_title,publication_year,reference,user_contact,institution_type,research_fund,research_field,notes,lat,lon,se_interaction,science,fishing_region,common_name) VALUES
+
+:1,$ s/'/''/g
+:1,$ s/`/'/g
+
+Antes de meterlo a la base, poner: max_allowed_packet=1GB
+
+
+UPDATE regiones SET nombre_region='B Camp Caribe' WHERE nombre_region='B. Camp. Caribe';
+UPDATE regiones SET nombre_region='Freshwater_Terrestrial' WHERE nombre_region='Freshwater/Terrestrial';
+UPDATE regiones SET nombre_region='G California' WHERE nombre_region='G. California';
+UPDATE regiones SET nombre_region='W G Mexico' WHERE nombre_region='W. G. Mexico';

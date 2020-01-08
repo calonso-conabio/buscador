@@ -1,9 +1,9 @@
 class MacaulayService
 
-  def dameMedia_nc(taxonNC, type, page=1)
+  def dameMedia_nc(taxonNC, type, page=1, min_page_size = 20)
     cornell = CONFIG.cornell.api
 
-    url = "#{cornell}sciName=#{taxonNC.limpiar.gsub(' ','+')}&assetFormatCode=#{type}&taxaLocale=es&page=#{page}&pageSize=20"
+    url = "#{cornell}sciName=#{taxonNC.limpiar.gsub(' ','+')}&assetFormatCode=#{type}&taxaLocale=es&page=#{page}&pageSize=#{min_page_size}"
     url_escape = URI.escape(url)
     uri = URI.parse(url_escape)
     req = Net::HTTP::Get.new(uri.to_s)

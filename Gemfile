@@ -15,6 +15,7 @@ gem 'delayed_job'
 gem 'delayed_job_mongoid'
 gem 'delayed-web'
 gem 'devise'
+gem 'docx'
 gem 'exifr'
 gem 'fontello_rails_converter'
 gem 'formtastic'
@@ -32,7 +33,7 @@ gem 'pg'
 gem 'puma', '~> 3.7'  # Use Puma as the app server
 gem 'rack-contrib'
 gem 'rack-google-analytics'
-gem 'rails', '5.1.6.1'
+gem 'rails', '5.1.6.2'
 gem 'railties'
 gem 'rake'
 gem 'recaptcha', :require => 'recaptcha/rails'  # Con el api de google
@@ -53,7 +54,10 @@ gem 'uglifier'
 gem 'wash_out'
 gem 'whenever', :require => false
 gem 'wicked_pdf'
+gem 'will_paginate', '~> 3.1.0'
 gem 'zip-zip' # Needed by axlsx
+
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

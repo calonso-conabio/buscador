@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'texgyreadventorregular';
+  src: url('/fonts/texgyreadventor-regular-webfont.ttf') format('truetype'),
+  url('/fonts/texgyreadventor-regular-webfont.eot'),
+  url('/fonts/texgyreadventor-regular-webfont.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/texgyreadventor-regular-webfont.woff') format('woff'),
+  url('/fonts/texgyreadventor-regular-webfont.svg#texgyreadventorregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'opensans';
+  src: url('/fonts/opensans-regular-webfont.ttf') format('truetype'),
+  url('/fonts/opensans-regular-webfont.eot'),
+  url('/fonts/opensans-regular-webfont.woff') format('woff'),
+  url('/fonts/opensans-regular-webfont.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'acumin-pro-extra-condensed';
+  src: url('/fonts/acumin-pro-extra-condensed.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+body{
+  background-color: #fafafa;
+}
+#brandBar, footer.legal{padding: 15px 0;}
+#brandBar{background-color: #333333;}
+footer.legal{background-color: #f3f3f3;}
+
+#content{
+  padding: 30px 10px;
+}
+#pestañas div.panel-body {
+  background-color: #f7f2d930;
+  border-left: 1px solid #d3d3d3;
+  filter: drop-shadow(3px 3px 3px #cecece);
+}
+#brandBar .dropdown {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1001;
+}
+.vista-general-ev-icon, .vista-especialista-ev-icon{font-size: 1.5em!important; color: #555555;}
+
+.conabio-ev-icon:before, .conabio_completo-ev-icon:before{
+  width: 4em!important;
+  font-size: 3.5em;
+  color: #f7f7f7;
+  margin: 0;
+}
+
+.soulmate-type-suggestions li{
+  padding: 1em 0;
+  min-height: 125px;
+}
+#soulmate{
+  margin: 0px;
+  right: 0px;
+  width: 50%;
+}

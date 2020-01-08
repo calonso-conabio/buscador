@@ -1,0 +1,6 @@
+<div class='nested-fields'>
+  <%= f.input :proyecto_id, as: :hidden %>
+  <%= f.input :nombre_keyword, required: true, input_html: { onclick: 'dameKeyword($(this))', autocomplete: :off } %>
+
+  <%= link_to_remove_association 'Borrar asociación', f, :class => 'btn btn-danger btn-sm' %>
+</div>

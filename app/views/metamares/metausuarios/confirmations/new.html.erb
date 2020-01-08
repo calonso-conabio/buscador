@@ -1,0 +1,13 @@
+<h1 class="text-center">Reenviar el correo para la confirmación de tu cuenta</h1>
+
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+  <%= devise_error_messages! %>
+  <div class="form-group form-inline text-center">
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+    <%= f.submit :Enviar , class: 'btn btn-success'%>
+  </div>
+<% end %>
+
+<hr />
+<%= render "metamares/metausuarios/shared/links" %>

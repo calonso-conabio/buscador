@@ -1,13 +1,3 @@
 module InicioHelper
-
-  def dameNews
-    issues = Hash.new
-    ws = GithubService.new
-
-    ws.dame_issues.each  do |x|
-      issues.merge!({x['title'] => x['body'].html_safe})
-    end
-    issues
-  end
-
+##TODO se conserva el archivo en caso de que sea necesario, si despues del rediseño no se utiliza, hay q borrarlo @albertoglezba
 end

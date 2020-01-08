@@ -2,16 +2,15 @@ var limpiaBusqueda = function(){
     var controles = ".porGrupo input, .porSemaforo input, .porZonas input, .porNombreGrupo input, .porNombreGrupo select, .porCriterios input, .porCriterios select";
     var visuales = ".porGrupo span, .porSemaforo span, .porZonas span, .porZonas path, .porCriterios span";
     var inputsALimpiar = $(controles + ", " + visuales);
-    $('input, select, span, path').removeClass("disabled zona-seleccionada");
-    $("#id, #nombre").val('');
+    inputsALimpiar.attr("disabled", false).removeClass("disabled zona-seleccionada").prop("checked", false);
+    $("#id, #nombre, .porNombreGrupo input, .porNombreGrupo select").val('');
 };
 
 var bloqueaBusqueda = function(){
     var controles = ".porGrupo input, .porSemaforo input, .porZonas input, .porNombreGrupo select, .porCriterios input, .porCriterios select";
     var visuales = ".porGrupo span, .porSemaforo span, .porZonas span, .porZonas path, .porCriterios span";
     var inputsABloquear = $(controles + ", " + visuales);
-    inputsABloquear.attr("disabled", true).addClass("disabled");
-    inputsABloquear.prop("checked", false);
+    inputsABloquear.attr("disabled", true).addClass("disabled").prop("checked", false);
 };
 
 $(document).ready(function(){
@@ -50,6 +49,7 @@ $(document).ready(function(){
         input.prop("checked", !input.prop("checked"));
     });
 
+
     $(".porZonas input").each(function(index, item){
         if($(item).prop('checked')){
             $('#path_' + item.id).addClass('zona-seleccionada');
@@ -57,6 +57,9 @@ $(document).ready(function(){
     });
 
     $("html,body").animate({scrollTop: 105}, 500);
+
+    if($('#id').val()!=''){bloqueaBusqueda();}
+
 });
 
 var scroll_array = false;

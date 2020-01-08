@@ -1,0 +1,37 @@
+<%= simple_form_for @directorio, **@form_params, wrapper: :horizontal_form, wrapper_mappings: {
+    boolean:       :horizontal_boolean,
+    check_boxes:   :horizontal_collection,
+    file:          :horizontal_file,
+    radio_buttons: :horizontal_collection,
+    range:         :horizontal_range,
+    #time:          :custom_multi_select,
+    select:        :horizontal_collection
+    #date:          :horizontal_multi_select,
+    #datetime:      :horizontal_multi_select,
+    #select:        :floating_labels_select
+} do |f| %>
+
+  <% if @directorio.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@directorio.errors.count, 'error') %> prohibieron que el pez se guardara:</h2>
+
+      <ul>
+        <% @directorio.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.input :tema_estudio %>
+  <%= f.input :linea_investigacion %>
+  <%= f.input :region_estudio %>
+  <%= f.input :cargo %>
+  <%= f.input :grado_academico %>
+  <%= f.input :telefono %>
+  <%= f.input :pagina_web %>
+
+  <%= f.submit class: 'btn btn-lg btn-block btn-success' %>
+  <%= link_to t('helpers.submit.usuario.cancel'), metamares_proyectos_path, { :class=>"btn btn-lg btn-block btn-default" } %>
+
+<% end %>

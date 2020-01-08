@@ -1,22 +1,21 @@
 <div style="background-color: #b7bfa2; font-size: 16px; font-family: 'Arial', sans-serif; width: 100%; color: #333333;">
   <div style="background-color: #333333; padding: 20px; min-height: 100px; color: #bababa; float: left;">
     <div style="width: 30%; float: left; padding: 0; min-height: 1px;">
-      <img src="http://enciclovida.mx/logoEnciclovidaCorreo.png" style="display: block; max-width: 100%; height: auto;">
-      <!--img src="http://enciclovida.mx/assets/correo/logoEnciclovidaCorreo.png" style="display: block; max-width: 100%; height: auto;"-->
+      <img src="<%= CONFIG.site_url %>imagenes/correo/logoEnciclovidaCorreo.png" style="display: block; max-width: 100%; height: auto;">
     </div>
-    <div style="width: 30%; float: left; padding: 0 10px; min-height: 1px;">
-      <p style="font-size: 1.2em; font-weight: bold; text-align: center;">Gracias por utilizar el servicio de comentarios de EncicloVida</p>
-    </div>
-    <div style="width: 30%; float: right; padding: 0; min-height: 1px;">
-      <img src="http://enciclovida.mx/logoConabioCorreo.png" style="display: block; max-width: 100%; height: auto;">
-      <!--img src="http://enciclovida.mx/assets/correo/logoConabioCorreo.png" style="display: block; max-width: 100%; height: auto;"-->
 
+    <div style="width: 30%; float: left; padding: 0 10px; min-height: 1px;">
+      <p style="font-size: 1.2em; font-weight: bold; text-align: center;">Gracias por utilizar Enciclovida</p>
+    </div>
+
+    <div style="width: 30%; float: right; padding: 0; min-height: 1px;">
+      <img src="<%= CONFIG.site_url %>imagenes/correo/logoConabioCorreo.png" style="display: block; max-width: 100%; height: auto;">
     </div>
   </div>
 
   <div style="padding: 0 20px; float: left">
-    <%= @correos.inspect unless Rails.env.production? %>
     <%= yield %>
   </div>
-  <img src="http://enciclovida.mx/assets/portada/bosqueEncabezado.png" style="width: 100%;">
+
+  <img src="<%= CONFIG.site_url %>imagenes/correo/bosqueEncabezado.png" style="width: 100%;">
 </div>

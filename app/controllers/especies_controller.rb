@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class EspeciesController < ApplicationController
 
   skip_before_action :set_locale, only: [:create, :update, :edit_photos, :comentarios, :fotos_referencia,
@@ -9,7 +11,8 @@ class EspeciesController < ApplicationController
                                      :descripcion_catalogos, :comentarios, :fotos_bdi, :videos_bdi,
                                      :fotos_referencia, :fotos_naturalista, :nombres_comunes_naturalista,
                                      :nombres_comunes_todos, :ejemplares_snib, :ejemplar_snib, :cambia_id_naturalista,
-                                     :dame_nombre_con_formato, :noticias, :media_tropicos]
+                                     :dame_nombre_con_formato, :noticias, :media_tropicos,:bhl]
+
   before_action :only => [:arbol, :arbol_nodo_inicial, :arbol_nodo_hojas, :arbol_identado_hojas] do
     set_especie(true)
   end
@@ -24,7 +27,7 @@ class EspeciesController < ApplicationController
                           :arbol, :arbol_nodo_inicial, :arbol_nodo_hojas, :arbol_identado_hojas, :comentarios,
                           :fotos_referencia, :fotos_bdi, :videos_bdi, :media_cornell, :media_tropicos, :fotos_naturalista, :nombres_comunes_naturalista,
                           :nombres_comunes_todos, :ejemplares_snib, :ejemplar_snib, :observacion_naturalista,
-                          :cambia_id_naturalista, :dame_nombre_con_formato, :noticias]
+                          :cambia_id_naturalista, :dame_nombre_con_formato, :noticias,:bhl]
 
   # Pone en cache el webservice que carga por default
   caches_action :describe, :expires_in => eval(CONFIG.cache.fichas), :cache_path => Proc.new { |c| "especies/#{c.params[:id]}/#{c.params[:from]}" }, :if => :params_from_conabio_present?
@@ -544,6 +547,7 @@ class EspeciesController < ApplicationController
 
   # Viene de la pestaña de la ficha
   def describe
+    puts "entrando al controlador de wikipedia"
     @describers = if CONFIG.taxon_describers
                     CONFIG.taxon_describers.map{|d| TaxonDescribers.get_describer(d)}.compact
                   elsif @especie.iconic_taxon_name == "Amphibia" && @especie.especie_o_inferior?
@@ -565,6 +569,7 @@ class EspeciesController < ApplicationController
         break unless @description.blank?
       end
     end
+
 =begin
     if @describers.include?(TaxonDescribers::Wikipedia) && @especie.wikipedia_summary.blank?
       @taxon.wikipedia_summary(:refresh_if_blank => true)
@@ -760,6 +765,24 @@ class EspeciesController < ApplicationController
   end
 
 
+  #editar para poner informacion de bhl y crear vista
+  def bhl
+
+    @TotalMostrar = 10
+    puts "entrando al controlador de BHL"
+    @bhlControl = BhlService.new
+    pagina = @bhlControl.rescuApi(@especie.nombre_cientifico)
+
+    @BhlInfo = JSON.parse(pagina)
+    @TamanioTotal = @BhlInfo["Result"].length
+
+
+    #Test de paginado
+    @NuevoBHL = @BhlInfo["Result"].each_slice(10).to_a
+    @SegundoNuevoBHL = @BhlInfo["Result"].paginate(:page => params[:page], :per_page => 10)
+
+  end
+
   def show_bioteca_record_info
 
     # Variable fianl que contendrá los detalles de X ficha seleccionada
@@ -913,7 +936,8 @@ class EspeciesController < ApplicationController
       # Responder con la plantilla hecha
       respond_to do |format|
         format.html {
-          render :partial => 'bioteca_records'
+          #render :partial => 'bioteca_records'
+          render '_bioteca_records'
         }
       end
     else
@@ -931,12 +955,16 @@ class EspeciesController < ApplicationController
       if id_millon = Adicional.where(idMillon: params[:id]).first
         @especie = Especie.find(id_millon.especie_id)
       else  # Tampoco era el ID de millon
-        render :_error and return
+        if params[:action] == 'show' && params[:format] == 'json'
+          render json: {} and return
+        else
+          render :_error and return
+        end
       end
     end
 
     # Si llego aqui quiere decir que encontro un id en la centralizacion valido
-    @especie.servicios if params[:action] == 'show'
+    @especie.servicios if params[:action] == 'show' && params[:format].blank?
 
     # Por si no viene del arbol, ya que no necesito encontrar el valido
     if !arbol
@@ -946,7 +974,7 @@ class EspeciesController < ApplicationController
         if estatus.length == 1  # Nos aseguramos que solo haya un valido
           begin
             @especie = Especie.find(estatus.first.especie_id2)
-            redirect_to especie_path(@especie)
+            #redirect_to especie_path(@especie)
           rescue
             render :_error and return
           end

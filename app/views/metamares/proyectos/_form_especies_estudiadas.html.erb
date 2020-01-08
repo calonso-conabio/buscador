@@ -1,0 +1,7 @@
+<div class='nested-fields'>
+  <%= f.input :proyecto_id, as: :hidden %>
+  <%= f.input :nombre_cientifico %>
+  <%= f.input :especie_id, as: :hidden %>
+
+  <%= link_to_remove_association "Borrar asociación", f, :class => 'btn btn-danger btn-sm' %>
+</div>

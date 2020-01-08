@@ -1,0 +1,64 @@
+<script data-turbolinks-track="true">
+    $(document).ready(function(){
+        // Asigna el soulmate a la caja nombre
+        // soulmateAsigna('avanzada');
+    });
+
+</script>
+
+<div class="col-xs-12">
+  <fieldset>
+    <legend><h5 class="text-primary"><strong>Filtros de estadísticas</strong></h5></legend>
+    <div>
+      <%= selectEstadisticas.html_safe %>
+    </div>
+    <br>
+    <div class="">
+      <%= valorResultado.html_safe %>
+    </div>
+  </fieldset>
+</div>
+
+<div class="col-xs-12">
+  <fieldset>
+    <legend>
+      <h5 class="btn btn-link" id="por_nombre_fuente"><i class="glyphicon glyphicon-chevron-left"></i><strong>Ir a búsqueda por nombre </strong></h5>
+      <h5 class="btn btn-link" id="por_gi_fuente" style="display: none;"><strong>Ir a búsqueda por grupo icónico </strong><i class="glyphicon glyphicon-chevron-right"></i></h5>
+    </legend>
+    <div class="form-group radio" id="por_gi">
+      <%= radioGruposIconicos.html_safe %>
+    </div>
+
+    <div class="form-group" id="por_nombre" style="display: none;">
+      <%= text_field_tag :nombre, nil, :maxlength => 255, :placeholder => 'Escribe un nombre común o científico ...', :autocomplete => :off, :class => 'form-control', :value => params[:busqueda] == 'avanzada' ? params[:nombre_comun] : nil %>
+    </div>
+    <%= hidden_field_tag :busqueda, :avanzada %>
+    <%= hidden_field_tag :id, nil %>
+  </fieldset>
+
+  <div id="panelCategoriaTaxonomicaPt" style="display: none;">
+    <fieldset>
+      <legend><h5 class="text-primary"><strong>Categoria taxonómica</strong></h5></legend>
+    </fieldset>
+    <div id="datos_cat"></div>
+  </div>
+</div>
+
+<div class="col-xs-12">
+  <fieldset>
+    <legend><h5 class="text-primary"><strong>Categorías de riesgo y comercio internacional</strong></h5></legend>
+    <div class="checkbox">
+      <%= checkboxEstadoConservacion.html_safe %>
+    </div>
+  </fieldset>
+</div>
+
+<div class="col-xs-12">
+  <fieldset>
+    <legend><h5 class="text-primary"><strong>Tipo de distribución</strong></h5></legend>
+    <div class="checkbox">
+      <%= checkboxTipoDistribucion.html_safe %>
+    </div>
+  </fieldset>
+</div>
+
