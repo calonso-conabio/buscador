@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-MX" lang="es-MX">
+<head>
+  <meta http-equiv="content-type" content="text/html" charset="UTF-8"/>
+  <meta name="keywords" content="<%= yield :meta_keywords %>">
+  <title><%= yield :title %></title>
+  <%= favicon_link_tag '/favicon.ico' %>
+
+  <%= javascript_include_tag 'application_b4', 'data-turbolinks-track': true %>
+  <%= javascript_include_tag 'admin/admin', 'data-turbolinks-track': true %>
+
+  <script type="text/javascript" data-turbolinks-track="true">
+      TYPES = eval("<%=raw CategoriaTaxonomica.categorias_redis %>");
+      IP = "<%= IP %>";
+      PORT = "<%= PORT %>";
+  </script>
+
+  <script type="text/javascript" data-turbolinks-track="true">
+      I18n.defaultLocale = "<%= CONFIG.default_locale.to_s %>";
+      I18n.locale = "<%= I18n.locale %>";
+      I18n.fallbacks = true;
+  </script>
+
+  <%= stylesheet_link_tag 'boots4-upgrade/application_b4', 'data-turbolinks-track': true %>
+
+  <%= csrf_meta_tags %>
+  <%= yield :extrahead %>
+  <%= yield :extracss %>
+  <%= yield :extrajs %>
+</head>
+
+<body>
+<%= yield :ribbon %>
+
+<header class="container-fluid">
+  <%= render :partial => 'shared_b4/brandBar' %>
+  <%= yield :extra_title_header %>
+</header>
+
+<section id="content" class="container-fluid">
+  <div class="row main">
+    <%= yield %>
+  </div>
+</section>
+
+<footer class="container-fluid">
+  <%= render :partial => 'shared_b4/footer_social' %>
+  <%= render :partial => 'shared_b4/footer_legal' %>
+</footer>
+
+<%= yield :delayedjs %>
+</body>
+</html>

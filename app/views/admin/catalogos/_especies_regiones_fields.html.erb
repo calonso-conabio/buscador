@@ -1,0 +1,14 @@
+<div class='nested-fields'>
+  <%= f.input :especie_id, as: :hidden, required: true %>
+  <%= f.input :catalogo_id, as: :hidden, required: true %>
+  <%= f.input :region_id, required: true %>
+
+  <%= f.simple_fields_for :bibliografias do |biblio| %>
+    <%= render partial: 'especies_regiones_bibliografias_fields', locals: { f: biblio } %>
+  <% end %>
+
+  <%= link_to_add_association('Asocia una bibliografía por región', f, :bibliografias, partial: 'especies_regiones_bibliografias_fields') %>
+  <%= link_to_remove_association 'Desvincula la región', f, { class: 'float-right' } %>
+
+  <br />
+</div>

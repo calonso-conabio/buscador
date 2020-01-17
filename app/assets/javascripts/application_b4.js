@@ -17,7 +17,7 @@
 //= require jquery_ujs
 //= require boots4-upgrade/jquery-ui.min
 //= require boots4-upgrade/bootstrap.bundle
-//3 require lib/scrolling
+// require lib/scrolling
 //= require lib/jquery.soulmate
 //= require lib/jquery.bootpag.min
 //= require turbolinks

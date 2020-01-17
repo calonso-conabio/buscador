@@ -33,7 +33,7 @@ module ApplicationHelper
       case params[:render]
       when 'title'
         nombre_cientifico.sanitize.gsub(/[<b><\/b>]/,'').html_safe
-      when 'link'
+      when 'link', 'link-inline'
         "<b><i>#{link_to nombre_cientifico.sanitize, especie_path(taxon), link_params}</i></b> #{taxon.nombre_autoridad} #{estatus}".html_safe
       when 'header'
         "<h3>#{cat_taxonomica unless taxon.especie_o_inferior?}#{nombre_cientifico} #{taxon.nombre_autoridad} #{estatus}</h3>".html_safe
@@ -58,6 +58,8 @@ module ApplicationHelper
         "<h3>#{nombre_comun}#{'<br />' if nombre_comun.present?}#{cat_taxonomica unless taxon.especie_o_inferior?}#{nombre_cientifico}</h3>".html_safe
       when 'inline'
         nombre_cientifico.html_safe
+      when 'link-inline'
+        "#{nombre_comun} <b><i>#{link_to nombre_cientifico.sanitize.html_safe, especie_path(taxon), link_params}</i></b>".html_safe
       else
         "#{nombre_comun}#{'<br />' if nombre_comun.present?}#{nombre_cientifico}".html_safe
       end

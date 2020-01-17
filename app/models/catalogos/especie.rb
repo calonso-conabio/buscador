@@ -294,7 +294,7 @@ nombre_autoridad, estatus").categoria_taxonomica_join }
       cat = esp_cat.catalogo
       next unless cat.es_catalogo_permitido?
       nombre_catalogo = cat.dame_nombre_catalogo
-      biblio_cita_completa = esp_cat.especies_catalogos_bibliografias.where(catalogo_id: cat.id).map { |b| b.bibliografia.cita_completa }
+      biblio_cita_completa = esp_cat.bibliografias.where(catalogo_id: cat.id).map { |b| b.bibliografia.cita_completa }
       seccion = nombre_catalogo.estandariza.to_sym
 
       resp[seccion] = { nombre_catalogo: nombre_catalogo, datos: [] } unless resp[seccion].present?

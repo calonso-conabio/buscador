@@ -1,0 +1,27 @@
+<div class='nested-fields'>
+
+  <% if @index > -1 %>
+    <% nombre_cientifico = @admin_catalogos[0].especies_catalogo[@index].especie.nombre_cientifico %>
+    <%= f.input :nombre_cientifico, input_html: { value: nombre_cientifico, disabled: '' } %>
+  <% else %>
+    <%= f.input :nombre_cientifico, as: :search, input_html: { class: 'ncient-soulmate' } %>
+  <% end %>
+
+  <%= f.input :especie_id, as: :hidden, required: true %>
+  <%= f.input :catalogo_id, as: :hidden, required: true %>
+
+  <%= f.simple_fields_for :bibliografias do |biblio| %>
+    <%= render partial: 'especies_bibliografias_fields', locals: { f: biblio } %>
+  <% end %>
+
+  <%= f.simple_fields_for :regiones do |region| %>
+    <%= render partial: 'especies_regiones_fields', locals: { f: region } %>
+  <% end %>
+
+  <%= link_to_add_association('Asocia una bibliografía', f, :bibliografias, partial: 'especies_bibliografias_fields') %>
+  <br />
+  <%= link_to_add_association('Asocia una región', f, :regiones, partial: 'especies_regiones_fields') %>
+  <%= link_to_remove_association 'Desvincula la especie', f, { class: 'float-right' } %>
+
+</div>
+

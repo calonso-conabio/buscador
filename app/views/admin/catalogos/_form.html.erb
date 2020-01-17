@@ -1,0 +1,67 @@
+<% content_for(:delayedjs) do %>
+  <%= javascript_include_tag 'admin/catalogos/catalogos_extra', 'data-turbolinks-track' => true %>
+<% end %>
+
+<% content_for(:extracss) do %>
+  <% if I18n.locale.to_s != 'es-cientifico' %>
+    <style type="text/css" data-turbolinks-track="true">
+      .soulmate-type-suggestions li{
+        padding: 1em 0;
+        min-height: 125px;
+      }
+    </style>
+  <% end %>
+<% end %>
+
+<%= simple_form_for @admin_catalogo, **@form_params, wrapper: :horizontal_form, wrapper_mappings: {
+    boolean:       :horizontal_boolean,
+    check_boxes:   :horizontal_collection,
+    file:          :horizontal_file,
+    radio_buttons: :horizontal_collection,
+    range:         :horizontal_range,
+    #time:          :custom_multi_select,
+    select:        :horizontal_collection
+    #date:          :horizontal_multi_select,
+    #datetime:      :horizontal_multi_select,
+    #select:        :floating_labels_select
+} do |f| %>
+
+  <% if @admin_catalogo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@admin_catalogo.errors.count, 'error') %> prohibieron que el uso se guardara:</h2>
+
+      <ul>
+        <% @admin_catalogo.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.input :descripcion, input_html: {} %>
+  <%= f.input :nivel1 %>
+  <%= f.input :nivel2 %>
+  <%= f.input :nivel3 %>
+  <%= f.input :nivel4 %>
+  <%= f.input :nivel5 %>
+
+  <h3>Especies asociadas</h3>
+  <div>
+    <% @index = 0 %>
+    <%= f.simple_fields_for :especies_catalogo do |especie| %>
+      <%= render partial: 'especies_fields', locals: { f: especie } %>
+      <% @index+= 1 %>
+    <% end %>
+
+    <% @index = -1 %>
+    <%= link_to_add_association 'Asocia una especie', f, :especies_catalogo, partial: 'especies_fields' %>
+  </div>
+
+  <hr />
+
+  <div class="col-4">
+    <%= f.submit class: 'btn btn-lg btn-block btn-success' %>
+    <%= link_to t('helpers.submit.admin_catalogo.cancel'), @admin_catalogo.new_record? ? admin_catalogos_path : admin_catalogo_path(@admin_catalogo), { :class=>"btn btn-lg btn-block btn-secondary" } %>
+  </div>
+
+<% end %>

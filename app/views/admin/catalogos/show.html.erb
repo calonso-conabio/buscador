@@ -1,0 +1,13 @@
+<h3><%= @admin_catalogo.descripcion %></h3>
+<p id="notice"><%= notice %></p>
+
+<ol>
+  <% @admin_catalogo.especies.select_basico.left_joins(:adicional, :categoria_taxonomica).order(:nombre_cientifico).each do |especie| %>
+    <li><%= tituloNombreCientifico(especie, {render: 'link-inline'},{target: :_blank}) %></li>
+  <% end %>
+</ol>
+
+<%= link_to 'Edit', edit_admin_catalogo_path(@admin_catalogo) %> |
+<%= link_to 'Back', admin_catalogos_path %>
+
+
