@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190424232856) do
+ActiveRecord::Schema.define(version: 20191128201908) do
 
   create_table "adicionales", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "especie_id", null: false
@@ -113,10 +113,10 @@ ActiveRecord::Schema.define(version: 20190424232856) do
     t.index ["estadistica_id"], name: "idx_especies_estadistica_estadistica_id"
   end
 
-  create_table "estadisticas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "estadisticas", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "descripcion_estadistica"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "listas", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(version: 20190424232856) do
     t.datetime "updated_at"
     t.string "geoserver_info"
     t.string "tropico_id"
+    t.integer "eol_id"
   end
 
   create_table "relacionCentralizacion", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
