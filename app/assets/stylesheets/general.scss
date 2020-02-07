@@ -149,7 +149,7 @@ footer.legal p {
   background-image: -o-linear-gradient(top, #eeeeee, #fafafa);
 }
 /*para los iconitos de la busqueda básica*/
-#brandBar .btn-title[tooltip-title]:hover:after {
+#brandBar .btn-title[tooltip-title]:hover:after, .caracteristica-distribucion-ambiente-taxon.btn-title[tooltip-title]:hover:after {
   left: initial;
   right: 50%;
   top: 95%;
@@ -260,8 +260,13 @@ ul.social-buttons li a:active {
 .probablemente-extinta-en-el-medio-silvestre-e-ev-icon:after { content: '\e824';}
 
 .nom:after, .sujeta-a-proteccion-especial-pr-ev-icon:after, .amenazada-a-ev-icon:after, .en-peligro-de-extincion-p-ev-icon:after, .probablemente-extinta-en-el-medio-silvestre-e-ev-icon:after {color: #444444; margin-left: -1.2em;}
-
 /*Termina NOM-059*/
+
+/* Evaluación CONABIO*/
+[class$="evaluacion-conabio-ev-icon"], [class*="evaluacion-conabio-ev-icon "]{
+  color: #800000;
+}
+/* Termina Evaluación CONABIO*/
 
 /* IUCN*/
 .iucn, .riesgo-bajo-lr-preocupacion-menor-lc-ev-icon:before,.riesgo-bajo-lr-casi-amenazado-nt-ev-icon:before,.vulnerable-vu-ev-icon:before, .en-peligro-en-ev-icon:before, .en-peligro-critico-cr-ev-icon:before, .extinto-en-estado-silvestre-ew-ev-icon:before, .extinto-ex-ev-icon:before{color: #de2302;}

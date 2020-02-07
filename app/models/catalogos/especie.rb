@@ -263,26 +263,32 @@ nombre_autoridad, estatus").categoria_taxonomica_join }
 
   # REVISADO: Para sacar los nombres de las categorias de IUCN, NOM, CITES, ambiente y prioritaria, regresa un array con los valores
   def nom_cites_iucn_ambiente_prioritaria(opc={})
-    response = []
+    # Se ponen en grupos para poder meterles espacios cuando se despliegan en el show
+    response = { grupo1: [], grupo2: [], grupo3: [], grupo4: [] }
 
-    response << {'NOM-059-SEMARNAT 2010' => catalogos.nom.map(&:descripcion).uniq}
+    response[:grupo2] << {'NOM-059-SEMARNAT 2010' => catalogos.nom.map(&:descripcion).uniq}
+
+    response[:grupo2] << {'Evaluación CONABIO' => catalogos.evaluacion_conabio.map do |cat|
+      cat.descripcion + ' Evaluación CONABIO'
+    end }
 
     if opc[:iucn_ws]
       iucn_ws = IUCNService.new.dameRiesgo(:nombre => nombre_cientifico, id: id)
 
       if iucn_ws.present?
-        response << {'IUCN Red List of Threatened Species 2017-1' => [iucn_ws]}
+        response[:grupo2] << {'IUCN Red List of Threatened Species 2017-1' => [iucn_ws]}
       else
-        response << {'IUCN Red List of Threatened Species 2017-1' => catalogos.iucn.map(&:descripcion).uniq}
+        response[:grupo2] << {'IUCN Red List of Threatened Species 2017-1' => catalogos.iucn.map(&:descripcion).uniq}
       end
 
     else
-      response << {'IUCN Red List of Threatened Species 2017-1' => catalogos.iucn.map(&:descripcion).uniq}
+      response[:grupo2] << {'IUCN Red List of Threatened Species 2017-1' => catalogos.iucn.map(&:descripcion).uniq}
     end
 
-    response << {'CITES 2016' => catalogos.cites.map(&:descripcion)}
-    response << {'Prioritarias DOF 2014' => catalogos.prioritarias.map(&:descripcion)}
-    response << {'Tipo de ambiente' => catalogos.ambientes.map(&:descripcion)}
+    response[:grupo3] << {'CITES 2016' => catalogos.cites.map(&:descripcion)}
+    response[:grupo4] << {'Prioritarias DOF 2014' => catalogos.prioritarias.map(&:descripcion)}
+    response[:grupo4] << {'Tipo de ambiente' => catalogos.ambientes.map(&:descripcion)}
+
     response
   end
 

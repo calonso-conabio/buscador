@@ -8,19 +8,24 @@
   <h6><strong><%= link_to "Categoría internacional de riesgo", 'http://www.biodiversidad.gob.mx/especies/catRiesMundo.html' %></strong><br /><small><%=t(:iucn)%></small></h6>
   <%= botones[:iucn].join("\n").html_safe %>
 </div>
-<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center" id="TipoDistribucion">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center" id="IUCN">
+  <h6><strong>Evaluación de riesgo realizada por CONABIO</strong></h6>
+  <%= botones[:evaluacion_conabio].join("\n").html_safe %>
+</div>
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 text-center" id="TipoDistribucion">
   <h6><strong>Tipo de distribución: </strong></h6>
   <%= botones[:tipoDistribucion].join("\n").html_safe %>
 </div>
-<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center" id="Prioritaria">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 text-center" id="Prioritaria">
   <h6><strong><%= link_to "Prioritarias para la conservación", 'http://dof.gob.mx/nota_detalle.php?codigo=5334865&fecha=05/03/2014' %></strong><br /><small>SEMARNAT 2014</small></h6>
   <%= botones[:prioritaria].join("\n").html_safe %>
 </div>
-<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center" id="CITES">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 text-center" id="CITES">
   <h6><strong><%= link_to "Protegidas del comercio internacional", 'http://www.biodiversidad.gob.mx/especies/catRiesComInt.html' %></strong><br /><small><%=t(:cites)%></small></h6>
   <%= botones[:cites].join("\n").html_safe %>
 </div>
-<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center" id="Ambiente">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 text-center" id="Ambiente">
   <h6><strong>Ambiente</strong></h6>
   <%= botones[:ambiente].join("\n").html_safe %>
 </div>

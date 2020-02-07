@@ -180,10 +180,10 @@ class EspeciesController < ApplicationController
           @describers.each do |d|
             @describer = d
             @description = begin
-              d.equal?(TaxonDescribers::EolEs) ? d.describe(@especie, :language => 'es') : d.describe(@especie)
-            rescue OpenURI::HTTPError, Timeout::Error => e
-              nil
-            end
+                             d.equal?(TaxonDescribers::EolEs) ? d.describe(@especie, :language => 'es') : d.describe(@especie)
+                           rescue OpenURI::HTTPError, Timeout::Error => e
+                             nil
+                           end
             break unless @description.blank?
           end
         end
@@ -558,10 +558,10 @@ class EspeciesController < ApplicationController
       @describers.each do |d|
         @describer = d
         @description = begin
-          d.equal?(TaxonDescribers::EolEs) ? d.describe(@especie, :language => 'es') : d.describe(@especie)
-        rescue OpenURI::HTTPError, Timeout::Error => e
-          nil
-        end
+                         d.equal?(TaxonDescribers::EolEs) ? d.describe(@especie, :language => 'es') : d.describe(@especie)
+                       rescue OpenURI::HTTPError, Timeout::Error => e
+                         nil
+                       end
         break unless @description.blank?
       end
     end
@@ -582,10 +582,10 @@ class EspeciesController < ApplicationController
       describers.each do |describer|
 
         sumamry = begin
-          describer.get_summary(@especie)
-        rescue OpenURI::HTTPError, Timeout::Error => e
-          nil
-        end
+                    describer.get_summary(@especie)
+                  rescue OpenURI::HTTPError, Timeout::Error => e
+                    nil
+                  end
 
         break unless sumamry.blank?
       end
@@ -943,17 +943,25 @@ class EspeciesController < ApplicationController
   private
 
   def set_especie(arbol = false)
-    begin  # Coincidio y es el ID de la centralizacion
-      @especie = Especie.find(params[:id])
-    rescue   #si no encontro el taxon, puede ser el ID viejo de millones
-      if id_millon = Adicional.where(idMillon: params[:id]).first
-        @especie = Especie.find(id_millon.especie_id)
-      else  # Tampoco era el ID de millon
-        if params[:action] == 'show' && params[:format] == 'json'
-          render json: {} and return
-        else
-          render :_error and return
-        end
+    id = params[:id].split('-').first
+
+    if id.numeric?  # Quiere decir que es un ID de la centralizacion o del antiguo de millones
+      begin
+        @especie = Especie.find(id)  # Coincidio y es el ID de la centralizacion
+      rescue
+        id_millon = Adicional.where(idMillon: id).first
+        @especie = Especie.find(id_millon.especie_id) if id_millon  # Es el ID viejo de millones
+      end
+
+    elsif idCAT = Scat.where(catalogo_id: id).first
+      @especie = idCAT.especie  # Es el IdCAT de la tabla SCAT
+    end
+
+    unless @especie.present?
+      if params[:action] == 'show' && params[:format] == 'json'
+        render json: {} and return
+      else
+        render :_error and return
       end
     end
 

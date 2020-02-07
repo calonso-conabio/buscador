@@ -16,6 +16,7 @@
 .porifera-ev-icon:before { content: '\e80e'; } /* '' */
 .echinodermata-ev-icon:before { content: '\e80f'; } /* '' */
 .mollusca-ev-icon:before { content: '\e810'; } /* '' */
+.vulnerable-vu-evaluacion-conabio-ev-icon:before { content: '\e811'; } /* '' */
 .plantae-ev-icon:before { content: '\e812'; } /* '' */
 .bryophyta-ev-icon:before { content: '\e813'; } /* '' */
 .polypodiidae-ev-icon:before { content: '\e814'; } /* '' */
@@ -75,6 +76,7 @@
 .peces-mariscos-comerciales-ev-icon:before { content: '\e84a'; } /* '' */
 .datos-ecologicos-ev-icon:before { content: '\e84b'; } /* '' */
 .flow-cascade-ev-icon:before { content: '\e84c'; } /* '' */
+.sujetas-a-proteccion-especial-pr-evaluacion-conabio-ev-icon:before { content: '\e84d'; } /* '' */
 .conabio-ev-icon:before { content: '\e84e'; } /* '' */
 .ev1-ev-icon:before { content: '\e84f'; } /* '' */
 .vida-ev-icon:before { content: '\e850'; } /* '' */
@@ -115,5 +117,14 @@
 .importado-ev-icon:before { content: '\e873'; } /* '' */
 .semaforo-moderado-ev-icon:before { content: '\e874'; } /* '' */
 .chondrichthyes-ev-icon:before { content: '\e875'; } /* '' */
+.preocupacion-menor-lc-evaluacion-conabio-ev-icon:before { content: '\e876'; } /* '' */
+.extinto-ex-evaluacion-conabio-ev-icon:before { content: '\e877'; } /* '' */
+.extinto-en-estado-silvestre-ew-evaluacion-conabio-ev-icon:before { content: '\e878'; } /* '' */
+.en-peligro-en-evaluacion-conabio-ev-icon:before { content: '\e879'; } /* '' */
+.en-peligro-de-extincion-p-evaluacion-conabio-ev-icon:before { content: '\e87a'; } /* '' */
+.en-peligro-critico-cr-evaluacion-conabio-ev-icon:before { content: '\e87b'; } /* '' */
+.datos-insuficientes-dd-evaluacion-conabio-ev-icon:before { content: '\e87c'; } /* '' */
+.casi-amenazado-nt-evaluacion-conabio-ev-icon:before { content: '\e87d'; } /* '' */
+.amenazada-a-evaluacion-conabio-ev-icon:before { content: '\e87e'; } /* '' */
 .circle-ev-icon:before { content: '\f111'; } /* '' */
 .copyright-ev-icon:before { content: '\f1f9'; } /* '' */
