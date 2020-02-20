@@ -15,9 +15,7 @@ var cargaGrupos = function()
             var grupos_orden = [resp.resultados[5],resp.resultados[1],resp.resultados[9],resp.resultados[0],
                 resp.resultados[6],resp.resultados[4], resp.resultados[7],resp.resultados[3],resp.resultados[2],resp.resultados[8]];
             $.each(grupos_orden, function(index, prop){
-                $('#contenedor_grupos').append('<label><input type="radio" name="id">' +
-                    '<span><span tooltip-title="' + prop.grupo + '" class="'+  prop.icono+' grupo_id btn-title" grupo="'+prop.grupo+
-                    '" reino="' + prop.reino + '"></span></span><small grupo_id_badge="'+ prop.grupo + '"> ' + prop.total +  '</small></label>');
+                $('#contenedor_grupos').append('<label tooltip-title="' + prop.grupo + '" class="grupo_id" grupo="'+prop.grupo+'" reino="' + prop.reino + '"><input type="radio" name="id">' + '<span><span class="'+  prop.icono+' btn-title" ></span></span><small grupo_id_badge="'+ prop.grupo + '"> ' + prop.total +  '</small></label>');
             });
         } else
             console.log('Falló el servicio de conteo del SNIB');

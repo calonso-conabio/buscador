@@ -108,16 +108,25 @@ header {
   font-size: 22px;
   color: #000000;
 }
-
+#especies-destacadas h5, #promo-evida h5{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+#promo-evida{
+  max-height: 350px;
+}
 #especies-destacadas div.col{
   background-repeat: no-repeat !important;
   background-attachment: local;
   background-size: cover;
   background-position: center center;
-  transition: all 0.4s ease-out;
+  transition: all 0.25s ease-in-out;
 }
 #especies-destacadas div.col a {
-  height: 550px;
+  min-height: 400px;
+  height: auto;
   width: 100%;
 }
 

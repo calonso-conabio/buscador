@@ -40,7 +40,7 @@ var soulmateAsigna = function(tipo_busqueda, elem)
             });
 
             if(data.geodatos != undefined && data.geodatos.length > 0){
-                iconos = iconos + "<span class='btn-title' tooltip-title='Tiene datos geográficos'><i class='glyphicon glyphicon-globe'></i></span>";
+                iconos = iconos + "<span class='btn-title' tooltip-title='Tiene datos geográficos'><i class='fa fa-globe'></i></span>";
             }
 
             if(data.fotos > 0) {

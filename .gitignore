@@ -65,6 +65,9 @@ db/metamares/metamares.mwb.bak
 db/metamares/migracion_base/metamares*csv
 db/metamares/migracion_base/metamares*sql
 db/metamares/migracion_base/*sql
+db/metamares/migracion_base/version_*
 public/javascripts
 public/IUCN
-
+public/assets/
+tools/naturalista/log/
+log

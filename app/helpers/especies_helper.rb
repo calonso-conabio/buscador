@@ -226,11 +226,18 @@ title='Bibliografía' data-content='#{biblio}'>Bibliografía</a>" if biblio.pres
   # REVISADO: Pone las respectivas categorias de riesgo, distribucion y ambiente en el show de especies
   def ponCaracteristicaDistribucionAmbienteTaxon(taxon)
     response = []
-    caracteristicas = [taxon.tipo_distribucion.values, taxon.nom_cites_iucn_ambiente_prioritaria({iucn_ws: true}).map{|h| h.values}].flatten
+    caracteristicas = taxon.nom_cites_iucn_ambiente_prioritaria({iucn_ws: true})
+    caracteristicas[:grupo1] << taxon.tipo_distribucion
 
-    caracteristicas.each{ |x|
-      response << "<span class='btn-title' title='#{x}'><i class ='#{x.estandariza}-ev-icon'></i></span>"
-    }
+    caracteristicas.each do |g, valores|
+      tiene_valor = false
+      valores.map{ |v| v.values }.flatten.each do |valor|
+        response << "<span class='btn-title caracteristica-distribucion-ambiente-taxon' title='#{valor}'><i class ='#{valor.estandariza}-ev-icon'></i></span>"
+        tiene_valor = true
+      end
+
+      response << "&nbsp;"*5 if tiene_valor  # Espacios para seprar las categorias
+    end
 
     response << "<small class='glyphicon glyphicon-question-sign text-primary ' onclick=\"$('#panelCaracteristicaDistribucionAmbiente').toggle(600,
 'easeOutBounce')\" style='cursor: pointer; margin-left: 10px;'></small>" if response.any?
@@ -244,7 +251,8 @@ title='Bibliografía' data-content='#{biblio}'>Bibliografía</a>" if biblio.pres
     def creaSpan(recurso)
       nombre = recurso.descripcion
       icono  = "<i class = '#{recurso.descripcion.parameterize}-ev-icon'></i>"
-      "<span title='#{nombre}' class='btn-title' alt='#{nombre}'>#{icono}</span>"
+
+      "<span title='#{nombre}' class='btn-title alt='#{nombre}'>#{icono}</span>"
     end
 
     Catalogo.nom_cites_iucn_todos.each do |k, valores|

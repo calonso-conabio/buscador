@@ -135,6 +135,9 @@ module CacheServices
     if Rails.cache.exist?("#{recurso}_#{id}")
       cache = Rails.cache.read("#{recurso}_#{id}")
 
+      r = cache[:created_at] && cache[:expires_in]
+      return false unless r
+
       begin
         (cache[:created_at] + cache[:expires_in]) > Time.now.to_f
       rescue
@@ -804,9 +807,12 @@ module CacheServices
 
     # Caracteristicas de riesgo y conservacion, ambiente y distribucion
     cons_amb_dist = {}
-    caracteristicas = nom_cites_iucn_ambiente_prioritaria(iucn_ws: true) << tipo_distribucion
 
-    caracteristicas.reduce({}, :merge).each do |nombre, valores|
+    caracteristicas = nom_cites_iucn_ambiente_prioritaria({iucn_ws: true})
+    caracteristicas[:grupo1] << tipo_distribucion
+
+    # Paso de la muerte para que solo itere sobre un hash
+    caracteristicas.map { |k,v| v.reduce({}, :merge) }.reduce({}, :merge).each do |nombre, valores|
       next unless valores.any?
 
       valores.each do |valor|

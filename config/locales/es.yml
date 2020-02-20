@@ -339,6 +339,7 @@ es:
     veracruz-de-ignacio-de-la-llave: Ver.
     yucatan: Yuc.
     zacatecas: Zac.
+  evaluacion_conabio: Evaluación CONABIO
   helpers:
     label:
       usuario:
@@ -362,11 +363,11 @@ es:
     cr: En peligro crítico (CR)
     en: En peligro (EN)
     vu: Vulnerable (VU)
-    cd: "Riesgo bajo (LR): Dependiente de conservación (cd)"
+    cd: Dependiente de conservación (cd)
     dd: Datos insuficientes (DD)
     ne: No evaluado (NE)
-    nt: "Riesgo bajo (LR): Casi amenazado (nt)"
-    lc: "Riesgo bajo (LR): Preocupación menor (lc)"
+    nt: Casi amenazado (nt)
+    lc: Preocupación menor (lc)
   keywords: especies, México, consulta, buscador, fichas, imágenes, videos, taxonomía
   lenguas:
     afrikaans: Afrikáans

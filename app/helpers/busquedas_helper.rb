@@ -35,7 +35,7 @@ module BusquedasHelper
   # REVISADO: Filtros para categorías de riesgo y comercio internacional
   def checkboxEstadoConservacion(opciones={})
     opc = @@opciones.merge(opciones)
-    options = @nom_cites_iucn_todos.map{ |k,v| [t(k), v.map{ |val| [val.descripcion, val.id, { class: "#{val.descripcion.estandariza}-ev-icon f-fuentes" }] }] }
+    options = @nom_cites_iucn_todos.map{ |k,v| [t(k), v.map{ |val| [val.descripcion.gsub('-eval',''), val.id, { class: "#{val.descripcion.estandariza}-ev-icon f-fuentes" }] }] }
     select_tag('edo_cons', grouped_options_for_select(options), opc)
   end
 
