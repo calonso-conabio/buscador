@@ -38,8 +38,8 @@
 .probablemente-extinta-en-el-medio-silvestre-e-2-ev-icon:before { content: '\e824'; } /* '' */
 .no-evaluado-ne-ev-icon:before { content: '\e825'; } /* '' */
 .datos-insuficientes-dd-ev-icon:before { content: '\e826'; } /* '' */
-.riesgo-bajo-lr-preocupacion-menor-lc-ev-icon:before { content: '\e827'; } /* '' */
-.riesgo-bajo-lr-casi-amenazado-nt-ev-icon:before { content: '\e828'; } /* '' */
+.preocupacion-menor-lc-ev-icon:before { content: '\e827'; } /* '' */
+.casi-amenazado-nt-ev-icon:before { content: '\e828'; } /* '' */
 .vulnerable-vu-ev-icon:before { content: '\e829'; } /* '' */
 .en-peligro-en-ev-icon:before { content: '\e82a'; } /* '' */
 .en-peligro-critico-cr-ev-icon:before { content: '\e82b'; } /* '' */

@@ -9,7 +9,8 @@ class Admin::CatalogosController < Admin::AdminController
   # GET /admin/catalogos
   # GET /admin/catalogos.json
   def index
-    @admin_catalogos = Admin::Catalogo.usos
+    @admin_catalogo = Admin::Catalogo.new(admin_catalogo_index)
+    @admin_catalogos = @admin_catalogo.query_index
   end
 
   # GET /admin/catalogos/1
@@ -26,7 +27,7 @@ class Admin::CatalogosController < Admin::AdminController
   # GET /admin/catalogos/1/edit
   def edit
     @form_params = {}
-    @admin_catalogos = Admin::Catalogo.includes(especies_catalogo: :especie).where(id: params[:id])
+    @admin_catalogo = Admin::Catalogo.includes(especies_catalogo: [:especie, bibliografias: :bibliografia, regiones: [region: [:tipo_region], bibliografias: :bibliografia]]).where(id: params[:id]).first
   end
 
   # POST /admin/catalogos
@@ -48,7 +49,6 @@ class Admin::CatalogosController < Admin::AdminController
   # PATCH/PUT /admin/catalogos/1
   # PATCH/PUT /admin/catalogos/1.json
   def update
-    #puts admin_catalogo_params.inspect
     respond_to do |format|
       if @admin_catalogo.update(admin_catalogo_params)
         format.html { redirect_to @admin_catalogo, notice: 'Catalogo was successfully updated.' }
@@ -67,6 +67,18 @@ class Admin::CatalogosController < Admin::AdminController
     respond_to do |format|
       format.html { redirect_to catalogos_url }
       format.json { head :no_content }
+    end
+  end
+
+  # El ajax cuando edita los niveles de una catalogo
+  def dame_nivel
+    nivel = params[:nivel]
+    if nivel.present? && (0..5).to_a.include?(nivel.to_i)
+      admin_catalogo = Admin::Catalogo.new(admin_catalogo_niveles_params)
+      admin_catalogo.ajax = true
+      render json: { estatus: true, resultados: admin_catalogo.send("dame_nivel#{nivel.to_i + 1}") }
+    else
+      render json: { estatus: false, msg: 'Parámetros incorrecto' }
     end
   end
 
@@ -139,6 +151,20 @@ class Admin::CatalogosController < Admin::AdminController
     end
 
     p
+  end
+
+  # La lista blanca para el ajax cuando edita los niveles de una catalogo
+  def admin_catalogo_niveles_params
+    params.permit(:nivel1, :nivel2, :nivel3, :nivel4, :nivel5)
+  end
+
+  # La lista blanca para los filtros de especie y nivel1
+  def admin_catalogo_index
+    begin
+      params.require(:admin_catalogo).permit(:especie_id, :nivel1)
+    rescue
+      {}
+    end
   end
 
 end

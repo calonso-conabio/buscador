@@ -1,5 +1,7 @@
 class ValidacionAvanzada < Validacion
 
+  require 'rubyXL/convenience_methods'
+
   attr_accessor :fila
 
   # Si alguna columna se llama diferente, es solo cosa de añadir un elemento mas al array correspondiente

@@ -1,7 +1,15 @@
 <div class='nested-fields'>
   <%= f.input :especie_id, as: :hidden, required: true %>
   <%= f.input :catalogo_id, as: :hidden, required: true %>
-  <%= f.input :bibliografia_id, required: true %>
+  <%= f.input :bibliografia_id, as: :hidden, required: true %>
+
+  <% if @index_biblio > -1 %>
+    <% bibliografia = @admin_catalogo.especies_catalogo[@index].bibliografias[@index_biblio].bibliografia.cita_completa %>
+    <%= f.input :biblio, as: :text, input_html: { value: bibliografia, disabled: '' } %>
+  <% else %>
+    <%= f.input :biblio, as: :text, input_html: { class: 'biblio-autocomplete' } %>
+  <% end %>
+
   <%= link_to_remove_association 'Desvincula la bibliografía', f, { class: 'float-right' } %>
 
   <br />

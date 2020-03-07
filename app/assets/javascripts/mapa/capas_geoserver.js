@@ -27,7 +27,7 @@ var borraCapasAnterioresGeoserver = function()
  */
 var leyendaGeoserver = function()
 {
-    geoserver_control = L.control.layers({}, {}, {collapsed: false, position: 'bottomleft'}).addTo(map);
+    geoserver_control = L.control.layers({}, {}, {collapsed: true, position: 'bottomleft'}).addTo(map);
 
     geoserver_control.addOverlay(distribucionLayer,
         "<b>Distribución potencial<br /> (Geoserver CONABIO)</b>"
@@ -39,16 +39,32 @@ var leyendaGeoserver = function()
  * @param url
  */
 var capaDistribucionGeoserver = function (url) {
-    distribucionLayer = L.tileLayer.wms(url, {
-        layers: opciones.geodatos.geoserver_layer,
-        format: 'image/png',
-        transparent: true,
-        opacity:.5,
-        zIndex: 4
+    var primer_layer = false;
+    distribucionLayer = L.layerGroup([], { zIndex: 100 });
+    geoserver_control = L.control.layers({}, {}, {collapsed: true, position: 'topright'}).addTo(map);
+
+    $.each(opciones.geodatos.geoserver_descargas_url, function (index, datos) {
+        console.log(datos);
+
+        window[datos.id] = L.tileLayer.wms(url, {
+            layers: datos.id,
+            format: 'image/png',
+            transparent: true,
+            opacity: .7,
+            zIndex: 4,
+        });
+
+        distribucionLayer.addLayer(window[datos.id]);
+
+        if(!primer_layer)
+        {
+            map.addLayer(window[datos.id]);
+            //window[datos.id].bringToFront();
+            primer_layer = true;
+        }
+
+        geoserver_control.addOverlay(window[datos.id],
+            "<b>Dist. potencial</b>: " + datos.anio + ' (' + datos.id + ')'
+        );
     });
-
-    map.addLayer(distribucionLayer);
-    leyendaGeoserver();
-
-    distribucionLayer.bringToFront();  // Para desde un inicio que se muestre el mapa de distribucion
 };

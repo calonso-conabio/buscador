@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Admin Bibliografias</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Autor</th>
+      <th>Anio</th>
+      <th>Titulo publicacion</th>
+      <th>Titulo sub publicacion</th>
+      <th>Editorial pais pagina</th>
+      <th>Numero volumen anio</th>
+      <th>Editores compiladores</th>
+      <th>Isbnissn</th>
+      <th>Observaciones</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @admin_bibliografias.each do |admin_bibliografia| %>
+      <tr>
+        <td><%= admin_bibliografia.autor %></td>
+        <td><%= admin_bibliografia.anio %></td>
+        <td><%= admin_bibliografia.titulo_publicacion %></td>
+        <td><%= admin_bibliografia.titulo_sub_publicacion %></td>
+        <td><%= admin_bibliografia.editorial_pais_pagina %></td>
+        <td><%= admin_bibliografia.numero_volumen_anio %></td>
+        <td><%= admin_bibliografia.editores_compiladores %></td>
+        <td><%= admin_bibliografia.isbnissn %></td>
+        <td><%= admin_bibliografia.observaciones %></td>
+        <td><%= link_to 'Show', admin_bibliografia %></td>
+        <td><%= link_to 'Edit', edit_admin_bibliografia_path(admin_bibliografia) %></td>
+        <td><%= link_to 'Destroy', admin_bibliografia, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Admin Bibliografia', new_admin_bibliografia_path %>

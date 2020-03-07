@@ -38,12 +38,12 @@
     </div>
   <% end %>
 
-  <%= f.input :descripcion, input_html: {} %>
-  <%= f.input :nivel1 %>
-  <%= f.input :nivel2 %>
-  <%= f.input :nivel3 %>
-  <%= f.input :nivel4 %>
-  <%= f.input :nivel5 %>
+  <%= f.input :descripcion, label: 'Nombre del catálogo' %>
+  <%= f.input :nivel1, label: 'nivel 1', as: :select, collection: @admin_catalogo.dame_nivel1, include_blank: '- - Selecciona un catálogo - -', input_html: { class: 'select-nivel'} %>
+  <%= f.input :nivel2, label: 'nivel 2', as: :select, collection: @admin_catalogo.dame_nivel2, include_blank: '- - Selecciona un catálogo - -', input_html: { class: 'select-nivel'} %>
+  <%= f.input :nivel3, label: 'nivel 3', as: :select, collection: @admin_catalogo.dame_nivel3, include_blank: '- - Selecciona un catálogo - -', input_html: { class: 'select-nivel'} %>
+  <%= f.input :nivel4, label: 'nivel 4', as: :select, collection: @admin_catalogo.dame_nivel4, include_blank: '- - Selecciona un catálogo - -', input_html: { class: 'select-nivel'} %>
+  <%= f.input :nivel5, label: 'nivel 5', as: :select, collection: @admin_catalogo.dame_nivel5, include_blank: '- - Selecciona un catálogo - -', input_html: { class: 'select-nivel'} %>
 
   <h3>Especies asociadas</h3>
   <div>
@@ -54,7 +54,7 @@
     <% end %>
 
     <% @index = -1 %>
-    <%= link_to_add_association 'Asocia una especie', f, :especies_catalogo, partial: 'especies_fields' %>
+    <%= link_to_add_association 'Asocia una especie', f, :especies_catalogo, partial: 'especies_fields', class: 'btn btn-info', role: 'button', 'data-association-insertion-method': :after %>
   </div>
 
   <hr />

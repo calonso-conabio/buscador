@@ -1,0 +1,39 @@
+<% content_for(:delayedcss) do %>
+  <style type="text/css">
+    .soulmate-type-suggestions li{
+      padding: 1em 0;
+      min-height: 125px;
+    }
+  </style>
+<% end %>
+<% content_for(:delayedjs) do %>
+  <script src="http://www.google.com/jsapi" type="text/javascript" data-turbolinks-track="true"></script>
+  <script data-turbolinks-track="true">
+      // Asigna el soulmate a la caja nombre
+      $(document).ready(function(){soulmateAsigna();});
+  </script>
+<% end %>
+
+
+<%= form_tag busquedas_resultados_url, :method => :get, :id => :basica, :role => 'form' do %>
+  <%= hidden_field_tag :busqueda, :basica %>
+  <%= hidden_field_tag :id %>
+
+  <div class="form-group text-center">
+    <label class="font-weight-bold text-white" for="nombre">Busca entre más de 103 mil especies</label>
+    <%= text_field_tag :nombre, nil, :maxlength => 255, :placeholder => 'Escribe un nombre común o científico ...', :autocomplete => :off, :class => 'form-control form-control-lg', :value => params[:busqueda] == 'nombre_comun' ? params[:nombre_comun] : nil %>
+    <div class="dropdown mt-3">
+      <%= button_tag "Buscar", data: { disable_with: 'Procesando...' },:class => "btn btn-success btn-lg w-25 ", :title=>'Buscar' %>
+      <button class="btn btn-light btn-lg dropdown-toggle w-25" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Más herramientas
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <%= link_to "<i class='busqueda-avanzada-ev-icon mr-3'></i>Avanzada".html_safe, avanzada_url, :class => "dropdown-item", :title => 'Ir a la búsqueda avanzada', data: { turbolinks: false }  %>
+        <%= link_to "<i class='busqueda-region-ev-icon mr-3'></i>Por región".html_safe, explora_por_region_url, :class => "dropdown-item", :title => 'Ir a la búsqueda por región', data: { turbolinks: false }  %>
+        <%= link_to "<i class='peces-mariscos-comerciales-ev-icon mr-3'></i>Peces y mariscos comerciales".html_safe, peces_url, :class => "dropdown-item", :title => 'Ir a la búsqueda de peces y mariscos comerciales', data: { turbolinks: false }  %>
+        <%= link_to "<i class='exotica-invasora-ev-icon mr-3'></i>Especies exóticas invasoras".html_safe, exoticas_invasoras_url, :class => "dropdown-item", :title => 'Ir a la búsqueda de especies exóticas invasoras', data: { turbolinks: false }  %>
+        <%= link_to "<i class='datos-ecologicos-ev-icon mr-3'></i>Datos ecológicos".html_safe, "http://proyecto-species.org/", target: '_blank', :class => "dropdown-item", :title => 'Explora datos ecológicos', data: { turbolinks: false , confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }  %>
+      </div>
+    </div>
+  </div>
+<% end %>

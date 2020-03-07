@@ -5,10 +5,10 @@ class Bibliografia < ActiveRecord::Base
 
   # Los alias con las tablas de catalogos
   alias_attribute :id, :IdBibliografia
-  alias_attribute :onservaciones, :Observaciones
+  alias_attribute :observaciones, :Observaciones
   alias_attribute :autor, :Autor
   alias_attribute :anio, :Anio
-  alias_attribute :titulo_Publicacion, :TituloPublicacion
+  alias_attribute :titulo_publicacion, :TituloPublicacion
   alias_attribute :titulo_sub_publicacion, :TituloSubPublicacion
   alias_attribute :editorial_pais_pagina, :EditorialPaisPagina
   alias_attribute :numero_volumen_anio, :NumeroVolumenAnio

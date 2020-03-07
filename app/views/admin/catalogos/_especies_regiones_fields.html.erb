@@ -1,12 +1,23 @@
 <div class='nested-fields'>
   <%= f.input :especie_id, as: :hidden, required: true %>
   <%= f.input :catalogo_id, as: :hidden, required: true %>
-  <%= f.input :region_id, required: true %>
+  <%= f.input :region_id, as: :hidden, required: true %>
 
-  <%= f.simple_fields_for :bibliografias do |biblio| %>
-    <%= render partial: 'especies_regiones_bibliografias_fields', locals: { f: biblio } %>
+  <% if @index_reg > -1 %>
+    <% region = @admin_catalogo.especies_catalogo[@index].regiones[@index_reg].region.nombre_region %>
+    <% tipo_region = @admin_catalogo.especies_catalogo[@index].regiones[@index_reg].region.tipo_region.descripcion %>
+    <%= f.input :reg, as: :text, input_html: { value: "#{region}, #{tipo_region}", disabled: '' } %>
+  <% else %>
+    <%= f.input :reg, as: :text, input_html: { class: 'reg-autocomplete' } %>
   <% end %>
 
+  <% @index_reg_biblio = 0 %>
+  <%= f.simple_fields_for :bibliografias do |biblio| %>
+    <%= render partial: 'especies_regiones_bibliografias_fields', locals: { f: biblio } %>
+    <% @index_reg_biblio+= 1 %>
+  <% end %>
+
+  <% @index_reg_biblio = -1 %>
   <%= link_to_add_association('Asocia una bibliografía por región', f, :bibliografias, partial: 'especies_regiones_bibliografias_fields') %>
   <%= link_to_remove_association 'Desvincula la región', f, { class: 'float-right' } %>
 

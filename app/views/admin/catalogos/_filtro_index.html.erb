@@ -1,0 +1,18 @@
+<%= simple_form_for @admin_catalogo, url: admin_catalogos_path, method: 'get', wrapper: :horizontal_form do |f| %>
+
+  <%= f.input :nivel1, label: 'Catálogo', as: :select, collection: @admin_catalogo.dame_nivel1, include_blank: '- - Filtra por catálogo - -' %>
+  <%= f.input :nombre_cientifico %>
+  <%= f.input :especie_id, as: :hidden %>
+
+  <div>
+    <%= f.submit value: 'Filtrar', class: 'btn btn-success' %>
+    <%= link_to "Limpiar", admin_catalogos_path, class: "btn btn-light" %>
+  </div>
+
+<% end %>
+
+<hr />
+
+<script>
+  soulmateAsigna("admin/catalogos/index","admin_catalogo_nombre_cientifico");
+</script>

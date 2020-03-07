@@ -51,6 +51,7 @@ tools/correspondencia_geoserver/
 app/assets/taxones/*
 public/kmz/*
 tools/correspondencia_proyectos_naturalista/
+tools/mapas_SIG/*.csv
 public/fontello-demo.html
 public/pdfs/
 public/uploads/

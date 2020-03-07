@@ -1,6 +1,15 @@
+<%#= stylesheet_link_tag 'especies/arbol/arbol_identado' %>
+<%#= javascript_include_tag 'especies/arbol/arbol_identado' %>
 <% if @taxones.present? && @taxones.length > 0 %>
-    <%= dameArbolIdentadoInicial(@taxones) %>
+  <div class="table-responsive table-bordered">
+    <table class="table table-sm ">
+      <thead>
+      <tr class="bg-success">
+        <th scope="col" colspan="2">Taxonomía</th>
+      </tr>
+      </thead>
+      <tbody class="table-light" style="font-size: .85em;">
+        <%= dameArbolInicialSinIndentar(@taxones) %>
+    </table>
+  </div>
 <% end %>
-
-<%= stylesheet_link_tag 'especies/arbol/arbol_identado' %>
-<%= javascript_include_tag 'especies/arbol/arbol_identado' %>

@@ -1,48 +1,77 @@
-<div class="col-12">
-  <h3>Lista de usos</h3>
+<div class="container">
 
-  <div class="justify-content-end row">
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Acciones
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <%= link_to('Nuevo uso', new_admin_catalogo_path, class: 'dropdown-item') %>
+  <div class="row">
+
+    <div class="col"></div>
+
+    <div class="col-auto">
+
+      <div class="justify-content-end row mb-5">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Acciones
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <%= link_to('Nuevo catálogo', new_admin_catalogo_path, class: 'dropdown-item') %>
+          </div>
+        </div>
       </div>
+
+      <%= render partial: 'admin/catalogos/filtro_index' %>
+
     </div>
+
+    <div class="col"></div>
+
   </div>
 
-  <table>
-    <thead>
-    <tr>
-      <th>Nombre del uso</th>
-      <th>Número de especies</th>
-      <th></th>
-    </tr>
-    </thead>
 
-    <tbody>
-    <% @admin_catalogos.each do |catalogo| %>
-      <tr>
-        <td><%= catalogo.descripcion %></td>
-        <td><%= catalogo.totales %></td>
-        <td>
+  <div class="row">
 
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="col"></div>
 
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <%= link_to 'Ver las especies', catalogo, class: 'dropdown-item' %>
-              <%= link_to 'Editar', edit_admin_catalogo_path(catalogo), class: 'dropdown-item' %>
-              <%= link_to 'Destruir', catalogo, method: :delete, data: { confirm: 'Are you sure?' }, class: 'dropdown-item' %>
-            </div>
-          </div>
+    <div class="col-auto">
+      <table>
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Número de especies</th>
+          <th></th>
+        </tr>
+        </thead>
 
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+        <tbody>
+        <% @admin_catalogos.each do |catalogo| %>
+          <%
+            niveles = [catalogo.nivel1, catalogo.nivel2, catalogo.nivel3, catalogo.nivel4, catalogo.nivel5]
+            niveles.delete_if { |n| n == 0 }
+          %>
+          <tr>
+            <td class="<%= 'bg-secondary text-white border-top border-dark' if catalogo.nivel2 == 0 %>"><%= ("&nbsp;"*5*niveles.length).html_safe %><%= catalogo.descripcion %></td>
+            <td class="<%= 'bg-secondary text-white border-top border-dark' if catalogo.nivel2 == 0 %>"><%= catalogo.totales %></td>
+            <td>
+
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <%#= link_to 'Ver las especies', catalogo, class: 'dropdown-item' %>
+                  <%= link_to("Editar solo a #{params[:admin_catalogo][:nombre_cientifico]}", "/admin/especies_catalogos/#{catalogo.id},#{params[:admin_catalogo][:especie_id]}/edit", class: 'dropdown-item') if params[:admin_catalogo].present? && params[:admin_catalogo][:especie_id].present? %>
+                  <%= link_to "Editar", edit_admin_catalogo_path(catalogo), class: 'dropdown-item' %>
+                  <%= link_to 'Destruir', catalogo, method: :delete, data: { confirm: 'Esta acción es irreversible y borrará tambien las especies, bibiografias y regiones vinculadas a este catálogo, ¿Estás segur@ de esta edición?' }, class: 'dropdown-item' %>
+                </div>
+              </div>
+
+            </td>
+          </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="col"></div>
+
+  </div>
 
 </div>

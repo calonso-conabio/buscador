@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Autor:</strong>
+  <%= @admin_bibliografia.autor %>
+</p>
+
+<p>
+  <strong>Anio:</strong>
+  <%= @admin_bibliografia.anio %>
+</p>
+
+<p>
+  <strong>Titulo publicacion:</strong>
+  <%= @admin_bibliografia.titulo_publicacion %>
+</p>
+
+<p>
+  <strong>Titulo sub publicacion:</strong>
+  <%= @admin_bibliografia.titulo_sub_publicacion %>
+</p>
+
+<p>
+  <strong>Editorial pais pagina:</strong>
+  <%= @admin_bibliografia.editorial_pais_pagina %>
+</p>
+
+<p>
+  <strong>Numero volumen anio:</strong>
+  <%= @admin_bibliografia.numero_volumen_anio %>
+</p>
+
+<p>
+  <strong>Editores compiladores:</strong>
+  <%= @admin_bibliografia.editores_compiladores %>
+</p>
+
+<p>
+  <strong>Isbnissn:</strong>
+  <%= @admin_bibliografia.isbnissn %>
+</p>
+
+<p>
+  <strong>Observaciones:</strong>
+  <%= @admin_bibliografia.observaciones %>
+</p>
+
+<%= link_to 'Edit', edit_admin_bibliografia_path(@admin_bibliografia) %> |
+<%= link_to 'Back', admin_bibliografias_path %>

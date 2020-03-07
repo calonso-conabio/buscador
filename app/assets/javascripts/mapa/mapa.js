@@ -13,13 +13,13 @@ var cargaMapa = function (id)
     // Google terrain map layer
     var GTM_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
         subdomains:['mt0','mt1','mt2','mt3'],
-        zIndex: 2,
+        zIndex: 1,
         noWrap: true
     });
     // Google Hybrid
     var GHM_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{
         subdomains:['mt0','mt1','mt2','mt3'],
-        zIndex: 3,
+        zIndex: 1,
         noWrap: true
     });
 
@@ -29,9 +29,9 @@ var cargaMapa = function (id)
         zoomControl: false,
         doubleClickZoom: false,
         layers: [     // Existe un bug poniendo primero los layes de google
-            OSM_layer,
-            GTM_layer,
-            GHM_layer
+            //OSM_layer,
+            GHM_layer,
+            //GTM_layer,
         ]
     });
 
@@ -50,14 +50,15 @@ var cargaMapa = function (id)
     map.addControl(zoom);
     map.addControl(fullscreen);
 
-    map.setView(place, 5);  // Default place and zoom
+    map.setView(place, 4);  // Default place and zoom
 
     // Para poner las capas iniciales de los mapas
     var baseMaps = {
-        "Open Street Maps": OSM_layer,
-        "Vista de terreno": GTM_layer,
-        "Vista Híbrida": GHM_layer
+        "Vista Híbrida": GHM_layer,
+        //"Open Street Maps": OSM_layer,
+        //"Vista de terreno": GTM_layer,
     };
 
     L.control.layers(baseMaps).addTo(map);
+
 };

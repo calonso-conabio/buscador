@@ -1,5 +1,3 @@
-<h3>Editando <i><%= @admin_catalogo.descripcion %></i></h3>
-
 <div class="col-12">
 
   <div class="justify-content-end row">
@@ -8,7 +6,7 @@
         Acciones
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <%= link_to('Más detalles', admin_catalogo_path(@admin_catalogo), class: 'dropdown-item') %>
+        <%#= link_to('Más detalles', admin_catalogo_path(@admin_catalogo), class: 'dropdown-item') %>
         <%= link_to('Lista de usos', admin_catalogos_path, class: 'dropdown-item') %>
         <%= link_to('Eliminar', admin_catalogo_path(@admin_catalogo), class: 'dropdown-item', method: :delete, data: { confirm: '¿Estas seguro?' }) %>
       </div>

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Admin Especies Catalogos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Especie</th>
+      <th>Catalogo</th>
+      <th>Observaciones</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @admin_especies_catalogos.each do |admin_especie_catalogo| %>
+      <tr>
+        <td><%= admin_especie_catalogo.especie_id %></td>
+        <td><%= admin_especie_catalogo.catalogo_id %></td>
+        <td><%= admin_especie_catalogo.observaciones %></td>
+        <td><%= link_to 'Show', admin_especie_catalogo %></td>
+        <td><%= link_to 'Edit', edit_admin_especie_catalogo_path(admin_especie_catalogo) %></td>
+        <td><%= link_to 'Destroy', admin_especie_catalogo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Admin Especie Catalogo', new_admin_especie_catalogo_path %>

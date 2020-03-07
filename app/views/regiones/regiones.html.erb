@@ -1,1 +1,0 @@
-<%= select_tag("distribucion_nivel_#{@nivel+1}", options_for_select(@regiones.collect {|r| [r.capitalize, r.id] }), prompt: 'Todos', class: "form-control") if @regiones.present? %>

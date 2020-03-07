@@ -7,34 +7,34 @@
 </script>
 
 <% if I18n.locale.to_s != 'es-cientifico' %>
-    <style type="text/css">
-        .soulmate-type-suggestions li{
-            padding: 1em 0;
-            min-height: 125px;
-        }
-    </style>
+  <style type="text/css">
+    .soulmate-type-suggestions li{
+      padding: 1em 0;
+      min-height: 125px;
+    }
+  </style>
 <% end %>
 
 <%= form_tag busquedas_resultados_url, :method => :get, :id => :basica, :class => 'form-horizontal', :role => 'form' do %>
-    <%= hidden_field_tag :busqueda, :basica %>
-    <%= hidden_field_tag :id %>
+  <%= hidden_field_tag :busqueda, :basica %>
+  <%= hidden_field_tag :id %>
 
-    <div class="form-group">
-      <div class="input-group">
-        <%= text_field_tag :nombre, nil, :maxlength => 255, :placeholder => 'Escribe un nombre común o científico ...', :autocomplete => :off, :class => 'form-control input-lg', :value => params[:busqueda] == 'nombre_comun' ? params[:nombre_comun] : nil %>
-        <div class="input-group-btn">
-          <%= button_tag "<i class='glyphicon glyphicon-search' aria-hidden='true'></i>".html_safe, data: { disable_with: 'Procesando...' },:class => "btn btn-busquedas btn-title", :title=>'Buscar' %>
-        </div>
+  <div class="form-group">
+    <div class="input-group">
+      <%= text_field_tag :nombre, nil, :maxlength => 255, :placeholder => 'Escribe un nombre común o científico ...', :autocomplete => :off, :class => 'form-control input-lg', :value => params[:busqueda] == 'nombre_comun' ? params[:nombre_comun] : nil %>
+      <div class="input-group-btn">
+        <%= button_tag "<i class='glyphicon glyphicon-search' aria-hidden='true'></i>".html_safe, data: { disable_with: 'Procesando...' },:class => "btn btn-busquedas btn-title", :title=>'Buscar' %>
       </div>
-      <% if params[:controller] != 'inicio' %>
-        <div class="btn-group" role="group" aria-label="...">
-          <%= link_to "<i class='busqueda-avanzada-ev-icon'></i>".html_safe, avanzada_url, :class => "btn btn-busquedas btn-title", :title => 'Ir a la búsqueda avanzada', data: { turbolinks: false }  %>
-          <%= link_to "<i class='busqueda-region-ev-icon'></i>".html_safe, explora_por_region_url, :class => "btn btn-busquedas btn-basica btn-title", :title => 'Ir a la búsqueda por región', data: { turbolinks: false }  %>
-          <%= link_to "<i class='peces-mariscos-comerciales-ev-icon'></i>".html_safe, '/peces', :class => "btn btn-busquedas btn-basica btn-title", :title => 'Ir a la búsqueda de peces y mariscos comerciales', data: { turbolinks: false }  %>
-          <%= link_to "<i class='exotica-invasora-ev-icon'></i>".html_safe, exoticas_invasoras_url, :class => "btn btn-busquedas btn-basica btn-title", :title => 'Ir a la búsqueda de especies exóticas invasoras', data: { turbolinks: false }  %>
-          <%= link_to "<i class='datos-ecologicos-ev-icon'></i>".html_safe, "http://proyecto-species.org/", target: '_blank', :class => "btn btn-busquedas btn-basica btn-title", :title => 'Explora datos ecológicos', data: { turbolinks: false , confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }  %>
-        </div>
-        <% end %>
     </div>
+    <% if params[:controller] != 'inicio' %>
+      <div class="btn-group" role="group" aria-label="...">
+        <%= link_to "<i class='busqueda-avanzada-ev-icon'></i>".html_safe, avanzada_url, :class => "btn btn-busquedas btn-title", :title => 'Ir a la búsqueda avanzada', data: { turbolinks: false }  %>
+        <%= link_to "<i class='busqueda-region-ev-icon'></i>".html_safe, explora_por_region_url, :class => "btn btn-busquedas btn-basica btn-title", :title => 'Ir a la búsqueda por región', data: { turbolinks: false }  %>
+        <%= link_to "<i class='peces-mariscos-comerciales-ev-icon'></i>".html_safe, '/peces', :class => "btn btn-busquedas btn-basica btn-title", :title => 'Ir a la búsqueda de peces y mariscos comerciales', data: { turbolinks: false }  %>
+        <%= link_to "<i class='exotica-invasora-ev-icon'></i>".html_safe, exoticas_invasoras_url, :class => "btn btn-busquedas btn-basica btn-title", :title => 'Ir a la búsqueda de especies exóticas invasoras', data: { turbolinks: false }  %>
+        <%= link_to "<i class='datos-ecologicos-ev-icon'></i>".html_safe, "http://proyecto-species.org/", target: '_blank', :class => "btn btn-busquedas btn-basica btn-title", :title => 'Explora datos ecológicos', data: { turbolinks: false , confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }  %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
 

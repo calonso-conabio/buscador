@@ -472,7 +472,7 @@
     },
     {
       "uid": "beff80e3f3a88a8ef704e0e0949a42d9",
-      "css": "riesgo-bajo-lr-preocupacion-menor-lc",
+      "css": "preocupacion-menor-lc",
       "code": 59431,
       "src": "custom_icons",
       "selected": true,
@@ -486,7 +486,7 @@
     },
     {
       "uid": "776518dc43a72d340f122ddb8e2bf485",
-      "css": "riesgo-bajo-lr-casi-amenazado-nt",
+      "css": "casi-amenazado-nt",
       "code": 59432,
       "src": "custom_icons",
       "selected": true,

@@ -13,10 +13,9 @@
 
 <% content_for(:delayedjs) do %>
   <%= javascript_include_tag 'especies/mapa/mapa_delayed', 'data-turbolinks-track' => true %>
+  <script data-turbolinks-track="true">
+      $('#map').css('height', $('#contenedor_mapa').height());
+  </script>
 <% end %>
 
-<div id="map"></div>
-
-<script data-turbolinks-track="true">
-    $('#map').css('height', $('#contenedor_mapa').height() - 30);
-</script>
+<div id="map" class="col-12"></div>

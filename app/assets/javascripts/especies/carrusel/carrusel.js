@@ -11,41 +11,43 @@ var fotosNaturalista = function()
             type: 'GET',
             dataType: 'json'
         }).done(function (json) {
-            if (jQuery.isEmptyObject(json)) {
-                fotosBDI();
-            } else {
-
-                if (json.total_results == 0) {
-                    fotosBDI();
-                } else if (json.results[0].taxon_photos.length == 0) {
-                    fotosBDI();
-                } else {
-                    $.ajax(
-                        {
-                            url: '/especies/' + opciones.taxon + '/fotos-referencia',
-                            type: 'POST',
-                            data: {
-                                fotos: JSON.stringify(json.results[0].taxon_photos.slice(0, 5))
-                            }
-                        }).done(function (fotos) {
-                            if (jQuery.isEmptyObject(opciones.geodatos))
-                                $('#contenedor_fotos').removeClass().addClass('col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2');
-                            else {
-                                $('#contenedor_fotos').removeClass().addClass('col-xs-12 col-sm-10 col-md-5 col-lg-5 col-xs-offset-0 col-sm-offset-1 col-md-offset-0');
-                                $('#contenedor_mapa').removeClass().addClass('col-xs-12 col-sm-10 col-md-7 col-lg-7 col-xs-offset-0 col-sm-offset-1 col-md-offset-0');
-                            }
-
-                            $('#contenedor_fotos').html(fotos);
-                            inicia_carrusel();
-
-                        }).error(function (error) {
-                            fotosBDI();
-                        });
-                }
-            }
-        }).error(function (error) {
+        if (jQuery.isEmptyObject(json)) {
             fotosBDI();
-        });
+        } else {
+
+            if (json.total_results == 0) {
+                fotosBDI();
+            } else if (json.results[0].taxon_photos.length == 0) {
+                fotosBDI();//TODO PONER CAJAS FIJAS, EN EL EVENTO DONE RELLENAR LOS BACKGROUND
+            } else {
+                $.ajax(
+                    {
+                        url: '/especies/' + opciones.taxon + '/fotos-referencia',
+                        type: 'POST',
+                        data: {
+                            fotos: JSON.stringify(json.results[0].taxon_photos.slice(0, 5))
+                        }
+                    }).done(function (fotos) {
+                    if (jQuery.isEmptyObject(opciones.geodatos)){}
+                    //$('#contenedor_fotos').removeClass().addClass('col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2');
+                    else {
+                        //$('#contenedor_fotos').removeClass().addClass('col-xs-12 col-sm-10 col-md-5 col-lg-5 col-xs-offset-0 col-sm-offset-1 col-md-offset-0');
+                        $('#contenedor_mapa').removeClass().addClass('row');
+                    }
+
+                    $('#contenedor_fotos').html(fotos);
+                    //inicia_carrusel();
+
+                    $('#especies-destacadas .col').hover(function(){$(this).toggleClass('col-7')});
+                    $('#especies-destacadas').hover(function(){$('#especies-destacadas div.col:first-of-type').toggleClass('col-6')});
+                }).fail(function (error) {
+                    fotosBDI();
+                });
+            }
+        }
+    }).fail(function (error) {
+        fotosBDI();
+    });
 };
 
 /**
@@ -59,43 +61,45 @@ var fotosBDI = function()
             type: 'GET',
             dataType: 'json'
         }).done(function (json) {
-            if (jQuery.isEmptyObject(json)) {
+        if (jQuery.isEmptyObject(json)) {
+            $('#contenedor_fotos').remove();
+            if (jQuery.isEmptyObject(opciones.geodatos)) $('#sin_datos').html('Lo sentimos, pero no contamos con una imagen o geodato');
+        } else {
+
+            if (json.estatus == 'error') {
+                $('#contenedor_fotos').remove();
+                if (jQuery.isEmptyObject(opciones.geodatos)) $('#sin_datos').html('Lo sentimos, pero no contamos con una imagen o geodato');
+            } else if (json.estatus == 'OK' && json.fotos.length == 0) {
                 $('#contenedor_fotos').remove();
                 if (jQuery.isEmptyObject(opciones.geodatos)) $('#sin_datos').html('Lo sentimos, pero no contamos con una imagen o geodato');
             } else {
+                $.ajax(
+                    {
+                        url: '/especies/' + opciones.taxon + '/fotos-referencia',
+                        type: 'POST',
+                        data: {fotos: JSON.stringify(json.fotos.slice(0, 5))}
+                    }).done(function (fotos) {
+                    if (jQuery.isEmptyObject(opciones.geodatos)){}
+                    //$('#contenedor_fotos').removeClass().addClass('col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2');
+                    else {
+                        //$('#contenedor_fotos').removeClass().addClass('col-xs-12 col-sm-10 col-md-5 col-lg-5 col-xs-offset-0 col-sm-offset-1 col-md-offset-0');
+                        $('#contenedor_mapa').removeClass().addClass('col-xs-12');
+                    }
 
-                if (json.estatus == 'error') {
+                    $('#contenedor_fotos').html(fotos);
+                    $('#especies-destacadas .col').hover(function(){$(this).toggleClass('col-5')});
+                    $('#especies-destacadas').hover(function(){$('#especies-destacadas div.col:first-of-type').toggleClass('col-4')});
+                    //inicia_carrusel();
+                }).fail(function (error) {
                     $('#contenedor_fotos').remove();
-                    if (jQuery.isEmptyObject(opciones.geodatos)) $('#sin_datos').html('Lo sentimos, pero no contamos con una imagen o geodato');
-                } else if (json.estatus == 'OK' && json.fotos.length == 0) {
-                    $('#contenedor_fotos').remove();
-                    if (jQuery.isEmptyObject(opciones.geodatos)) $('#sin_datos').html('Lo sentimos, pero no contamos con una imagen o geodato');
-                } else {
-                    $.ajax(
-                        {
-                            url: '/especies/' + opciones.taxon + '/fotos-referencia',
-                            type: 'POST',
-                            data: {fotos: JSON.stringify(json.fotos.slice(0, 5))}
-                        }).done(function (fotos) {
-                            if (jQuery.isEmptyObject(opciones.geodatos))
-                                $('#contenedor_fotos').removeClass().addClass('col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2');
-                            else {
-                                $('#contenedor_fotos').removeClass().addClass('col-xs-12 col-sm-10 col-md-5 col-lg-5 col-xs-offset-0 col-sm-offset-1 col-md-offset-0');
-                                $('#contenedor_mapa').removeClass().addClass('col-xs-12 col-sm-10 col-md-7 col-lg-7 col-xs-offset-0 col-sm-offset-1 col-md-offset-0');
-                            }
-
-                            $('#contenedor_fotos').html(fotos);
-                            inicia_carrusel();
-                        }).error(function (error) {
-                            $('#contenedor_fotos').remove();
-                            if (jQuery.isEmptyObject(opciones.geodatos)) $('#sin_datos').html('Lo sentimos, pero aún no contamos con una imagen o geodato');
-                        });
-                }
+                    if (jQuery.isEmptyObject(opciones.geodatos)) $('#sin_datos').html('Lo sentimos, pero aún no contamos con una imagen o geodato');
+                });
             }
-        }).error(function (error) {
-            $('#contenedor_fotos').remove();
-            if (jQuery.isEmptyObject(opciones.geodatos)) $('#sin_datos').html('Lo sentimos, pero hubo un error al cargar las fotos');
-        });
+        }
+    }).fail(function (error) {
+        $('#contenedor_fotos').remove();
+        if (jQuery.isEmptyObject(opciones.geodatos)) $('#sin_datos').html('Lo sentimos, pero hubo un error al cargar las fotos');
+    });
 };
 
 /**

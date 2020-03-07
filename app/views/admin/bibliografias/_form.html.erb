@@ -1,0 +1,21 @@
+
+<%= simple_form_for(@admin_bibliografia) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :autor %>
+    <%= f.input :anio %>
+    <%= f.input :titulo_publicacion %>
+    <%= f.input :titulo_sub_publicacion %>
+    <%= f.input :editorial_pais_pagina %>
+    <%= f.input :numero_volumen_anio %>
+    <%= f.input :editores_compiladores %>
+    <%= f.input :isbnissn %>
+    <%= f.input :observaciones %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

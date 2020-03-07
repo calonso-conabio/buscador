@@ -40,7 +40,7 @@ var soulmateAsigna = function(tipo_busqueda, elem)
             });
 
             if(data.geodatos != undefined && data.geodatos.length > 0){
-                iconos = iconos + "<span class='btn-title' tooltip-title='Tiene datos geográficos'><i class='glyphicon glyphicon-globe'></i></span>";
+                iconos = iconos + "<span class='btn-title' tooltip-title='Tiene datos geográficos'><i class='fa fa-globe'></i></span>";
             }
 
             if(data.fotos > 0) {
@@ -79,6 +79,10 @@ var soulmateAsigna = function(tipo_busqueda, elem)
                 break;
             case 'admin/catalogos':
                 $('#'+elemento.replace('nombre_cientifico','especie_id')).attr('value', data.id);
+                break;
+            case 'admin/catalogos/index':
+                $('#admin_catalogo_especie_id').val(data.id);
+                $('#admin_catalogo_nombre_cientifico').val(data.nombre_cientifico);
                 break;
             default:
                 // Para no pasar por el controlador de busquedas, ir directo a la especie, solo busqueda basica

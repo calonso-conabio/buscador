@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre region:</strong>
+  <%= @admin_region.nombre_region %>
+</p>
+
+<p>
+  <strong>Tipo region:</strong>
+  <%= @admin_region.tipo_region_id %>
+</p>
+
+<p>
+  <strong>Clave region:</strong>
+  <%= @admin_region.clave_region %>
+</p>
+
+<p>
+  <strong>Id region asc:</strong>
+  <%= @admin_region.id_region_asc %>
+</p>
+
+<%= link_to 'Edit', edit_admin_region_path(@admin_region) %> |
+<%= link_to 'Back', admin_regiones_path %>

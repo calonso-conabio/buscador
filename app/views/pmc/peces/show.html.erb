@@ -61,6 +61,7 @@
       </h3>
 
       <% @criterios["Estado poblacional en el Pacífico"].each do |c|  %>
+        <% next unless c %>
         <div class="mb-4">
           <b><%= c[:tipo_propiedad] %></b>
           <% if Pmc::Criterio::CON_ADVERTENCIA.include?(c[:nombre]) %>
@@ -81,7 +82,8 @@
         </div>
       <% end %>
 
-      <% @criterios["Estado poblacional en el Golfo de México y caribe"].each do |c|  %>
+      <% @criterios["Estado poblacional en el Golfo de México y caribe"].each do |c| %>
+        <% next unless c %>
         <div class="mb-4">
           <b><%= c[:tipo_propiedad] %></b>
           <% if Pmc::Criterio::CON_ADVERTENCIA.include?(c[:nombre]) %>

@@ -3,9 +3,26 @@ Buscador::Application.routes.draw do
 
   #match '*path' => redirect('/mantenimiento.html'), via: [:get, :post]
 
+=begin
   namespace :admin do
-    resources :catalogos
+    resources :catalogos do
+      collection do
+        get :dame_nivel
+      end
+    end
+    resources :especies_catalogos
+    resources :regiones do
+      collection do
+        get :autocompleta
+      end
+    end
+    resources :bibliografias do
+      collection do
+        get :autocompleta
+      end
+    end
   end
+=end
 
   if Rails.env.development?
     namespace :metamares do
@@ -226,8 +243,6 @@ Buscador::Application.routes.draw do
   resources :nombres_regiones
 
   resources :nombre_regiones_bibliografias
-
-  resources :bibliografias
 
   match 'especies/:id/edit_photos' => 'especies#edit_photos', :as => :edit_taxon_photos, :via => :get
   match 'especies/:id/photos' => 'especies#photos', :as => :taxon_photos, :via => :get

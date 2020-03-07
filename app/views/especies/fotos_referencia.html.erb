@@ -1,21 +1,14 @@
-<div id="foto-carrusel" class="text-center">
-  <%= link_to image_tag(@foto_default.large_url || @foto_default.best_photo, :id=>'foto-carrusel-interna', :class=>'img-responsive'), @foto_default.native_page_url, :target => :_blank, :class => 'enlace-atribucion' %>
-  <p>
-    <small class="text-center" id='foto-atribucion'>  <%= @foto_default.attribution_txt %></small>
-    <small>Las imágenes de Flickr pueden pertenecer a especies que no se encuentran en México</small>
-  </p>
-</div>
+<div id="especies-destacadas" class="row">
+  <% @fotos.each_with_index do |f, i|%>
+    <%-
+      next unless f.square_url.present?
+      img_square = f.square_url
+      img_normal = f.large_url || f.best_photo
+      next unless img_normal.present?
+    -%>
+    <div class="col <%= 'col-6' if i == 0  %>" style="background-image: url('<%= img_normal %>');">
+      <a class="btn btn-title" href="<%= f.native_page_url %>" title="<%= f.attribution_txt %>"></a>
+    </div>
+  <% end %>
 
-<div id="carrusel" class="frame">
-  <div class="slidee">
-    <% @fotos.each do |f| %>
-        <%-
-            next unless f.square_url.present?
-            img_square = f.square_url
-            img_normal = f.large_url || f.best_photo
-            next unless img_normal.present?
-        -%>
-        <img src="<%= img_square %>" data-large="<%= img_normal %>" data-attribution="<%= f.attribution_txt %>" data-native-page-url="<%= f.native_page_url %>" class="img-thumbnail img-circle"/>
-    <% end %>
-  </div>
 </div>

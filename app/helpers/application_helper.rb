@@ -233,11 +233,11 @@ module ApplicationHelper
   end
 
   def icono_globo
-    "<i class='glyphicon glyphicon-globe'></i>".html_safe
+    "<i class='fa fa-globe'></i>".html_safe
   end
 
   def icono_descarga
-    "<i class='glyphicon glyphicon-save'></i>".html_safe
+    "<i class='fa fa-download'></i>".html_safe
   end
 
   def tiene_permiso?(nombre_rol, con_hijos=false)

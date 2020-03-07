@@ -8,7 +8,7 @@ $(document).ready(function() {
             success: function (data, status) {
                 $('.taxon_description').replaceWith(data);
             },
-            error: function (request, status, error) {
+            fail: function (request, status, error) {
                 $('.taxon_description').loadingShades('close');
             }
         });

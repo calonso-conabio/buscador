@@ -1,3 +1,4 @@
+<% #### Begins Contents for... #### %>
 <% content_for(:extrajs) do %>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <%= javascript_include_tag 'especies/especies', 'data-turbolinks-track' => true %>
@@ -9,11 +10,7 @@
 <% end %>
 
 <% content_for(:extracss) do %>
-  <%= stylesheet_link_tag 'carrusel', 'data-turbolinks-track' => true %>
-<% end %>
-
-<% if notice.present? %>
-  <div class="row alert alert-success" role="alert"><%= notice %></div>
+  <%= stylesheet_link_tag 'boots4-upgrade/especies/especies', 'data-turbolinks-track' => true %>
 <% end %>
 
 <% content_for(:meta_keywords) do %>
@@ -24,71 +21,103 @@
   <%= @titulo = tituloNombreCientifico(@especie, render: 'title') %>
 <% end %>
 
-<div class="row">
-  <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
-    <%= tituloNombreCientifico(@especie, render: 'header') %>
-  </div>
+<% #### Ends Contents for... #### %>
 
-  <div class="col-xs-12 col-sm-4 col-md-6 col-lg-6 text-right f-fuentes">
-    <%= ponCaracteristicaDistribucionAmbienteTaxon(@especie) %>
+<% if notice.present? %>
+  <div class="col-12 alert alert-success" role="alert">
+    <%= notice %>
   </div>
+<% end %>
 
-  <% if (@datos[:especie_o_inferior]) %>
-    <div class="col-xs-12 panel-shadow" id="panelCaracteristicaDistribucionAmbiente">
-      <%= render :partial => 'panelCaracteristicaDistribucionAmbiente' %>
+<div class="col-12 mb-2">
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <%= tituloNombreCientifico(@especie, render: 'header') %>
+
+<%# if (@datos[:especie_o_inferior]) %>
+      <!--div class="col-12 panel-shadow" id="panelCaracteristicaDistribucionAmbiente"-->
+      <%#= render :partial => 'panelCaracteristicaDistribucionAmbiente' %>
+      <!--/div-->
+<%# end %>
+      <div id="nombres_comunes_todos"></div>
+      <%= dameSinonimosUhomonimos(@especie, {tipo_recurso: 'Sinónimos'}) %>
+<%#= dameSinonimosUhomonimos(@especie, {tipo_recurso: 'Homónimos'}) %>
+      <div class="f-fuentes">
+        <%= ponCaracteristicaDistribucionAmbienteTaxon(@especie) %>
+      </div>
     </div>
-  <% end %>
 
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div id="nombres_comunes_todos"></div>
-    <br />
-    <%= dameSinonimosUhomonimos(@especie, {tipo_recurso: 'Sinónimos'}) %>
-    <%#= dameSinonimosUhomonimos(@especie, {tipo_recurso: 'Homónimos'}) %>
+    <div class="col-xs-12 col-md" id="contenedor_fotos">
+      <p class="text-center">
+        <i class="spin3-ev-icon animate-spin" style="font-size: 3em; color: rgba(128, 0, 0, 0.75);"></i>
+      <h4 class="text-center">Cargando las fotos ... por favor, espera</h4>
+      </p>
+    </div>
   </div>
 </div>
 
-<hr/>
 
-<div class="btn-group pull-right" style="z-index: 1;">
-  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <b>Más información científica sobre la especie...  </b><span class="caret"></span>
-  </button>
 
-  <ul class="dropdown-menu" style="z-index: 1001;" id="enlaces_externos">
-    <li>
-      <%= button_tag("<b>Ficha en PDF <i class ='file-pdf-ev-icon'></i></b>".html_safe, :class => 'btn btn-link', :type => :button, id: :boton_pdf, title: 'Descargar en formato PDF') %>
-    </li>
-    <li role="separator" class="divider"></li>
-    <li class="dropdown-header">Consultar en: <sup><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></sup></li>
-    <li>
-      <%= link_to('BHL', "http://www.biodiversitylibrary.org/name/#{@especie.nombre_cientifico.limpiar}", target: '_blank', class: 'noLoad', title: 'Biblioteca sobre el Patrimonio de la Biodiversidad (BHL)', data: { confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }) %>
-    </li>
-    <li>
-      <%= link_to(' Google Académico', "https://scholar.google.com.mx/scholar?hl=es&q=#{@especie.nombre_cientifico.limpiar}", class: 'noLoad', target: '_blank', title: 'Búsqueda en Google Académico (Schoolar)', data: { confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }) %>
-    </li>
-    <li>
-      <%= link_to(' ResearchGate', "https://www.researchgate.net/search?q=#{@especie.nombre_cientifico.limpiar}", class: 'noLoad', target: '_blank', title: 'Búsqueda en el portal científico ResearchGate', data: { confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }) %>
-    </li>
-    <li role="separator" class="divider"></li>
-    <% if @datos[:ficha_naturalista] %>
-      <li>
-        <%= link_to("<small>#{imagotipo_naturalista_nombre}</small><sup><span class='glyphicon glyphicon-new-window' aria-hidden='true'></span></sup>".html_safe, @datos[:ficha_naturalista], class: 'noLoad', target: '_blank') %>
-      </li>
-    <% end %>
 
-    <li>
+<div class="col-12">
+  <div class="nav flex-sm-row flex-md-column nav-tabs" id="navegacion" role="tablist" aria-orientation="vertical">
+    <a class="nav-link active" id="geodata_e_imagen-tab" data-toggle="pill" href="#geodata_e_imagen" role="tab" aria-controls="geodata_e_imagen" aria-selected="true">Inicio</a>
+    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-media" role="tab" aria-controls="v-pills-profile" aria-selected="false">Media</a>
+    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-info" role="tab" aria-controls="v-pills-messages" aria-selected="false">Fichas</a>
+    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-comments" role="tab" aria-controls="v-pills-settings" aria-selected="false">Comentarios</a>
+
+
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Más info</a>
+    <div class="dropdown-menu" id="enlaces_externos">
+      <%= button_tag("<b>Ficha en PDF <i class='fa fa-file-pdf-o'></i></b>".html_safe, :class => 'dropdown-item', :type => :button, id: :boton_pdf, title: 'Descargar en formato PDF') %>
+      <div class="dropdown-divider"></div>
+      <h6 class="dropdown-header">Consultar en <i class="fa fa-external-link-square"></i>:</h6>
+      <%= link_to('BHL', "http://www.biodiversitylibrary.org/name/#{@especie.nombre_cientifico.limpiar}", target: '_blank', class: 'dropdown-item', title: 'Biblioteca sobre el Patrimonio de la Biodiversidad (BHL)', data: { confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }) %>
+      <%= link_to(' Google Académico', "https://scholar.google.com.mx/scholar?hl=es&q=#{@especie.nombre_cientifico.limpiar}", class: 'dropdown-item', target: '_blank', title: 'Búsqueda en Google Académico (Schoolar)', data: { confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }) %>
+      <%= link_to(' ResearchGate', "https://www.researchgate.net/search?q=#{@especie.nombre_cientifico.limpiar}", class: 'dropdown-item', target: '_blank', title: 'Búsqueda en el portal científico ResearchGate', data: { confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }) %>
+      <%= link_to(' Google Noticias', "https://news.google.com.mx/search?q=#{@especie.nombre_cientifico.limpiar}", class: 'dropdown-item', target: '_blank', title: 'Búsqueda de noticias con Google', data: { confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }) %>
+      <div class="dropdown-divider"></div>
+      <% if @datos[:ficha_naturalista] %>
+        <%= link_to("#{imagotipo_naturalista_nombre}<i class='fa fa-external-link-square'></i>".html_safe, @datos[:ficha_naturalista], class: 'dropdown-item', target: '_blank') %>
+      <% end %>
       <%= ponBotonEditaIDNaturalista if usuario_signed_in? && editarIDNaturalista = tiene_permiso?('Administrador') %>
-    </li>
-  </ul>
-</div>
-<div class="btn-group pull-right" style="z-index: 1;">
-  <%= link_to(' Google Noticias', "https://news.google.com.mx/search?q=#{@especie.nombre_cientifico.limpiar}", class: 'btn btn-basica btn-warning btn-sm noLoad', target: '_blank', title: 'Búsqueda de noticias con Google', data: { confirm: "La consulta externa a EncicloVida se realizará en una nueva ventana." }) %>
+    </div>
+
+  </div>
+
+
+  <div class="tab-content" id="v-pills-tabContent">
+    <div class="tab-pane fade show active" id="geodata_e_imagen" role="tabpanel" aria-labelledby="geodata_e_imagen-tab">
+      <div class="row">
+        <div class="col-xs-12 col" id="arbol">
+          <%= render :partial => 'especies/arbol/arbol_identado_inicial' %>
+        </div>
+        <div class="col-xs-12 col-sm-9">
+          <% if @datos[:geodatos].present? %>
+            <%= render :partial => 'geodata_e_imagen' %>
+          <% end %>
+          <p id='sin_datos' class="text-primary text-center"></p>
+        </div>
+
+      </div>
+    </div>
+    <div class="tab-pane fade" id="v-pills-media" role="tabpanel" aria-labelledby="v-pills-profile-tab">b</div>
+    <div class="tab-pane fade" id="v-pills-info" role="tabpanel" aria-labelledby="v-pills-messages-tab">c</div>
+    <div class="tab-pane fade" id="v-pills-comments" role="tabpanel" aria-labelledby="v-pills-settings-tab">d</div>
+    <div class="tab-pane fade" id="v-pills-more" role="tabpanel" aria-labelledby="v-pills-settings-tab">d</div>
+  </div>
 </div>
 
-<div id="pestañas" class="panel row">
+
+
+
+
+
+
+<div id="pestañas" class="panel col-12">
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active">
-      <a href="#geodata_e_imagen" class="noLoad" aria-controls="geodata_e_imagen" role="tab" data-toggle="pill"><i class="picture-ev-icon"></i>/<i class="glyphicon glyphicon-globe"></i><strong><small> Inicio</small></strong></a>
+      <a href="" aria-controls="geodata_e_imagen" role="tab" data-toggle="pill"><i class="picture-ev-icon"></i>/<i class="glyphicon glyphicon-globe"></i><strong><small> Inicio</small></strong></a>
     </li>
 
     <li role="presentation" class="dropdown">
@@ -131,15 +160,10 @@
     <li role="presentation" >
       <a href="#comentario" aria-controls="comentario" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-comment"></i><strong><small>  Comentarios</small></strong> <span id="totales" class="label label-primary"><%= @datos[:cuantos_comentarios] %></span></a>
     </li>
-    <!--li role="presentation" >
-      <a href="#noticias" aria-controls="noticias" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-flash" aria-hidden="true"></span><strong><small>Noticias</small></strong></a>
-    </li-->
   </ul>
 
   <div class="tab-content">
-    <div id="geodata_e_imagen" role="tabpanel" class="tab-pane fade in panel-body active">
-      <%= render :partial => 'geodata_e_imagen' %>
-    </div>
+
 
     <div id="descripcion_catalogos" role="tabpanel" class="tab-pane fade panel-body">
       <p class="text-center">
@@ -238,7 +262,7 @@
       </div>
     </div>
 
-    <div id="arbol" role="tabpanel" class="tab-pane fade panel-body"></div>
+    <div  role="tabpanel" class="tab-pane fade panel-body"></div>
     <div id="comentario" role="tabpanel" class="tab-pane fade panel-body"></div>
     <!--div id="noticias" role="tabpanel" class="tab-pane fade panel-body"></div-->
   </div>

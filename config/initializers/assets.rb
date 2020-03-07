@@ -11,6 +11,8 @@ comentarios/comentarios.js
 metamares/metamares.js metamares/metamares.css metamares/graficas.js metamares/graficas.css
 fichas/fichas.js fichas.css estadisticas/estadisticas.js estadisticas/estadisticas.css
 application_b4.js boots4-upgrade/application_b4.scss boots4-upgrade/busquedas/avanzada/avanzada.scss
-boots4-upgrade/inicio.scss
+<<<<<<< HEAD
+boots4-upgrade/inicio.scss boots4-upgrade/especies/especies.scss
 admin/admin.js admin/catalogos/catalogos_extra.js
+lib/bootstrap-select.min.css lib/bootstrap-select.min.js
 )

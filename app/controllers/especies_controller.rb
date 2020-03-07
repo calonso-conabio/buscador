@@ -20,6 +20,7 @@ class EspeciesController < ApplicationController
     tiene_permiso?('Administrador')  # Minimo administrador
   end
 
+  layout 'application_b4'
   layout false, :only => [:describe, :observaciones_naturalista, :edit_photos, :descripcion_catalogos,
                           :arbol, :arbol_nodo_inicial, :arbol_nodo_hojas, :arbol_identado_hojas, :comentarios,
                           :fotos_referencia, :fotos_bdi, :videos_bdi, :media_cornell, :media_tropicos, :fotos_naturalista, :nombres_comunes_naturalista,
@@ -39,6 +40,11 @@ class EspeciesController < ApplicationController
   # GET /especies/1.json
   def show
     render 'especies/noPublicos' and return unless @especie.scat.Publico
+    ## Para mostrar la taxonomia en la página inicial del show
+    @taxones = Especie.arbol_nodo_inicial(@especie)
+    puts '----------------------------------------'
+puts @taxones.inspect
+    puts '----------------------------------------'
     respond_to do |format|
       format.html do
 

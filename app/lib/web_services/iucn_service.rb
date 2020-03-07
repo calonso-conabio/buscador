@@ -39,9 +39,7 @@ class IUCNService
 
     CSV.foreach(csv_path, :headers => true) do |r|
       self.row = r
-      self.datos = []
-      self.datos[0] = row['scientificName']
-      self.datos[1] = row['redlistCategory']
+      self.datos = [row['scientificName'], row['redlistCategory'], nil, nil, nil, nil, nil, nil]  # Se inicializa la respuesta vacia
 
       v = Validacion.new
 
@@ -51,43 +49,54 @@ class IUCNService
         v.nombre_cientifico = row['scientificName']
       end
 
+      v.nombre_cientifico = v.nombre_cientifico.gsub('ssp.', 'subsp.')
       v.encuentra_por_nombre
+
       self.validacion = v.validacion
       self.datos[7] = validacion[:msg]
 
-      if validacion[:estatus]  # Hubo al menos una coincidencia
-        if validacion[:taxon].present?  # Solo un resultado
-          valida_extras
-        end
+      if validacion[:estatus]
+        valida_extras  # Solo un resultado y al menos fue coincidencia
       else
         if validacion[:taxones].present?  # Mas de un resultado
-          cuantos_encontro = []
+          if datos[7] == 'Existe más de una búsqueda exacta'
+            cuantos_encontro = 0
 
-          validacion[:taxones].each do |taxon|
-            validacion[:taxon] = taxon
-            next unless valida_extras
-            cuantos_encontro << validacion[:taxon].id
-          end
+            validacion[:taxones].each do |taxon|
+              validacion[:taxon] = taxon
+              if valida_extras  # Encontro el verdadero de entre las coincidencias
+                self.datos[7] = 'Búsqueda exacta'
+                cuantos_encontro+= 1
+                break
+              end
+            end  # End each taxones
 
-          cuantos_encontro.uniq!
+            sin_coincidencias if cuantos_encontro == 0
 
-          if cuantos_encontro.length == 1  # Caso mas sencillo de solo encontrar uno
-            self.datos[7] = 'Búsqueda exacta'
-          elsif cuantos_encontro.length > 1
-            self.datos[2] = nil
-            self.datos[3] = nil
-            self.datos[4] = nil
-            self.datos[5] = nil
-            self.datos[6] = nil
-            self.datos[7] = "[REVISAR] - Existe más de una coincidencia: #{validacion[:taxones].map{ |t| t.scat.catalogo_id }.join('|')}"
-          else
-            self.datos[2] = nil
-            self.datos[3] = nil
-            self.datos[4] = nil
-            self.datos[5] = nil
-            self.datos[6] = nil
-            self.datos[7] = 'Sin coincidencias'
-          end
+          else  # Si es busqueda similar con multiples coincidencias
+            cuantos_encontro = []
+
+            validacion[:taxones].each do |taxon|  # Descartando los que no son de la categoria o del phylum/division
+              validacion[:taxon] = taxon
+              next unless misma_categoria?
+              next unless mismo_phylum?
+
+              cuantos_encontro << taxon
+            end  # End each taxones
+
+            if cuantos_encontro.length == 0
+              sin_coincidencias
+            elsif cuantos_encontro.length == 1
+              sin_coincidencias
+              validacion[:taxon] = cuantos_encontro.first
+              self.datos[7] = 'Búsqueda similar'
+              valida_extras
+            else
+              sin_coincidencias
+              self.datos[7] = "Existe más de una búsqueda similar: #{validacion[:taxones].map{ |t| t.scat.catalogo_id }.join('|')}"
+            end
+
+          end  # End si existe mas de una busqueda exacta con multiples coincidencias
 
         end
       end
@@ -103,7 +112,7 @@ class IUCNService
 
   # Bitacora especial para catalogos, antes de correr en real, pasarsela
   def bitacora
-    log_path = Rails.root.join('log', Time.now.strftime('%Y-%m-%d_%H%m') + '_IUCN.csv')
+    log_path = Rails.root.join('log', 'validacion_IUCN', Time.now.strftime('%Y-%m-%d_%H%m') + '_IUCN.csv')
     @@bitacora ||= File.new(log_path, 'a+')
   end
 
@@ -118,7 +127,7 @@ class IUCNService
     end
 
     self.datos[7] = 'Sin coincidencias'
-    return false
+    false
   end
 
   # Valida que la categoria taxonomica sea la misma
@@ -138,7 +147,7 @@ class IUCNService
       return false
     end
 
-    return true
+    true
   end
 
   # Asigna el nombre valido en caso de ser un sinonimo
@@ -148,37 +157,40 @@ class IUCNService
         validacion[:taxon] = taxon_valido
         self.datos[5] = validacion[:taxon].scat.catalogo_id
         self.datos[6] = validacion[:taxon].nombre_cientifico
-        self.datos[7] = 'Es un sinónimo y encontró el válido'
-        return true
+        self.datos[7] = 'Búsqueda exacta, era un sinónimo'
+        true
       else
-        self.datos[5] = nil
-        self.datos[6] = nil
-        self.datos[7] = '[REVISAR] - Es un sinónimo y hubo problemas al encontrar el válido'
-        return false
+        self.datos[7] = 'Es un sinónimo y hubo problemas al encontrar el válido'
+        false
       end
 
-    elsif validacion[:taxon].estatus == 2
+    else
       self.datos[5] = validacion[:taxon].scat.catalogo_id
       self.datos[6] = validacion[:taxon].nombre_cientifico
-      return true
+      true
     end
   end
 
   # Valida el nombre y categoría taxonomica
   def valida_extras
-    if datos[7] == 'Búsqueda similar'
-      self.datos[7] = '[REVISAR] - Búsqueda similar'
-    end
-
-    return unless misma_categoria?
-    return unless mismo_phylum?
+    return false unless misma_categoria?
+    return false unless mismo_phylum?
 
     self.datos[2] = validacion[:taxon].nombre_cientifico
     self.datos[3] = validacion[:taxon].scat.catalogo_id
-    self.datos[4] = validacion[:taxon].estatus
+    self.datos[4] = validacion[:taxon].estatus == 2 ? 'Válido/Aceptado' : 'Sinónimo'
 
-    return unless dame_el_valido
-    true
+    return true if ['Búsqueda similar'].include?(datos[7])
+    return dame_el_valido if ['Búsqueda exacta', 'Existe más de una búsqueda exacta'].include?(datos[7])
+  end
+
+  def sin_coincidencias
+    self.datos[2] = nil
+    self.datos[3] = nil
+    self.datos[4] = nil
+    self.datos[5] = nil
+    self.datos[6] = nil
+    self.datos[7] = 'Sin coincidencias'
   end
 
 end

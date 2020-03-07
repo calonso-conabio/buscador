@@ -1,8 +1,29 @@
 <% if @nombres_comunes.present? && @nombres_comunes.any? %>
-    <%
-       @nombres_comunes.each do |hash_nombres|
-       lengua = hash_nombres.keys.first
-    %>
-        <span><%= hash_nombres[lengua].sort.join(', ') %> <sub><i><%= lengua %></i></sub>;</span>
+  <% @nombres_comunes.each_with_index do |hash_nombres, i| %>
+    <% lengua = hash_nombres.keys.first %>
+    <% if i == 0 %>
+      <span class="badge badge-pill badge-light"><%= lengua %>: </span>
+      <span><%= hash_nombres[lengua].sort.join(', ') %></span>
+      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <span class="badge badge-pill badge-light" >...</span>
+      </button>
+      <div class="collapse position-absolute" id="collapseExample" style="z-index: 1001;">
+        <div class="card card-body overflow-auto" style="max-height: 200px;">
+          <dl class="row">
+    <% else %>
+      <dt class="col-sm-2">
+        <span class="badge badge-pill badge-light" ><%= lengua %>: </span>
+      </dt>
+      <dd class="col-sm-10">
+        <span><%= hash_nombres[lengua].sort.join(', ') %></span>
+      </dd>
     <% end %>
+
+  <% end %>
+  </dl>
+  </div>
+  </div>
+
 <% end %>
+
+

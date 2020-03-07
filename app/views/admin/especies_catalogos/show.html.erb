@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Especie:</strong>
+  <%= @admin_especie_catalogo.especie_id %>
+</p>
+
+<p>
+  <strong>Catalogo:</strong>
+  <%= @admin_especie_catalogo.catalogo_id %>
+</p>
+
+<p>
+  <strong>Observaciones:</strong>
+  <%= @admin_especie_catalogo.observaciones %>
+</p>
+
+<%= link_to 'Edit', edit_admin_especie_catalogo_path(@admin_especie_catalogo) %> |
+<%= link_to 'Back', admin_especies_catalogos_path %>
