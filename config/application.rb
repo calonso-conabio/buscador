@@ -67,5 +67,10 @@ module Buscador
                       :user_name => CONFIG.smtp.user_name,
                       :password => CONFIG.smtp.password)
     end
+
+    #
+    config.generators do |g|
+     g.orm :active_record
+    end
   end
 end
